@@ -1,0 +1,63 @@
+@import '~assets/scss/variables.scss';
+
+nav{
+    .container{
+        display: flex;
+        justify-content: space-between;
+        height: 50px;
+        .logo-link{
+            display: flex;
+            align-items: center;
+            height: 100%;
+            font-family: $font-family-logo;
+            font-weight: 800;
+            font-size: 24px;
+            color: $primary;
+            img{
+                height: 54%;
+                width: auto;
+                margin-right: 15px;
+            }
+            span{
+                margin: 0 10px;
+                color: $secondary;
+            }
+        }
+
+        .menu{
+            ul{
+                width: 100%;
+                margin: 0;
+                border-radius: 0 0 .25rem .25rem;
+                border-top: none; 
+            }
+            > button{
+                transition: all 300ms ease-in-out;
+                min-width: 100px;
+                text-align: left;
+                padding: 0 15px;
+                border: 1px solid rgba(255,255,255,0);
+                border-bottom: none;
+                border-top: none;
+                img{
+                    height: 26px;
+                    width: auto;
+                    margin-right: 7px;
+                }
+                span{
+                    font-weight: 500;
+                }
+                
+            }
+            &.open{
+                >button{
+                    min-width: 250px;
+                    background-color: #fff;
+                    border: 1px solid rgba(0,0,0,.15);
+                    border-bottom: none;
+                    border-top: none;
+                }
+            }
+        }
+    }
+}

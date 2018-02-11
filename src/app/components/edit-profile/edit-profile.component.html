@@ -1,0 +1,39 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 card personal-info">
+        <h5>Edit personal info</h5>
+        <form (ngSubmit)="save()" [formGroup]="formPersonalInfo" class="row">
+          <div class="col-8 offset-2">
+            <div>
+              <label>First name</label>
+              <input type="text" placeholder="First name" formControlName="firstName">
+            </div>
+            <div>
+              <label>Last name</label>
+              <input type="text" placeholder="Last name" formControlName="lastName">
+            </div>
+          </div>
+          <div class="col-8 offset-2">
+            <div>
+              <label>Email</label>
+              <input type="email" placeholder="Email address" formControlName="email">
+            </div>
+            <div>
+              <label>Telephone</label>
+              <input type="telephone" placeholder="Telephone number" formControlName="telephone">
+            </div>
+          </div>
+          <div class="col-8 offset-2 buttons">
+            <a (click)="back()">Close</a>
+            <button type="submit">Save</button>
+          </div>
+        </form>
+      </div>
+      <div class="col-12 card delete">
+        <!-- <h5>Delete account</h5> -->
+        <button class="btn-danger text-white" (click)="showDeleteModal()">Delete account</button>
+      </div>
+    </div>
+  </div>
+</section>

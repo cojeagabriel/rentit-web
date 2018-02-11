@@ -1,0 +1,14 @@
+<div>
+  <form (ngSubmit)="delete()" [formGroup]="form">
+    <label>Delete account</label>
+    <small class="text-center text-muted">
+      Please enter the email and password of this account.
+    </small>
+    <p class="text-center">
+       All the data associated with this account will be erased and will not be retrievable.
+    </p>
+    <input type="email" placeholder="Email" formControlName="email">
+    <input type="password" placeholder="Password" formControlName="password">
+    <button type="submit" class="btn-danger button-login">Delete account</button>
+  </form>
+</div>

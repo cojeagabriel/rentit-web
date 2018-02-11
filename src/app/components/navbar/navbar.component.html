@@ -1,0 +1,30 @@
+<nav>
+  <div class="container">
+    <a routerLink="" class="logo-link">
+      <img src="assets/img/logo.png">
+      Rent<span>IT</span>
+    </a>
+    
+    <div class="btn-group menu" dropdown *ngIf="user">
+      <button dropdownToggle type="button" class="dropdown-toggle">
+        <img src="assets/img/user.png"> Hi, <span>{{ (user$ | async).firstName}}</span>
+        <span class="caret"></span>
+      </button>
+      <ul *dropdownMenu class="dropdown-menu" role="menu">
+        <li role="menuitem">
+          <a class="dropdown-item" routerLink="profile">Profile settings</a>
+        </li>
+        <li class="divider dropdown-divider"></li>
+        <li role="menuitem">
+          <a class="dropdown-item" routerLink="" (click)="logout()">
+            Logout
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <button *ngIf="!user" (click)="showLoginModal()">
+      Login
+    </button>
+  </div>
+</nav>

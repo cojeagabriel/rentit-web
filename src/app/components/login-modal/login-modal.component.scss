@@ -1,0 +1,50 @@
+@import '~assets/scss/variables.scss';
+
+.modal-content{
+    max-width: 300px;
+}
+div{
+    box-sizing: border-box;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    form{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        input{
+            margin-bottom: 15px;
+        }
+
+        h5{
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .button-login{
+            width: 100%;
+            padding: 7px 0;
+            margin-bottom: 15px;
+            color: white;
+            background-color: $primary-middle;
+            border-radius: 2px;
+            transition: all 150ms ease;
+            &:hover{
+                background-color: $primary-middle-darker;
+            }
+        }
+
+    }
+
+    .button-register{
+        transition: all 150ms ease;
+        color: $primary-middle;
+        &:hover{
+            text-decoration: underline;
+        }
+    }
+}

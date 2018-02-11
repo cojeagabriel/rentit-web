@@ -1,0 +1,48 @@
+/* You can add global styles to this file, and also import other style files */
+
+body{
+    margin: 0;
+}
+
+a, a:hover, a:focus, a:active{
+    text-decoration: none;
+    color: #333;
+}
+
+button{
+    background-color: initial;
+    border: none;
+    cursor: pointer;
+}
+
+button:active, button:focus{
+    outline: inherit !important;
+    box-shadow: none !important;
+    border: none;
+}
+
+input, textarea {
+    box-sizing: border-box;
+    padding: 7px 15px;
+    box-shadow: none !important;
+    outline: inherit !important;
+    border: solid 1px #c5c5c5;
+    border-radius: 2px;
+}
+
+input::placeholder, textarea::placeholder{
+    color: #c5c5c5;
+    font-size: 0.75em;
+}
+
+input:hover , textarea:hover{
+    border-color: #3f51b5;
+    outline: 0 none;
+}
+
+label{
+    font-weight: 700;
+    color: #333;
+    font-size: 0.75em;
+    margin-bottom: 7px;
+}

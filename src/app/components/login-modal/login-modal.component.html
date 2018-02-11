@@ -1,0 +1,9 @@
+<div>
+    <form (ngSubmit)="login()" [formGroup]="form">
+        <h5>Login</h5>
+        <input type="email" placeholder="Email" formControlName="email">
+        <input type="password" placeholder="Password" formControlName="password">
+        <button type="submit" class="button-login">Login</button>
+    </form>
+    <button (click)="showRegisterModal()" class="button-register">Don't have an account? Register</button>
+</div>

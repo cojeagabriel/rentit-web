@@ -1,0 +1,23 @@
+<div class="register-model">
+  <form (ngSubmit)="register()" [formGroup]="form">
+    <h5>Register</h5>
+    <div>
+      <div>
+        <label>First name</label>
+        <input type="firstName" placeholder="Please enter first name" formControlName="firstName">
+      </div>
+      <div>
+        <label>Last name</label>
+        <input type="lastName" placeholder="Please enter last name" formControlName="lastName">
+      </div>
+    </div>
+    <label>Email</label>
+    <input type="email" placeholder="Please enter email" formControlName="email">
+    <label>Password</label>
+    <input type="password" placeholder="Please enter password" formControlName="password">
+    <div *ngIf="errors" class="alert alert-danger">
+      {{ errors }}
+    </div>
+    <button type="submit" class="button-register">Register</button>
+  </form>
+</div>
