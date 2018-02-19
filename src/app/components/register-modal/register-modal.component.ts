@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { AuthService } from '../../services/auth.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
+import { AbstractControl } from '@angular/forms';
+import { NgModel } from '@angular/forms';
+import { NgForm } from '@angular/forms';
+
 
 @Component({
   selector: 'app-register-modal',
@@ -14,6 +18,7 @@ export class RegisterModalComponent implements OnInit {
 
   form: FormGroup;
   errors: string;
+  submitted: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,15 +31,17 @@ export class RegisterModalComponent implements OnInit {
   }
 
   createForm(): FormGroup{
+    this.submitted = true;
     return this.formBuilder.group({
-      firstName: this.formBuilder.control('tttt', Validators.required),
-      lastName: this.formBuilder.control('ttt%', Validators.required),
-      email: this.formBuilder.control('test', Validators.required),
-      password: this.formBuilder.control('parola', Validators.required)
+      firstName: this.formBuilder.control('te', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20), Validators.pattern('^[a-zA-Z]{2,20}$')])),
+      lastName: this.formBuilder.control('te', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20), Validators.pattern('^[a-zA-Z]{2,20}$')])),
+      email: this.formBuilder.control('test@yahoo.com', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(20), Validators.email])),
+      password: this.formBuilder.control('parola', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(20)]))
     });
   }
 
   register(): void{
+    this.submitted = true;
     this.errors = null;
     if (this.form.valid) {
       this.authService.register(this.form.value)
@@ -47,8 +54,6 @@ export class RegisterModalComponent implements OnInit {
           console.log("Registre success");
           this.bsModalRef.hide();
         });
-    } else {
-      this.errors = 'Fill all the fields';
     }
   }
 

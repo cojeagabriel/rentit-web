@@ -8,6 +8,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { BsModalService } from 'ngx-bootstrap';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 
 @Component({
   selector: 'app-edit-profile',
@@ -36,10 +38,10 @@ export class EditProfileComponent implements OnInit {
 
   private createForm(): FormGroup {
     return this.formBuilder.group({
-      firstName: this.formBuilder.control('', Validators.required),
-      lastName: this.formBuilder.control('', Validators.required),
-      email: this.formBuilder.control('', Validators.required),
-      telephone: this.formBuilder.control('', Validators.required)
+      firstName: this.formBuilder.control('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20), Validators.pattern('^[a-zA-Z]{2,20}$')])),
+      lastName: this.formBuilder.control('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20), Validators.pattern('^[a-zA-Z]{2,20}$')])),
+      email: this.formBuilder.control('', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(20), Validators.email])),
+      telephone: this.formBuilder.control('', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*')]))
     });
   }
 
@@ -53,11 +55,16 @@ export class EditProfileComponent implements OnInit {
         this.formPersonalInfo.patchValue({
           firstName: this.user.firstName,
           lastName: this.user.lastName,
-          email: this.user.email,
+          email: this.user.email
         });
         if(user.telephone){
           this.formPersonalInfo.patchValue({
             telephone: user.telephone
+          });
+        }
+        else{
+          this.formPersonalInfo.setValue({
+            telephone: ''
           });
         }
         console.log(this.user);
@@ -74,11 +81,8 @@ export class EditProfileComponent implements OnInit {
         })
         .subscribe((data) => {
           this.userService.getMe().subscribe();
-          console.log(data);
+          this.back();
         });
-    }
-    else {
-      alert("Fill all the fields");
     }
   }
 

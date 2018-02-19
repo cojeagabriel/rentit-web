@@ -14,8 +14,12 @@
         display: flex;
         flex-direction: column;
 
-        input{
-            margin-bottom: 15px;
+        label{
+            margin-top: 15px;
+        }
+
+        small.text-danger{
+            margin-top: 5px;
         }
 
         h5{
@@ -27,7 +31,7 @@
 
         .button-register{
             width: 100%;
-            margin-top: 15px;
+            margin-top: 30px;
             padding: 7px 0;
             color: white;
             background-color: $primary-middle;
@@ -43,7 +47,10 @@
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;
+
             &.alert{
+                margin-top: 15px;
+                margin-bottom: 0;
                 padding: 7px 15px;
                 border-radius: 2px;
             }
@@ -53,6 +60,12 @@
                 flex-direction: column;
                 &:first-child{
                     margin-right: 30px;
+                }
+                >label{
+                    margin-top: 0;
+                }
+                >small.text-danger{
+                    max-width: 180px;
                 }
             }
             

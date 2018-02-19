@@ -14,8 +14,12 @@ div{
         display: flex;
         flex-direction: column;
 
-        input{
-            margin-bottom: 15px;
+        label:not(:first-child){
+            margin-top: 15px;
+        }
+
+        small.text-danger{
+            margin-top: 5px;
         }
 
         h5{
@@ -25,9 +29,18 @@ div{
             text-align: center;
         }
 
+        >div.alert{
+            margin-top: 15px;
+            margin-bottom: 0;
+            padding: 7px 15px;
+            border-radius: 2px;
+            text-align: left;
+        }
+
         .button-login{
             width: 100%;
             padding: 7px 0;
+            margin-top: 30px;
             margin-bottom: 15px;
             color: white;
             background-color: $primary-middle;

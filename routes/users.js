@@ -38,6 +38,8 @@ router.post('/register', (req, res, next) => {
                             res.status(403).json({ success: false, msg: err.errors.lastName.message });
                         else if (err.errors.email)
                             res.status(403).json({ success: false, msg: err.errors.email.message });
+                        else if (err.errors.password)
+                            res.status(403).json({ success: false, msg: err.errors.password.message });
                     } else {
                         const payload = {
                             _id: user._id
@@ -53,6 +55,16 @@ router.post('/register', (req, res, next) => {
                             token: token
                         });
                     }
+                });
+                bcrypt.hash(newUser.password, null, null, function (err, hash) {
+                    if (err) {
+                        throw err;
+                    }
+                    newUser.password = hash;
+                    User.update({ emal: req.body.email }, { password: hash}, function (err, user) {
+                        if(err)
+                            throw err;
+                    });
                 });
             }
         });
@@ -70,14 +82,14 @@ router.post('/authenticate', (req, res, next) => {
         if (err) throw err;
 
         if (!user) {
-            res.status(403).send({ success: false, message: 'Authentication failed. User not found.' });
+            res.status(403).send({ success: false, msg: 'Authentication failed. User not found.' });
         } else if (user) {
 
             bcrypt.compare(req.body.password, user.password, function (err, match) {
 
                 // check if password matches
                 if (!match) {
-                    res.status(403).send({ success: false, message: 'Authentication failed. Wrong password.'});
+                    res.status(403).send({ success: false, msg: 'Authentication failed. Wrong password.'});
                 } else {
 
                     // if user is found and password is right
@@ -152,10 +164,9 @@ router.put('/update', (req, res) => {
 
 router.post('/delete', (req, res) => {
     User.findOne({
-        email: req.body.email
+        _id: req.decoded._id
     }, function (err, user) {
         if (err) throw err;
-
         if (!user) {
             res.status(403).send({ success: false, message: 'Delete account failed. User not found.' });
         } else if (user) {
@@ -164,7 +175,7 @@ router.post('/delete', (req, res) => {
 
                 // check if password matches
                 if (!match) {
-                    res.status(403).send({ success: false, message: 'Delete account failed. Wrong password.' });
+                    res.status(403).send({ success: false, message: 'Delete account failed. Wrong password.'});
                 } else {
                     User.remove({ _id: user._id }, function (err) {
                         if (!err) {

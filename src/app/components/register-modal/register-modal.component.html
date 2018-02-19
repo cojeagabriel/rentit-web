@@ -1,20 +1,47 @@
 <div class="register-model">
-  <form (ngSubmit)="register()" [formGroup]="form">
+  <form (ngSubmit)="register()" [formGroup]="form" #formTest="ngForm" novalidate>
     <h5>Register</h5>
     <div>
       <div>
-        <label>First name</label>
-        <input type="firstName" placeholder="Please enter first name" formControlName="firstName">
+        <label [ngClass]="{'text-danger':(formTest.submitted && !form.controls['firstName'].valid), 'text-success':(formTest.submitted && form.controls['firstName'].valid)}">First name</label>
+        <input [ngClass]="{'has-error':(formTest.submitted && !form.controls['firstName'].valid), 'has-success':(formTest.submitted && form.controls['firstName'].valid)}" type="firstName" placeholder="Please enter first name" formControlName="firstName">
+        <small *ngIf="formTest.submitted && form.controls['firstName'].hasError('required')" class="text-danger">This field is mandatory.</small>
+        <small *ngIf="formTest.submitted && !form.controls['firstName'].hasError('required') && form.controls['firstName'].hasError('minlength')" class="text-danger">Your first name must contain at least 2 characters</small>
+        <small *ngIf="formTest.submitted && form.controls['firstName'].hasError('maxlength')" class="text-danger">You first name must contain at maximum 20 characters</small>
+        <small *ngIf="formTest.submitted && !form.controls['firstName'].hasError('required') && !form.controls['firstName'].hasError('minlength') && !form.controls['firstName'].hasError('maxlength') && form.controls['firstName'].hasError('pattern')" class="text-danger">Your first name must contain only letters</small>
       </div>
       <div>
-        <label>Last name</label>
-        <input type="lastName" placeholder="Please enter last name" formControlName="lastName">
+        <label [ngClass]="{'text-danger':(formTest.submitted && !form.controls['lastName'].valid), 'text-success':(formTest.submitted &&
+        form.controls['lastName'].valid)}">Last name</label>
+        <input [ngClass]="{'has-error':(formTest.submitted && !form.controls['lastName'].valid), 'has-success':(formTest.submitted && form.controls['lastName'].valid)}" type="lastName" placeholder="Please enter last name" formControlName="lastName">
+        <small *ngIf="formTest.submitted && form.controls['lastName'].hasError('required')"
+          class="text-danger">This field is mandatory.</small>
+        <small *ngIf="formTest.submitted && !form.controls['lastName'].hasError('required') && form.controls['lastName'].hasError('minlength')"
+          class="text-danger">Your last name must contain at least 2 characters</small>
+        <small *ngIf="formTest.submitted && form.controls['lastName'].hasError('maxlength')" class="text-danger">You last name must contain at maximum 20 characters</small>
+        <small *ngIf="formTest.submitted && !form.controls['lastName'].hasError('required') && !form.controls['lastName'].hasError('minlength') && !form.controls['lastName'].hasError('maxlength') && form.controls['lastName'].hasError('pattern')"
+          class="text-danger">Your last name must contain only letters</small>
       </div>
     </div>
-    <label>Email</label>
-    <input type="email" placeholder="Please enter email" formControlName="email">
-    <label>Password</label>
-    <input type="password" placeholder="Please enter password" formControlName="password">
+
+    <label [ngClass]="{'text-danger':(formTest.submitted && !form.controls['email'].valid), 'text-success':(formTest.submitted &&
+    form.controls['email'].valid)}">Email</label>
+    <input [ngClass]="{'has-error':(formTest.submitted && !form.controls['email'].valid), 'has-success':(formTest.submitted && form.controls['email'].valid)}" type="email" placeholder="Please enter email" formControlName="email">
+    <small *ngIf="formTest.submitted && form.controls['email'].hasError('required')"
+      class="text-danger">This field is mandatory.</small>
+    <small *ngIf="formTest.submitted && !form.controls['email'].hasError('required') && form.controls['email'].hasError('minlength')"
+      class="text-danger">Your email must contain at least 3 characters</small>
+    <small *ngIf="formTest.submitted && form.controls['email'].hasError('maxlength')" class="text-danger">You email must contain at maximum 20 characters</small>
+    <small *ngIf="formTest.submitted && !form.controls['email'].hasError('required') && !form.controls['email'].hasError('minlength') && !form.controls['email'].hasError('maxlength') && form.controls['email'].hasError('email')"
+      class="text-danger">Your email is invalid</small>
+
+    <label [ngClass]="{'text-danger':(formTest.submitted && !form.controls['password'].valid), 'text-success':(formTest.submitted && form.controls['password'].valid)}">Password</label>
+    <input [ngClass]="{'has-error':(formTest.submitted && !form.controls['password'].valid), 'has-success':(formTest.submitted && form.controls['password'].valid)}" type="password" placeholder="Please enter password" formControlName="password">
+    <small *ngIf="formTest.submitted && form.controls['password'].hasError('required')"
+      class="text-danger">This field is mandatory.</small>
+    <small *ngIf="formTest.submitted && !form.controls['password'].hasError('required') && form.controls['password'].hasError('minlength')"
+      class="text-danger">Your password must contain at least 3 characters</small>
+    <small *ngIf="formTest.submitted && form.controls['password'].hasError('maxlength')" class="text-danger">You password must contain at maximum 20 characters</small>
     <div *ngIf="errors" class="alert alert-danger">
       {{ errors }}
     </div>

@@ -1,5 +1,6 @@
 import { BsModalService } from 'ngx-bootstrap/modal/bs-modal.service';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 import { Observable } from 'rxjs/Observable';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
@@ -17,6 +18,7 @@ import { RegisterModalComponent } from '../register-modal/register-modal.compone
 export class LoginModalComponent implements OnInit {
 
   form: FormGroup;
+  errors: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,22 +33,24 @@ export class LoginModalComponent implements OnInit {
 
   createForm(): FormGroup{
     return this.formBuilder.group({
-      email: this.formBuilder.control('cojeagabriel@yahoo.com', Validators.required),
+      email: this.formBuilder.control('test@yahoo', Validators.required),
       password: this.formBuilder.control('parola', Validators.required)
     });
   }
 
   login(){
     let {email, password} = this.form.value;
-    this.authService.authenticate(email, password)
-      .catch((err) => {
-        alert("User or password incorrect");
-        return Observable.throw(err);
-      })
-      .subscribe(() => {
-        console.log("Login success");
-        this.bsModalRef.hide();
-      });
+    if (this.form.valid) {
+      this.authService.authenticate(email, password)
+        .catch((err) => {
+          this.errors = err.error.msg;
+          return Observable.throw(new Error(`${err.status} ${err.msg}`));
+        })
+        .subscribe(() => {
+          console.log("Login success");
+          this.bsModalRef.hide();
+        });
+    }
   }
 
   showRegisterModal(){

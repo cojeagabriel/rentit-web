@@ -47,8 +47,8 @@ export class AuthService {
       });
   }
 
-  delete(email: string, password: string): Observable<any>{
-    return this.http.post(`${environment.apiUrl}/api/users/delete`, {email, password})
+  delete(password: string): Observable<any>{
+    return this.http.post(`${environment.apiUrl}/api/users/delete`, {password})
       .do(res => {
         this.logout();
       });

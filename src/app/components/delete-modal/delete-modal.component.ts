@@ -44,27 +44,20 @@ export class DeleteModalComponent implements OnInit {
 
   createForm(): FormGroup {
     return this.formBuilder.group({
-      email: this.formBuilder.control('cojeagabriel@yahoo.com', Validators.required),
       password: this.formBuilder.control('parola', Validators.required)
     });
   }
 
   delete(): void{
-    let { email, password } = this.form.value;
-    if (this.form.get('email').value == this.user.email){
-      this.authService.delete(email, password)
-        .catch(err => {
-          return Observable.throw(err);
-        })
-        .subscribe(res => {
-          this.bsModalRef.hide();
-          this.router.navigate(['/']);
-        });
-    }
-    else{
-      alert('Email is incorrect');
-    }
-    
+    let password = this.form.get('password').value;
+    this.authService.delete(password)
+      .catch(err => {
+        return Observable.throw(err);
+      })
+      .subscribe(res => {
+        this.bsModalRef.hide();
+        this.router.navigate(['/']);
+      });
   }
 
 }

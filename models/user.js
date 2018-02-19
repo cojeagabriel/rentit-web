@@ -1,7 +1,6 @@
 // get an instance of mongoose and mongoose.Schema
 var mongoose = require('mongoose');
 var validate = require('mongoose-validator');
-var bcrypt = require('bcrypt-nodejs');
 var config = require('../config');
 mongoose.connect(config.database);
 
@@ -10,12 +9,12 @@ var Schema = mongoose.Schema;
 var firstNameValidator = [
     validate({
         validator: 'isLength',
-        arguments: [3, 20],
+        arguments: [2, 20],
         message: 'First name should be between {ARGS[0]} and {ARGS[1]} characters',
     }),
     validate({
         validator: 'matches',
-        arguments: /^[a-zA-Z]{3,15}$/,
+        arguments: /^[a-zA-Z]{2,20}$/,
         message: 'Must contain only letters'
     })
 ]
@@ -23,12 +22,12 @@ var firstNameValidator = [
 var lastNameValidator = [
     validate({
         validator: 'isLength',
-        arguments: [3, 20],
+        arguments: [2, 20],
         message: 'Last mame should be between {ARGS[0]} and {ARGS[1]} characters',
     }),
     validate({
         validator: 'matches',
-        arguments: /^[a-zA-Z]{3,15}$/,
+        arguments: /^[a-zA-Z]{2,20}$/,
         message: 'Must contain only letters'
     })
 ]
@@ -41,7 +40,23 @@ var emailValidator = [
     validate({
         validator: 'isLength',
         arguments: [3, 20],
-        message: 'Email should be between {ARGS[0]} and {ARGS[1]} characters',
+        message: 'Email should be between {ARGS[0]} and {ARGS[1]} characters'
+    })
+]
+
+var passwordValidator = [
+    validate({
+        validator: 'isLength',
+        arguments: [3, 20],
+        message: 'Password should be between {ARGS[0]} and {ARGS[1]} characters'
+    })
+]
+
+var phoneValidator = [
+    validate({
+        validator: 'matches',
+        argument: /^\d{10}$/,
+        message: 'Phone number must contain 10 digits'
     })
 ]
 
@@ -67,12 +82,12 @@ module.exports = mongoose.model('User', new Schema({
     telephone: {
         type: Number,
         required: false,
-        min: [1000000000, 'Number must have 10 digits'],
-        max: [9999999999, 'Number must have 10 digits']
+        validate: phoneValidator
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        validate: passwordValidator
     },
     admin: Boolean
 }));
@@ -82,11 +97,5 @@ module.exports.getUserById = function (id, callback){
 }
 
 module.exports.createUser = function (newUser, callback) {
-    bcrypt.hash(newUser.password, null, null, function (err, hash) {
-        if (err) {
-            throw err;
-        }
-        newUser.password = hash;
-        newUser.save(callback);
-    });
+    newUser.save(callback);
 }
