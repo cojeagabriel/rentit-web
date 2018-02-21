@@ -115,12 +115,8 @@ router.post('/authenticate', (req, res, next) => {
     });
 });
 
-router.use(requireAuthenticated);
 
-// Profile
-router.get('/profile', (req, res, next) => {
-    res.send('PROFILE');
-});
+router.use(requireAuthenticated);
 
 // Users
 router.get('/', (req,res,next) => {

@@ -1,0 +1,25 @@
+@import '~assets/scss/variables.scss';
+
+h4 {
+    margin: 0;
+    > span{
+        margin-right: 5px;
+        color: $primary;
+    }
+}
+
+.title{
+    background-color: #fff;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.15);
+    > .container{
+        height: 50px;
+        display: flex;
+        align-items: center;
+    }
+}
+
+.card{
+    margin-top: 30px;
+    box-sizing: border-box;
+    padding: 15px;
+}

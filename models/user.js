@@ -89,7 +89,11 @@ module.exports = mongoose.model('User', new Schema({
         required: true,
         validate: passwordValidator
     },
-    admin: Boolean
+    admin: Boolean,
+    products: [{
+        type: Schema.ObjectId, 
+        ref: 'Product'
+    }]
 }));
 
 module.exports.getUserById = function (id, callback){

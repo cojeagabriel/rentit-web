@@ -1,8 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~assets/scss/variables.scss';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 body{
     margin: 0;
+    background-color: $neutral-gray-light;
+}
+
+body, html{
+    height: 100%;
 }
 
 a, a:hover, a:focus, a:active{
@@ -55,4 +61,16 @@ label{
     color: #333;
     font-size: 0.75em;
     margin-bottom: 7px;
+}
+
+app-root{
+    display: block;
+    height: 100%;
+}
+
+// sistematice
+
+.title-thin h4{
+    font-weight: 300 !important;
+    color: #666;
 }

@@ -6,6 +6,7 @@
     </a>
     
     <div class="btn-group menu" dropdown *ngIf="user">
+      <button routerLink="dashboard/new-product">Add item</button>
       <button dropdownToggle type="button" class="dropdown-toggle">
         <img src="assets/img/user.png"> Hi, <span>{{ (user$ | async).firstName}}</span>
         <span class="caret"></span>

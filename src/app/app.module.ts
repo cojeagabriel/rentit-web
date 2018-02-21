@@ -19,6 +19,10 @@ import { RegisterModalComponent } from './components/register-modal/register-mod
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { DeleteModalComponent } from './components/delete-modal/delete-modal.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { NewProductComponent } from './components/dashboard/new-product/new-product.component';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -29,7 +33,9 @@ import { DeleteModalComponent } from './components/delete-modal/delete-modal.com
     RegisterModalComponent,
     EditProfileComponent,
     ProfileComponent,
-    DeleteModalComponent
+    DeleteModalComponent,
+    DashboardComponent,
+    NewProductComponent
   ],
   imports: [
     BrowserModule,
@@ -40,11 +46,17 @@ import { DeleteModalComponent } from './components/delete-modal/delete-modal.com
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: 'profile', component: ProfileComponent, children: [
+      { path: 'profile', component: ProfileComponent, 
+        children: [
           { path: 'edit', component: EditProfileComponent }
-        ]
-      }
-    ])
+      ]},
+      { path: 'dashboard', component: DashboardComponent, 
+        children: [
+          { path: 'new-product', component: NewProductComponent}
+      ]}
+    ]),
+    AngularFontAwesomeModule,
+    BrowserAnimationsModule
   ],
   providers: [
     AuthService,

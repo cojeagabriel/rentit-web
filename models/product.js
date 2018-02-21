@@ -9,13 +9,11 @@ var Schema = mongoose.Schema;
 module.exports = mongoose.model('Product', new Schema({
     title: {
         type: String,
-        required: true,
-        validate: titleValidator
-    },
-    owner: {
-        type: Schema.ObjectId, 
-        ref: 'User', 
         required: true
+    },
+    _ownerId: {
+        type: Schema.ObjectId, 
+        ref: 'User'
     },
     category: {
         type: String,
@@ -27,12 +25,15 @@ module.exports = mongoose.model('Product', new Schema({
     },
     price: {
         type: Number,
-        required: false
+        required: true
     },
     pricePer: {
         type: String,
         required: true,
         enum: ['Hour', 'Day', 'Week', 'Month']
-    },
+    }
 }));
 
+module.exports.createProduct = function (newProduct, callback) {
+    newProduct.save(callback);
+}

@@ -1,0 +1,16 @@
+@import '~assets/scss/variables.scss';
+
+.dashboard{
+    height: 100%;
+    position: relative;
+    background-color: #eee;
+    .side-menu{
+        @include gradient;
+        border-right: solid 2px $primary-middle-darker;
+        height: 100%;
+        width: 200px;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}
