@@ -26,32 +26,60 @@ nav{
         }
 
         .menu{
+            display: flex;
+            align-items: center;
+            .add-item-button{
+                background-color: $secondary;
+                box-sizing: border-box;
+                padding: 0 20px;
+                height: 100%;
+                position: relative;
+                &:after{
+                    content: "";
+                    position: absolute;
+                    bottom: -1px;
+                    height: 1px;
+                    width: 100%;
+                    left: 0;
+                    background-color: $secondary-middle;
+                }
+                fa{
+                    margin-right: 7px;
+                }
+            }
+
             ul{
                 width: 100%;
                 margin: 0;
                 border-radius: 0 0 .25rem .25rem;
                 border-top: none; 
             }
-            > button{
-                transition: all 300ms ease-in-out;
-                min-width: 100px;
-                text-align: left;
-                padding: 0 15px;
-                border: 1px solid rgba(255,255,255,0);
-                border-bottom: none;
-                border-top: none;
-                img{
-                    height: 26px;
-                    width: auto;
-                    margin-right: 7px;
-                }
-                span{
-                    font-weight: 500;
+            > div{
+                position: relative;
+                height: 100%;
+                margin-right: -15px;
+                button{
+                    transition: all 300ms ease-in-out;
+                    padding: 0 15px;
+                    border: 1px solid rgba(255,255,255,0);
+                    border-bottom: none;
+                    border-top: none;
+                    min-width: 100px;
+                    text-align: left;
+                    height: 100%;
+                    img{
+                        height: 26px;
+                        width: auto;
+                        margin-right: 7px;
+                    }
+                    span{
+                        font-weight: 500;
+                    }
                 }
                 
             }
             &.open{
-                >button{
+                >div .user{
                     min-width: 250px;
                     background-color: #fff;
                     border: 1px solid rgba(0,0,0,.15);

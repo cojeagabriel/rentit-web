@@ -6,22 +6,27 @@
     </a>
     
     <div class="btn-group menu" dropdown *ngIf="user">
-      <button routerLink="dashboard/new-product">Add item</button>
-      <button dropdownToggle type="button" class="dropdown-toggle">
-        <img src="assets/img/user.png"> Hi, <span>{{ (user$ | async).firstName}}</span>
-        <span class="caret"></span>
+      <button routerLink="dashboard/new-product" class="add-item-button">
+        <fa name="plus"></fa>Add product
       </button>
-      <ul *dropdownMenu class="dropdown-menu" role="menu">
-        <li role="menuitem">
-          <a class="dropdown-item" routerLink="profile">Profile settings</a>
-        </li>
-        <li class="divider dropdown-divider"></li>
-        <li role="menuitem">
-          <a class="dropdown-item" routerLink="" (click)="logout()">
-            Logout
-          </a>
-        </li>
-      </ul>
+      <div>
+        <button dropdownToggle type="button" class="user dropdown-toggle">
+          <img src="assets/img/user.png"> Hi,
+          <span>{{ (user$ | async).firstName}}</span>
+          <span class="caret"></span>
+        </button>
+        <ul *dropdownMenu class="dropdown-menu" role="menu">
+          <li role="menuitem">
+            <a class="dropdown-item" routerLink="profile">Profile settings</a>
+          </li>
+          <li class="divider dropdown-divider"></li>
+          <li role="menuitem">
+            <a class="dropdown-item" routerLink="" (click)="logout()">
+              Logout
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <button *ngIf="!user" (click)="showLoginModal()">

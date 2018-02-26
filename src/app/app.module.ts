@@ -23,6 +23,11 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NewProductComponent } from './components/dashboard/new-product/new-product.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { HomeComponent } from './components/home/home.component';
+import { SearchComponent } from './components/home/search/search.component';
+import { ProductsComponent } from './components/home/products/products.component';
+import { ProductService } from './services/product.service';
 
 
 @NgModule({
@@ -35,7 +40,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ProfileComponent,
     DeleteModalComponent,
     DashboardComponent,
-    NewProductComponent
+    NewProductComponent,
+    HomeComponent,
+    SearchComponent,
+    ProductsComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +54,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
+      { path: '', component: HomeComponent},
       { path: 'profile', component: ProfileComponent, 
         children: [
           { path: 'edit', component: EditProfileComponent }
@@ -56,7 +65,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       ]}
     ]),
     AngularFontAwesomeModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatSidenavModule
   ],
   providers: [
     AuthService,
@@ -66,7 +76,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }    
+    },
+    ProductService
   ],
   entryComponents: [
     LoginModalComponent,

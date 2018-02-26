@@ -14,4 +14,8 @@ export class ProductService {
     return this._http.post(`${environment.apiUrl}/api/products`, product);
   }
 
+  getProducts(): Observable<Product[]>{
+    return this._http.get<Product[]>(`${environment.apiUrl}/api/products`);
+  }
+
 }

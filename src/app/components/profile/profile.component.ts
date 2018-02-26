@@ -18,17 +18,6 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.user$ = this.userService.me$;
-    this.getUser();
-  }
-
-  getUser(): void {
-    this.userService.getMe()
-      .catch(err => {
-        return Observable.throw(err);
-      })
-      .subscribe(user => {
-        console.log(user);
-      });
   }
 
 }

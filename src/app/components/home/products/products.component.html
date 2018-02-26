@@ -1,0 +1,27 @@
+<section>
+  <div class="container">
+    <h5 class="title">Latest products</h5>
+    <div class="row">
+      <div class="col-6 col-sm-6 col-md-4 item" *ngFor="let product of products">
+        <div class="card">
+          <div class="card-wrapper">
+            <a href="#"></a>
+           
+          </div>
+           <div class="product-info-wrapper">
+              <div class="product-info">
+                <p class="product-name">{{ product.title }}</p>
+                <p>
+                  <span class="price">{{ product.price }}€</span>
+                  <span class="price-per">/{{ product.pricePer }}</span>
+                </p>
+              </div>
+              <div class="product-details">
+                <button>View details</button>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
