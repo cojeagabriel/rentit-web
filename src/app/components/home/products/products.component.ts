@@ -1,6 +1,6 @@
 import { ProductService } from './../../../services/product.service';
 import { Observable } from 'rxjs/Observable';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit  } from '@angular/core';
 import { Product } from '../../../types/product';
 
 @Component({
@@ -8,7 +8,7 @@ import { Product } from '../../../types/product';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, AfterViewInit {
 
   products: Product[];
 
@@ -18,15 +18,6 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit() {
     
-    var swiper = new Swiper('.swiper-container', {
-      slidesPerView: 3,
-      spaceBetween: 30,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-    });
-
     this.productService.getProducts()
       .catch(err => {
         return Observable.throw(err);
@@ -34,6 +25,17 @@ export class ProductsComponent implements OnInit {
       .subscribe(products => {
         this.products = products;
       });
+  }
+
+  ngAfterViewInit() {
+    var swiper = new Swiper('.swiper-container', {
+      slidesPerView: 'auto',
+      spaceBetween: 30,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+    });
   }
 
 }
