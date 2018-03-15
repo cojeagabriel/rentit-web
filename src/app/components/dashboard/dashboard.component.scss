@@ -19,17 +19,55 @@
     align-items: center;
     justify-content: center;
     background-color: $secondary;
+    cursor: pointer;
 }
 
 .sidenav{
     @include gradient;
     box-sizing: border-box;
-    padding: 65px 30px 15px;
+    padding-top: 50px;
     width: 200px;
     box-shadow: none !important;
     visibility: visible !important;
     overflow: visible !important;
-    p,a,span{
-        color: rgba($color: #fff, $alpha: 0.5);
+    display: flex;
+    flex-direction: column;
+
+    .dashboard-link{
+        height: 50px;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        padding: 0 30px;
+        color: rgba($color: rgb(255, 255, 255), $alpha: 0.7);
+        background-color: rgba($color: $primary-dark, $alpha: 0.7);
+        transition: all 100ms ease-in-out;
+        &:hover{
+            color: white;
+        }
+    }
+
+    a{
+        font-weight: 300;
+        font-size: 12px;
+        fa{
+            margin-right: 15px;
+        }
+    }
+
+    .links-wrapper{
+        width: 100%;
+        box-sizing: border-box;
+        padding: 30px;
+        a{
+            color: white;
+        }
+    }
+
+    .separator{
+        margin: 30px 0;
+        width: 100%;
+        height: 1px;
+        background-color: rgba($color: $primary-dark, $alpha: 0.7);
     }
 }

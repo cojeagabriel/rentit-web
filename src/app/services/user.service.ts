@@ -21,6 +21,10 @@ export class UserService {
       });
   }
 
+  getById(id: string): Observable<User> {
+    return this.http.get<User>(`${environment.apiUrl}/api/users/${id}`);
+  }
+
   get me$(): Observable<User> {
     return this._me$.asObservable();
   }

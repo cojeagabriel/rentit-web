@@ -192,5 +192,12 @@ router.post('/delete', (req, res) => {
 });
 
 
+// Get by id
+router.get('/:id', (req, res, next) => {
+    User.find({ _id: req.params.id }, function (err, user) {
+        res.json(user);
+    });
+});
+
 
 module.exports = router;

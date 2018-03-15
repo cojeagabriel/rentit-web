@@ -1,9 +1,14 @@
 
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #sidenav class="sidenav">
-    <p><fa name="tachometer"></fa>Dashboard</p>
+  <mat-sidenav #sidenav class="sidenav" opened="true">
+    <a routerLink="./" class="dashboard-link"><fa name="tachometer"></fa>Dashboard</a>
     <!-- <button class="sidenav-toggle" (click)="sidenav.toggle()">Toggle</button> -->
     <fa name="bars" class="sidenav-toggle" (click)="sidenav.toggle()"></fa>
+    <div class="links-wrapper">
+      <a routerLink="my-products">
+        <fa name="archive"></fa>My products</a>
+    </div>
+    <!-- <span class="separator"></span> -->
   </mat-sidenav>
 
   <mat-sidenav-content>

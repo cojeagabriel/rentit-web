@@ -47,11 +47,9 @@ export class RegisterModalComponent implements OnInit {
       this.authService.register(this.form.value)
         .catch(err => {
           this.errors = err.error.msg;
-          console.log(err);
           return Observable.throw(new Error(`${err.status} ${err.msg}`));
         })
         .subscribe(() => {
-          console.log("Registre success");
           this.bsModalRef.hide();
         });
     }

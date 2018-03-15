@@ -1,0 +1,52 @@
+<div class="title title-thin">
+  <div class="container">
+    <h4>{{ product?.title}}</h4>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-12 card">
+      <div class="row">
+        <div class="col-4 images-upload-wrapper">
+          <img src="http://via.placeholder.com/500x500">
+          <button class="button-upload">
+            <fa name="upload"></fa>Upload image</button>
+        </div>
+        <div class="col-8 info-wrapper">
+          <form (ngSubmit)="update()" id="ngForm" [formGroup]="form" #formTest="ngForm" novalidate>
+            <label for="name">Name</label>
+            <input type="text" placeholder="Please enter the name of the product" formControlName="title">
+            <label for="description">Description</label>
+            <textarea placeholder="Please enter the product description" formControlName="description">
+
+            </textarea>
+            <label for="category">Category</label>
+            <select formControlName="category">
+              <option *ngFor="let c of category" [value]="c">{{ c }}</option>
+            </select>
+            <div class="price-wrapper">
+              <div>
+                <label for="price">Price</label>
+                <input type="text" formControlName="price">
+              </div>
+              <div>
+                <label for="pricePer">Per</label>
+                <select formControlName="pricePer">
+                  <option value="Hour">Hour</option>
+                  <option value="Day">Day</option>
+                  <option value="Month">Month</option>
+                  <option value="Year">Year</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="button-save" form="ngForm">
+              <fa name="save"></fa>Save product</button>
+          </form>
+          <div *ngIf="errors" class="alert alert-danger">
+            {{ errors }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

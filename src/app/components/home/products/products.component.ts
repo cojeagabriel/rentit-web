@@ -17,6 +17,16 @@ export class ProductsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    
+    var swiper = new Swiper('.swiper-container', {
+      slidesPerView: 3,
+      spaceBetween: 30,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+    });
+
     this.productService.getProducts()
       .catch(err => {
         return Observable.throw(err);

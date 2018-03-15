@@ -27,6 +27,10 @@ a, a:hover, a:focus, a:active{
     color: #333;
 }
 
+a:focus{
+    outline: 0 none !important;
+}
+
 button{
     background-color: initial;
     border: none;
@@ -39,12 +43,17 @@ button:active, button:focus{
     border: none;
 }
 
-input, textarea {
+select{
+    appearance: none;
+    background-color: white;
+}
+
+input, textarea, select {
     box-sizing: border-box;
     padding: 7px 15px;
     box-shadow: none !important;
     outline: inherit !important;
-    border: solid 1px #c5c5c5;
+    border: solid 1px #eee;
     border-radius: 2px;
 }
 
@@ -53,23 +62,28 @@ input::placeholder, textarea::placeholder{
     font-size: 0.75em;
 }
 
-input:hover , textarea:hover{
-    border-color: #3f51b5;
+input:hover , textarea:hover, select:hover{
+    border-color: #c5c5c5;
     outline: 0 none;
 }
 
-input.has-error{
+input.has-error,textarea.has-error,select.has-error{
     border-color: $danger;
 }
 
-input.has-success{
+input.has-success,textarea.has-success,select.has-success{
     border-color: $success;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 
 label{
     font-weight: 700;
-    color: #333;
+    color: #666;
     font-size: 0.75em;
     margin-bottom: 7px;
 }
@@ -79,10 +93,30 @@ app-root{
     height: 100%;
 }
 
+textarea, input, button, select { outline: none !important; }
+
+select:required:invalid {
+  color: gray;
+}
+option[value=""][disabled] {
+  display: none;
+}
+option {
+  color: black;
+}
+
+textarea{
+    resize: none;
+}
+
+select{
+    cursor: pointer;
+}
 
 //sidenav pentru performanta
 .mat-drawer-backdrop {
     opacity: 0 !important;
+    display: none !important;
 }
 
 md-sidenav.md-closed-add,
@@ -96,4 +130,8 @@ md-sidenav.md-closed-remove {
 .title-thin h4{
     font-weight: 100 !important;
     color: #666;
+}
+
+.tab-space{
+    padding-right: 2em;
 }

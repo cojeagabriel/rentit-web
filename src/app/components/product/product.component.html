@@ -1,0 +1,49 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 card">
+        <div class="row">
+          <div class="col-6 product-gallery">
+            <img src="assets/img/item1.jpg">
+          </div>
+          <div class="col-6 product-info">
+            <div class="product-info-wrapper">
+              <h4 class="title">{{ (product)?.title }}</h4>
+              <p>Rentor: {{ (user)?.lastName }}</p>
+              <p>Location: Bucharest</p>
+              <div>
+                <div class="location">
+                  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2850.338191182159!2d26.056299515522266!3d44.4057055291026!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b1ff91ff664e1b%3A0x37c0db87a1e55f0f!2sBloc+M57%2C+strada+Dobrun+4%2C+Bucure%C8%99ti+052034!5e0!3m2!1sen!2sro!4v1519915899494"
+                    frameborder="0" style="border:0"></iframe>
+                </div>
+                <div class="date-wrapper">
+                  <button class="date-pick start-date">
+                    <span class="month">22-05</span>
+                    <span class="hour">14:00</span>
+                  </button>
+                  <fa name="arrow-right"></fa>
+                  <button class="date-pick start-date">
+                    <span class="month">23-05</span>
+                    <span class="hour">14:00</span>
+                  </button>
+                </div>
+                <div class="price-wrapper">
+                  <span class="subtitle">Available:</span>
+                  <div class="total">
+                    <span class="subtitle">Total</span>
+                    <span class="price">{{ (product)?.price }}€</span>
+                  </div>
+                </div>
+                <button>Rent it</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 description">
+            <h5>Description</h5>
+            <p><span class="tab-space"></span> {{ (product)?.description }}</p>
+          </div>
+        </div>        
+      </div>
+    </div>
+  </div>
+</section>

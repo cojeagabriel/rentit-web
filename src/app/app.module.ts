@@ -28,6 +28,9 @@ import { HomeComponent } from './components/home/home.component';
 import { SearchComponent } from './components/home/search/search.component';
 import { ProductsComponent } from './components/home/products/products.component';
 import { ProductService } from './services/product.service';
+import { ProductComponent } from './components/product/product.component';
+import { MyProductsComponent } from './components/dashboard/my-products/my-products.component';
+import { EditProductComponent } from './components/dashboard/edit-product/edit-product.component';
 
 
 @NgModule({
@@ -43,7 +46,10 @@ import { ProductService } from './services/product.service';
     NewProductComponent,
     HomeComponent,
     SearchComponent,
-    ProductsComponent
+    ProductsComponent,
+    ProductComponent,
+    MyProductsComponent,
+    EditProductComponent
   ],
   imports: [
     BrowserModule,
@@ -55,13 +61,16 @@ import { ProductService } from './services/product.service';
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent},
+      { path: 'product/:id', component: ProductComponent},
       { path: 'profile', component: ProfileComponent, 
         children: [
           { path: 'edit', component: EditProfileComponent }
       ]},
       { path: 'dashboard', component: DashboardComponent, 
         children: [
-          { path: 'new-product', component: NewProductComponent}
+          { path: 'new-product', component: NewProductComponent},
+          { path: 'my-products', component: MyProductsComponent},
+          { path: 'my-products/:id', component: EditProductComponent},
       ]}
     ]),
     AngularFontAwesomeModule,

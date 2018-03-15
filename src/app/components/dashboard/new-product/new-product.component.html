@@ -1,12 +1,74 @@
 <div class="title title-thin">
   <div class="container">
     <h4>Add new product</h4>
+    <!-- <button type="submit" class="button-save" form="ngForm"><fa name="save"></fa>Save product</button> -->
+
   </div>
 </div>
 <div class="container">
   <div class="row">
     <div class="col-12 card">
-      Adauga produs
+      <div class="row">
+        <div class="col-4 images-upload-wrapper">
+          <img src="http://via.placeholder.com/500x500">
+          <button class="button-upload"><fa name="upload"></fa>Upload image</button>
+        </div>
+        <div class="col-8 info-wrapper">
+          <form (ngSubmit)="create()" id="ngForm" [formGroup]="form" #formTest="ngForm" novalidate>
+            <label for="name" [ngClass]="{'text-danger':(formTest.submitted && !form.controls['title'].valid), 'text-success':(formTest.submitted && form.controls['title'].valid)}">Name</label>
+            <input [ngClass]="{'has-error':(formTest.submitted && !form.controls['title'].valid), 'has-success':(formTest.submitted && form.controls['title'].valid)}" type="text" placeholder="Please enter the name of the product" formControlName="title">
+            <small *ngIf="formTest.submitted && form.controls['title'].hasError('required')" class="text-danger">This field is mandatory</small>
+            <small *ngIf="formTest.submitted && form.controls['title'].hasError('minlength')" class="text-danger">The title must contain at least 3 characters</small>
+            <small *ngIf="formTest.submitted && form.controls['title'].hasError('maxlength')" class="text-danger">The title must contain maximum 50 characters</small>
+            <label for="description" [ngClass]="{'text-danger':(formTest.submitted && !form.controls['description'].valid), 'text-success':(formTest.submitted && form.controls['description'].valid)}">Description</label>
+            <textarea placeholder="Please enter the product description" formControlName="description" [ngClass]="{'has-error':(formTest.submitted && !form.controls['description'].valid), 'has-success':(formTest.submitted && form.controls['description'].valid)}"></textarea>
+            <small *ngIf="formTest.submitted && form.controls['description'].hasError('required')" class="text-danger">This field is mandatory</small>
+            <small *ngIf="formTest.submitted && form.controls['description'].hasError('maxlength')" class="text-danger">The description must contain maximum 1000 characters</small>
+            <label for="category" [ngClass]="{'text-danger':(formTest.submitted && !form.controls['category'].valid), 'text-success':(formTest.submitted
+            && form.controls['category'].valid)}">Category</label>
+            <select formControlName="category" [ngClass]="{'has-error':(formTest.submitted && !form.controls['category'].valid), 'has-success':(formTest.submitted &&
+            form.controls['category'].valid)}">
+              <option *ngFor="let c of category" [value]="c">{{ c }}</option>
+            </select>
+            <small *ngIf="formTest.submitted && form.controls['category'].hasError('required')" class="text-danger">This field is mandatory</small>
+            <label for="quantity" [ngClass]="{'text-danger':(formTest.submitted && !form.controls['quantity'].valid), 'text-success':(formTest.submitted &&
+            form.controls['quantity'].valid)}">Quantity</label>
+            <div class="quantity-wrapper">
+              <span (click)="quantityMinus()">-</span>
+              <input type="number" value="1" min="1" max="100" formControlName="quantity" [ngClass]="{'has-error':(formTest.submitted && !form.controls['quantity'].valid), 'has-success':(formTest.submitted && form.controls['quantity'].valid)}">
+              <span (click)="quantityPlus()">+</span>
+            </div>
+            <small *ngIf="formTest.submitted && form.controls['quantity'].hasError('required')" class="text-danger">This field is mandatory</small>
+            <small *ngIf="formTest.submitted && form.controls['quantity'].hasError('min')" class="text-danger">The quantity must be at least 1</small>
+            <small *ngIf="formTest.submitted && form.controls['quantity'].hasError('max')" class="text-danger">The quantity must be maximum 100</small>
+            <div class="price-wrapper">
+              <div>
+                <label for="price" [ngClass]="{'text-danger':(formTest.submitted && !form.controls['price'].valid), 'text-success':(formTest.submitted &&
+                form.controls['price'].valid)}">Price</label>
+                <div><input class="price" type="number" formControlName="price" [ngClass]="{'has-error':(formTest.submitted && !form.controls['price'].valid), 'has-success':(formTest.submitted && form.controls['price'].valid)}"><span class="price-span">€</span></div>
+                <small *ngIf="formTest.submitted && form.controls['price'].hasError('required')" class="text-danger">This field is mandatory</small>
+                <small *ngIf="formTest.submitted && form.controls['price'].hasError('min')" class="text-danger">The price must be at least 0.001</small>
+                <small *ngIf="formTest.submitted && form.controls['price'].hasError('max')" class="text-danger">The price must be maximum 100000000</small>
+              </div>
+              <div>
+                <label for="pricePer" [ngClass]="{'text-danger':(formTest.submitted && !form.controls['pricePer'].valid), 'text-success':(formTest.submitted && form.controls['pricePer'].valid)}">Per</label>
+                <select formControlName="pricePer" [ngClass]="{'has-error':(formTest.submitted && !form.controls['pricePer'].valid), 'has-success':(formTest.submitted && form.controls['pricePer'].valid)}">
+                  <option value="Hour">Hour</option>
+                  <option value="Day">Day</option>
+                  <option value="Month">Month</option>
+                  <option value="Year">Year</option>
+                </select>
+              <small *ngIf="formTest.submitted && form.controls['pricePer'].hasError('required')" class="text-danger">This field is mandatory</small>
+              </div>
+            </div>
+            <button type="submit" class="button-save" form="ngForm">
+              <fa name="save"></fa>Save product</button>
+          </form>
+          <div *ngIf="errors" class="alert alert-danger">
+            {{ errors }}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
