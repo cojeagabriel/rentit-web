@@ -2,7 +2,7 @@
   <div class="container">
     <h5 class="title">Latest products</h5>
     <div class="row">
-      <div class="col-6 col-sm-6 col-md-4 item" *ngFor="let product of products">
+      <!-- <div class="col-6 col-sm-6 col-md-4 item" *ngFor="let product of products">
         <div class="card">
           <div class="card-wrapper">
             <a [routerLink]="'product/'+ product._id"></a>
@@ -21,11 +21,11 @@
               </div>
             </div>
         </div>
-      </div>
-      <!-- <div class="col-12">
+      </div> -->
+      <div class="col-12">
         <div class="swiper-container">
           <div class="swiper-wrapper">
-            <div class="swiper-slide">Slide 1</div>
+            <!-- <div class="swiper-slide">Slide 1</div>
             <div class="swiper-slide">Slide 2</div>
             <div class="swiper-slide">Slide 3</div>
             <div class="swiper-slide">Slide 4</div>
@@ -34,7 +34,39 @@
             <div class="swiper-slide">Slide 7</div>
             <div class="swiper-slide">Slide 8</div>
             <div class="swiper-slide">Slide 9</div>
-            <div class="swiper-slide">Slide 10</div>
+            <div class="swiper-slide">Slide 10</div> -->
+            <div class="swiper-slide" *ngFor="let product of products">
+              <div class="item">
+                <div class="card">
+                  <div class="card-wrapper">
+                    <a [routerLink]="'product/'+ product._id"></a>
+
+                  </div>
+                  <div class="product-info-wrapper">
+                    <div class="product-info">
+                      <p class="product-name">{{ product.title }}</p>
+                      <p>
+                        <span class="price">{{ product.price }}€</span>
+                        <span class="price-per">/{{ product.pricePer }}</span>
+                      </p>
+                    </div>
+                    <div class="product-details">
+                      <button>View details</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+      <!-- <div class="col-12">
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide" *ngFor="let product of products">{{ product.title }}</div>
+            <div class="swiper-slide" *ngFor="let product of products">{{ product.title }}</div>
           </div>
           <div class="swiper-pagination"></div>
         </div>

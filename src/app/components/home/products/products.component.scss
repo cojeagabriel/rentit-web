@@ -16,7 +16,12 @@ section{
     content: '';
 }
 
+.swiper-slide{
+    width: 30%;
+}
+
 .item{
+    width: 100%;
     margin-bottom: 30px;
     .card{
         height: 100%;
