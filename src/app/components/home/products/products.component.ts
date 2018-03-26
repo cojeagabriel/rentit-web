@@ -26,10 +26,8 @@ export class ProductsComponent implements OnInit, AfterViewInit {
         return Observable.throw(err);
       })
       .subscribe(products => {
-        console.log('sub');
         this.products = products;
       })
-      console.log('init');
   }
 
   ngAfterViewInit() {
@@ -40,6 +38,10 @@ export class ProductsComponent implements OnInit, AfterViewInit {
         pagination: {
           el: '.swiper-pagination',
           clickable: true,
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
         },
       });
     })

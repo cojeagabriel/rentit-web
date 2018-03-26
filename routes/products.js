@@ -36,6 +36,7 @@ router.post('/', (req, res, next) => {
         _ownerId: req.body._ownerId,
         category: req.body.category,
         description: req.body.description,
+        quantity: req.body.quantity,
         price: req.body.price,
         pricePer: req.body.pricePer
     });
@@ -57,6 +58,7 @@ router.put('/update/:id', (req, res, next) => {
         _ownerId: req.body._ownerId,
         category: req.body.category,
         description: req.body.description,
+        quantity: req.body.quantity,
         price: req.body.price,
         pricePer: req.body.pricePer
     }, (err, product) => {

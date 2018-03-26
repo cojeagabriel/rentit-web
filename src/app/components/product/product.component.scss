@@ -36,93 +36,39 @@ section{
 
 .product-info{
     .product-info-wrapper{
-        >p{
+        >p, .product-info-group > p{
+            color: #aaa;
             margin: 0;
-            color: #9d9d9d;
+            display: flex;
+            align-items: center;
+            span{
+                color: #333;
+                &.available{
+                    color: white;
+                    font-size: 0.8em;
+                    background-color: $primary;
+                    border-radius: 50px;
+                    display: inline-block;
+                    padding: 3px 10px;
+                }
+            }
         }
-        .title{
-            margin-top: 15px;
-            margin-bottom: 15px;
+
+        .product-info-group{
+            display: flex;
+            justify-content: space-between;
+            
         }
-        >div{
-            margin-top: 15px;
-            width: 100%;
-            flex-direction: row;
-            >div{
-                width: 100%;
-            }
-            .location{
-                iframe{
-                    width: 100%;
-                    height: 70px;
-                    margin-bottom: -6px;
-                }
-            }
-            .date-wrapper{
-                height: 70px;
-                @include gradient;
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                align-items: center;
-                color: rgba($color: white, $alpha: 0.5);
-                .date-pick{
-                    display: flex;
-                    flex-direction: column;
-                    height: 100%;
-                    align-items: center;
-                    justify-content: center;
-                    flex-grow: 1;
-                    transition: all 100ms ease-in-out;
-                    color: inherit;
-                    &:hover{
-                        background-color: $primary-dark;
-                    }
-                    .month{
-                        font-weight: 600;
-                        color: white;
-                    }
-                }
-                fa{
-                    padding: 0 30px;
-                }
-            }
-            .price-wrapper{
-                height: 70px;
-                padding: 0 15px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                border-right: solid 1px #ddd;
-                border-left: solid 1px #ddd;
-                >div{
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                }
-                .total{
-                    .price{
-                        color: $orange;
-                        font-size: 24px;
-                        font-weight: 700;
-                    }
-                }
-            }
-            >button{
-                width: 100%;
-                height: 40px;
-                background-color: $secondary;
-                border: solid 1px $secondary-middle;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition: all 100ms ease-in-out;
-                &:hover{
-                    background-color: $secondary;
-                    border-color: $secondary-dark;
-                }
-            }
+
+        .price{
+            color: $orange !important;
+            font-size: 24px;
+            font-weight: 700;
+            margin-right: 7px;
+        }
+
+        .price-per{
+            color: #999;
         }
     }
 }

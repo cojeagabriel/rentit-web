@@ -35,11 +35,12 @@ export class EditProductComponent implements OnInit {
 
   createForm() {
     return this.formBuilder.group({
-      title: this.formBuilder.control('', Validators.required),
+      title: this.formBuilder.control('', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])),
       _ownerId: '',
-      description: this.formBuilder.control('', Validators.required),
+      description: this.formBuilder.control('', Validators.compose([Validators.required, Validators.maxLength(50)])),
       category: this.formBuilder.control('', Validators.required),
-      price: this.formBuilder.control('', Validators.required),
+      quantity: this.formBuilder.control('', Validators.compose([Validators.required, Validators.min(1), Validators.max(100)])),
+      price: this.formBuilder.control('', Validators.compose([Validators.required, Validators.min(0.001), Validators.max(100000000)])),
       pricePer: this.formBuilder.control('', Validators.required)
     });
   }
@@ -53,6 +54,7 @@ export class EditProductComponent implements OnInit {
           _ownerId: this.product._ownerId,
           description: this.product.description,
           category: this.product.category,
+          quantity: this.product.quantity,
           price: this.product.price,
           pricePer: this.product.pricePer
         })
@@ -71,5 +73,21 @@ export class EditProductComponent implements OnInit {
         });
     }
   }
+
+  quantityPlus(): void {
+    if (this.form.get('quantity').value <= 100) {
+      this.form.patchValue({
+        quantity: this.form.get('quantity').value + 1
+      });
+    }
+  }
+  quantityMinus(): void {
+    if (this.form.get('quantity').value > 1) {
+      this.form.patchValue({
+        quantity: this.form.get('quantity').value - 1
+      });
+    }
+  }
+
 
 }
