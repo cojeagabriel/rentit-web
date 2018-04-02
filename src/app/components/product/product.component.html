@@ -20,10 +20,52 @@
                   <span class="price-per">/{{ (product)?.pricePer }}</span>
                 </p>
               </div>
-              <div class="rent-wrapper">
-                <p>ngModel property sets two-way data binding in this example</p>
-                <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [(ngModel)]="bsRangeValue">
+              <div class="rent-wrapper card">
+                <span class="field-name">Period</span>
+                <ngb-datepicker #dp ngModel (ngModelChange)="onDateChange($event)" [displayMonths]="2" [dayTemplate]="t" [markDisabled]="isDisabled">
+                </ngb-datepicker>
+                
+                <ng-template #t let-date="date" let-focused="focused">
+                  <span class="custom-day" [class.focused]="focused" [class.range]="isFrom(date) || isTo(date) || isInside(date) || isHovered(date)"
+                    [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">
+                    {{ date.day }}
+                  </span>
+                </ng-template>
+                <div class="period-wrapper">
+                  <div>
+                    <span class="field-name">From</span>
+                    <input class="form-control" placeholder="yyyy-mm-dd" name="start-date" [(ngModel)]="fromDate" ngbDatepicker [markDisabled]="isDisabled"
+                      #d="ngbDatepicker">
+                  </div>
+                  
+                  <fa name="angle-double-right"></fa>
+                  <div>
+                    <span class="field-name">To</span>
+                    <input class="form-control" placeholder="yyyy-mm-dd" name="end-date" [(ngModel)]="toDate" ngbDatepicker [markDisabled]="isDisabled"
+                      #d="ngbDatepicker">
+                  </div>
+                  <div>
+                    <span class="field-name">Todal {{ (product)?.pricePer}}s</span>
+                    <input class="form-control" type="number" [(ngModel)]="count">
+                  </div>
+                </div>
+                <div class="rent-wrapper__segment">
+                  <div>
+                    <span class="field-name">Quantity</span>
+                    <div class="quantity-wrapper">
+                      <span (click)="quantityMinus()">-</span>
+                      <input type="number" value="1" min="1" max="100" [(ngModel)]="quantity">
+                      <span (click)="quantityPlus()">+</span>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="field-name total">Total</span>
+                    <span *ngIf="count>=0" class="price">{{ (product)?.price*count*quantity }}€</span>
+                  </div>
+                </div>
+                <button class="button">Rent it!</button>
               </div>
+              <!-- <button class="button">Rent it!</button> -->
             </div>
           </div>
           <div class="col-12 description">

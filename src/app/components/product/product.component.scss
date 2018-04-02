@@ -36,6 +36,8 @@ section{
 
 .product-info{
     .product-info-wrapper{
+        display: flex;
+        flex-direction: column;
         >p, .product-info-group > p{
             color: #aaa;
             margin: 0;
@@ -70,5 +72,128 @@ section{
         .price-per{
             color: #999;
         }
+        .period-wrapper{
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            fa{
+                padding: 0 15px;
+                font-size: 2em;
+                color: $primary;
+                max-height: 40px;
+                display: flex;
+                align-items: center;
+                padding-top: 21px;
+            }
+            >div:last-child{
+                margin-left: 30px;
+                max-width: 90px;
+            }
+            .form-control[type="number"]{
+                text-align: center;
+            }
+        }
+
+        .rent-wrapper{
+            margin-top: 7px;
+            box-sizing: border-box;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .rent-wrapper__segment{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-bottom: 7px;
+        }
+    }
+}
+
+.field-name{
+    font-size: .8em;
+    margin-bottom: 5px;
+    color: #aaa;
+    display: flex;
+    &.total{
+        box-sizing: border-box;
+        padding-right: 15px;
+        justify-content: flex-end;
+    }
+}
+
+.custom-day {
+    text-align: center;
+    padding: 0.185rem 0.25rem;
+    display: inline-block;
+    height: 2rem;
+    width: 2rem;
+}
+.custom-day.focused {
+    background-color: #e6e6e6;
+}
+.custom-day.range, .custom-day:hover {
+    background-color: $primary;
+    color: white;
+}
+.custom-day.faded {
+    background-color: rgba($color: $primary, $alpha: 0.5);
+}
+
+ngb-datepicker{
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.quantity-wrapper{
+    display: flex;
+
+    span{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        width: 40px;
+        min-height: 100%;
+        background-color: #f8f8f8;
+        border: solid 1px #ddd;
+        transition: all 100ms ease-in-out;
+        user-select: none;
+        &:hover{
+            background-color: $secondary;
+            border-color: $secondary-middle;
+        }
+        &:first-child{
+            border-right: 0;
+        }
+        &:last-child{
+            border-left: 0;
+        }
+    }
+    input{
+        margin: 0;
+        border-radius: 0;
+        border-color: #ddd;
+    }
+    input[type='number']{
+        align-self: flex-start;
+        text-align: center;
+    }
+}
+
+.button{
+    height: 40px;
+    padding: 3px 15px;
+    border-radius: 2px;
+    background-color: $secondary;
+    border: solid 1px $secondary-middle;
+    display: flex;
+    align-items: center;
+    align-self: flex-end;
+    justify-content: center;
+    transition: all 100ms ease-in-out;
+    &:hover{
+        background-color: $secondary;
+        border-color: $secondary-dark;
     }
 }

@@ -6,6 +6,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal'
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CollapseModule} from 'ngx-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 import { AppComponent } from './app.component';
@@ -75,7 +76,8 @@ import { EditProductComponent } from './components/dashboard/edit-product/edit-p
     ]),
     AngularFontAwesomeModule,
     BrowserAnimationsModule,
-    MatSidenavModule
+    MatSidenavModule,
+    NgbModule.forRoot()
   ],
   providers: [
     AuthService,

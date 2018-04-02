@@ -135,3 +135,26 @@ md-sidenav.md-closed-remove {
 .tab-space{
     padding-right: 2em;
 }
+
+ngb-datepicker:focus,ngb-datepicker:active{
+    outline: inherit !important;
+    box-shadow: none !important;
+}
+
+.ngb-dp-day.disabled{
+    color: #ddd;
+}
+
+ngb-datepicker{
+    .ngb-dp-month{
+        width: 50%;
+        >.d-block{
+            display: flex;
+            justify-content: center;
+            >div{
+                display: flex;
+                justify-content: center;
+            }
+        }
+    }
+}
