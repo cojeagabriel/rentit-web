@@ -4,9 +4,9 @@
     <a routerLink="./" class="dashboard-link"><fa name="tachometer"></fa>Dashboard</a>
     <!-- <button class="sidenav-toggle" (click)="sidenav.toggle()">Toggle</button> -->
     <fa name="bars" class="sidenav-toggle" (click)="sidenav.toggle()"></fa>
-    <div class="links-wrapper">
-      <a routerLink="my-products">
-        <fa name="archive"></fa>My products</a>
+    <div class="links-wrapper d-flex flex-column">
+      <a routerLink="my-products"><fa name="archive"></fa>Products</a>
+      <a routerLink="my-orders"><fa name="inbox"></fa>Orders</a>
     </div>
     <!-- <span class="separator"></span> -->
   </mat-sidenav>

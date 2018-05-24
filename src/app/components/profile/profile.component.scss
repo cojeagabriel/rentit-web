@@ -1,14 +1,13 @@
 @import '~assets/scss/variables.scss';
 
 section{
-    background-image: url('../../../assets/img/background2.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+    // background-image: url('../../../assets/img/background2.png');
+    // background-repeat: no-repeat;
+    // background-position: center;
+    // background-size: cover;
     box-sizing: border-box;
     padding: 60px 0;
     color: $neutral-gray-light;
-    margin-bottom: 30px;
     .container{
         .row{
             .profile-picture{
@@ -47,4 +46,8 @@ section{
             }
         }
     }
+}
+
+main{
+    padding-top: 30px;
 }

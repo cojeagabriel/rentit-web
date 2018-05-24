@@ -1,0 +1,95 @@
+<form (ngSubmit)="sendOrder()" [formGroup]="form" id="ngForm" #formTest="ngForm" novalidate class="container">
+  <div class="row">
+    <div class="col-5 rent-modal--rent-box box-30 d-flex flex-column">
+      <h5 class="text-center mb-15">Your order</h5>
+      <div class="w-100 d-flex align-items-center justify-content-center order-date box-15">
+        <div class="d-flex align-items-center w-100">
+
+          <div class="d-flex flex-column align-items-center w-100">
+            <input class="form-control date-input" name="start-date" [ngModel]="fromDate" [ngModelOptions]="{standalone: true}" ngbDatepicker disabled>
+            <div class="time">
+              <ngb-timepicker [ngModel]="fromTime" name="start-time" [seconds]="false" [spinners]="false" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
+            </div>
+          </div>
+
+          <fa class="text-white" name="angle-double-right"></fa>
+
+          <div class="d-flex flex-column justify-center align-items-center w-100">
+            <input class="form-control date-input" name="end-date" [ngModel]="toDate" [ngModelOptions]="{standalone: true}" ngbDatepicker disabled>
+            <div class="time">
+              <ngb-timepicker [ngModel]="toTime" name="end-time" [seconds]="false" [spinners]="false" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="product-info card d-flex flex-row align-items-center">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <div class="product-img">
+            <img src="assets/img/item1.jpg">
+          </div>
+          <h5 class="name">{{ (product)?.title }}</h5>
+        </div>
+        <span class="quantity mr-15">x{{ order.quantity }}</span>
+      </div>
+      <div class="d-flex align-self-end align-items-center">
+        <span class="field-name total mr-15">Total</span>
+        <span class="price">{{ (product)?.price*count*order.quantity }}€</span>
+      </div>
+    </div>
+    <div class="col-7 personal-info-box box-30 mt-15">
+      <div class="d-flex mb-15">
+        <div class="d-flex flex-column mr-15 w-100">
+          <label>First name</label>
+          <input type="firstName" value="{{ (user)?.firstName }}" disabled>
+        </div>
+        <div class="d-flex flex-column w-100">
+          <label>Last name</label>
+          <input type="lastName" value="{{ (user)?.lastName }}" disabled>
+        </div>
+      </div>
+      <div class="d-flex mb-15">
+        <div class="d-flex flex-column mr-15 w-100">
+          <label>Email</label>
+          <input type="email" value="{{ (user)?.email }}" disabled>
+        </div>
+        <div class="d-flex flex-column w-100">
+          <label>Telephone</label>
+          <input type="telephone" value="0{{ (user)?.telephone }}" disabled>
+        </div>
+      </div>
+      <div class="d-flex flex-column mb-15">
+        <label  [ngClass]="{'text-danger':(formTest.submitted && !form.controls['address'].valid), 'text-success':(formTest.submitted &&
+        form.controls['address'].valid)}">Address</label>
+        <input type="address" formControlName="address" [ngClass]="{'has-error':(formTest.submitted && !form.controls['address'].valid), 'has-success':(formTest.submitted && form.controls['address'].valid)}">
+      </div>
+      <div class="d-flex mb-15">
+        <div class="d-flex flex-column mr-15 w-100">
+          <label>City</label>
+          <select formControlName="city">
+            <option value="Localitate" disabled></option>
+            <option value="Bucuresti">Bucuresti</option>
+            <option value="Brasov">Brasov</option>
+            <option value="Cluj">Cluj</option>
+          </select>
+        </div>
+        <div class="d-flex flex-column w-100 mr-15">
+          <label>Region</label>
+          <input type="region" formControlName="region">
+        </div>
+        <div class="d-flex flex-column w-100">
+          <label>ZIP</label>
+          <input type="number" formControlName="zip">
+        </div>
+      </div>
+      <!-- <div class="d-flex flex-column w-100">
+        <label>Leave a message</label>
+        <textarea formControlName="message"></textarea>
+      </div> -->
+      <div class="d-flex justify-content-center mb-15">
+        <button type="submit" class="button" form="ngForm">
+          <fa name="order"></fa>Send order</button>
+      </div>
+    </div>
+  </div>
+</form>

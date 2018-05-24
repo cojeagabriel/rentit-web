@@ -37,9 +37,10 @@ export class EditProductComponent implements OnInit {
     return this.formBuilder.group({
       title: this.formBuilder.control('', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])),
       _ownerId: '',
-      description: this.formBuilder.control('', Validators.compose([Validators.required, Validators.maxLength(50)])),
+      description: this.formBuilder.control('', Validators.compose([Validators.required, Validators.maxLength(10000)])),
       category: this.formBuilder.control('', Validators.required),
       quantity: this.formBuilder.control('', Validators.compose([Validators.required, Validators.min(1), Validators.max(100)])),
+      available: 0,
       price: this.formBuilder.control('', Validators.compose([Validators.required, Validators.min(0.001), Validators.max(100000000)])),
       pricePer: this.formBuilder.control('', Validators.required)
     });
@@ -55,6 +56,7 @@ export class EditProductComponent implements OnInit {
           description: this.product.description,
           category: this.product.category,
           quantity: this.product.quantity,
+          available: this.product.available,
           price: this.product.price,
           pricePer: this.product.pricePer
         })
@@ -62,6 +64,9 @@ export class EditProductComponent implements OnInit {
   }
 
   update(): void {
+    this.form.patchValue({
+      available: this.form.get('quantity').value
+    });
     if (this.form.valid) {
       this.productService.update(this.form.value,this.activatedRoute.snapshot.params.id)
         .catch(err => {

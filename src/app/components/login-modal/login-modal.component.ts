@@ -47,7 +47,7 @@ export class LoginModalComponent implements OnInit {
           return Observable.throw(new Error(`${err.status} ${err.msg}`));
         })
         .subscribe(() => {
-          console.log("Login success");
+          // console.log("Login success");
           this.bsModalRef.hide();
         });
     }

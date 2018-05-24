@@ -15,6 +15,10 @@ var port = process.env.PORT || 8080; // used to create, sign, and verify tokens
 mongoose.connect(config.database); // connect to database
 app.set('superSecret', config.secret); // secret variable
 
+autoIncrement = require('mongoose-auto-increment');
+var connection = mongoose.createConnection(config.database);
+autoIncrement.initialize(connection);
+
 // use body parser so we can get info from POST and/or URL parameters
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -32,6 +36,9 @@ app.use('/api/users', users);
 
 const products = require('./routes/products');
 app.use('/api/products', products);
+
+const orders = require('./routes/orders');
+app.use('/api/orders', orders);
 
 
 // Send all other requests to the Angular app

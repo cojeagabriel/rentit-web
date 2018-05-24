@@ -119,19 +119,22 @@ section{
 .swiper-button-prev, 
 .swiper-container-rtl .swiper-button-next{
     background-image: none;
+    svg{
+        fill: $primary !important;
+    }
 }
 
 .swiper-button-next{
 margin-top: 0px;
 position: absolute;
 top: 50%;
-right: -30px;
+right: -15px;
 transform: translateY(-80%);
 }
 .swiper-button-prev{
   position: absolute;
   top: 50%;
-  left: -30px;
+  left: -15px;
   transform: translateY(-80%);
   margin-top: 0px;
 }

@@ -67,7 +67,6 @@ export class EditProfileComponent implements OnInit {
             telephone: ''
           });
         }
-        console.log(this.user);
       });
   }
 

@@ -40,9 +40,10 @@ export class NewProductComponent implements OnInit {
     return this.formBuilder.group({
       title: this.formBuilder.control('', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])),
       _ownerId: '',
-      description: this.formBuilder.control('', Validators.compose([Validators.required, Validators.maxLength(50)])),
+      description: this.formBuilder.control('', Validators.compose([Validators.required, Validators.maxLength(10000)])),
       category: this.formBuilder.control('', Validators.required),
       quantity: this.formBuilder.control('', Validators.compose([Validators.required, Validators.min(1), Validators.max(100)])),
+      available: 0,
       price: this.formBuilder.control('', Validators.compose([Validators.required, Validators.min(0.001), Validators.max(100000000)])),
       pricePer: this.formBuilder.control('', Validators.required)
     });
@@ -62,7 +63,9 @@ export class NewProductComponent implements OnInit {
   }
 
   create(): void{
-    console.log(this.form.value);
+    this.form.patchValue({
+      available: this.form.get('quantity').value
+    });
     if (this.form.valid) {
       this.productService.create(this.form.value)
         .catch(err => {

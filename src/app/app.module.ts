@@ -1,3 +1,5 @@
+import { MyOrdersComponent } from './components/dashboard/my-orders/my-orders.component';
+import { OrderService } from './services/order.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -32,6 +34,8 @@ import { ProductService } from './services/product.service';
 import { ProductComponent } from './components/product/product.component';
 import { MyProductsComponent } from './components/dashboard/my-products/my-products.component';
 import { EditProductComponent } from './components/dashboard/edit-product/edit-product.component';
+import { RentModalComponent } from './components/product/rent-modal/rent-modal.component';
+import { OrderComponent } from './components/order/order.component';
 
 
 @NgModule({
@@ -50,7 +54,10 @@ import { EditProductComponent } from './components/dashboard/edit-product/edit-p
     ProductsComponent,
     ProductComponent,
     MyProductsComponent,
-    EditProductComponent
+    EditProductComponent,
+    RentModalComponent,
+    MyOrdersComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,
@@ -72,6 +79,8 @@ import { EditProductComponent } from './components/dashboard/edit-product/edit-p
           { path: 'new-product', component: NewProductComponent},
           { path: 'my-products', component: MyProductsComponent},
           { path: 'my-products/:id', component: EditProductComponent},
+          { path: 'my-orders', component: MyOrdersComponent},
+          { path: 'my-orders/:id', component: OrderComponent},
       ]}
     ]),
     AngularFontAwesomeModule,
@@ -88,12 +97,14 @@ import { EditProductComponent } from './components/dashboard/edit-product/edit-p
       useClass: AuthInterceptor,
       multi: true
     },
-    ProductService
+    ProductService,
+    OrderService
   ],
   entryComponents: [
     LoginModalComponent,
     RegisterModalComponent,
-    DeleteModalComponent
+    DeleteModalComponent,
+    RentModalComponent
   ],
   bootstrap: [AppComponent]
 })

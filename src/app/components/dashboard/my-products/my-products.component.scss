@@ -48,7 +48,7 @@ h4 {
             margin-left: 70px;
         }
         &:last-child{
-            margin-right: 70px;
+            margin-right: 80px;
         }
     }
 }
@@ -58,7 +58,7 @@ h4 {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    height: 70px;
+    height: 80px;
     &:not(:last-child){
         border-bottom: solid 1px #eee;
     }
@@ -68,8 +68,9 @@ h4 {
     }
     .img{
         display: flex;
-        height: 100%;
-        width: 70px !important;
+        height: 50px;
+        width: 50px;
+        margin-left: 15px;
         background-image: url('../../../../assets/img/item1.jpg');
         background-size: cover;
         background-position: center;
@@ -83,7 +84,7 @@ h4 {
     }
 
     .actions{
-        width: 70px;
+        width: 80px;
         height: 100%;
         border-left: solid 1px #eee;
         margin-left: 15px;

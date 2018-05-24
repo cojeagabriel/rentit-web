@@ -1,6 +1,15 @@
 @import '~assets/scss/variables.scss';
 
+main{
+    margin-top: 245px;
+    position: relative;
+}
+
 section{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -245px;
     padding: 30px 0;
 }
 
@@ -38,6 +47,9 @@ section{
     .product-info-wrapper{
         display: flex;
         flex-direction: column;
+        .title{
+            margin-bottom: 15px;
+        }
         >p, .product-info-group > p{
             color: #aaa;
             margin: 0;
@@ -78,24 +90,20 @@ section{
             margin-bottom: 15px;
             fa{
                 padding: 0 15px;
-                font-size: 2em;
+                font-size: 1.2em;
                 color: $primary;
                 max-height: 40px;
                 display: flex;
                 align-items: center;
-                padding-top: 21px;
+                padding-top: 23px;
             }
-            >div:last-child{
-                margin-left: 30px;
-                max-width: 90px;
-            }
-            .form-control[type="number"]{
-                text-align: center;
+            ngb-timepicker{
+                margin-left: 5px;
             }
         }
 
         .rent-wrapper{
-            margin-top: 7px;
+            margin-top: 15px;
             box-sizing: border-box;
             padding: 15px;
             margin-bottom: 15px;
@@ -106,6 +114,10 @@ section{
             flex-direction: row;
             justify-content: space-between;
             margin-bottom: 7px;
+            .form-control[type="number"]{
+                max-width: 70px;
+                text-align: center;
+            }
         }
     }
 }
@@ -137,7 +149,7 @@ section{
     color: white;
 }
 .custom-day.faded {
-    background-color: rgba($color: $primary, $alpha: 0.5);
+    background-color: rgba($color: $primary, $alpha: 0.7);
 }
 
 ngb-datepicker{

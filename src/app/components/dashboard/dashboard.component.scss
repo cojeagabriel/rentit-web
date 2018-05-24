@@ -23,7 +23,7 @@
 }
 
 .sidenav{
-    @include gradient;
+    @include gradient-dashboard;
     box-sizing: border-box;
     padding-top: 50px;
     width: 200px;
@@ -49,18 +49,24 @@
 
     a{
         font-weight: 300;
-        font-size: 12px;
+        // font-size: 12px;
         fa{
-            margin-right: 15px;
+            display: inline-block;
+            width: 30px;
         }
     }
 
     .links-wrapper{
         width: 100%;
         box-sizing: border-box;
-        padding: 30px;
+        padding-top: 30px;
         a{
-            color: white;
+            padding: 0px 30px;
+            color: rgba($color: white, $alpha: 0.7);
+            transition: all 100ms ease-in-out;
+            &:hover{
+                color: white;
+            }
         }
     }
 

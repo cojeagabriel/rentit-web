@@ -27,6 +27,10 @@ module.exports = mongoose.model('Product', new Schema({
         type: Number,
         required: true
     },
+    available: {
+        type: Number,
+        required: true
+    },
     price: {
         type: Number,
         required: true

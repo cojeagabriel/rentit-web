@@ -1,3 +1,5 @@
+<main>
+
 <section>
   <div class="container">
     <div class="row">
@@ -13,7 +15,7 @@
               <p>Location: &nbsp;<span>Bucharest</span></p>
               <div class="product-info-group">
                 <p>Available: &nbsp;
-                  <span class="available">{{ (product)?.quantity }} available</span>
+                  <span class="available">{{ (product)?.available }} available</span>
                 </p>
                 <p>Price: &nbsp;
                   <span class="price">{{ (product)?.price }}€</span>
@@ -34,28 +36,36 @@
                 <div class="period-wrapper">
                   <div>
                     <span class="field-name">From</span>
-                    <input class="form-control" placeholder="yyyy-mm-dd" name="start-date" [(ngModel)]="fromDate" ngbDatepicker [markDisabled]="isDisabled"
-                      #d="ngbDatepicker">
+                    <div class="d-flex align-items-center">
+                      <input class="form-control" placeholder="yyyy-mm-dd" name="start-date" [(ngModel)]="fromDate" ngbDatepicker [markDisabled]="isDisabled"
+                        #d="ngbDatepicker">
+                      <ngb-timepicker [(ngModel)]="fromTime" [seconds]="false" [hourStep]="hourStep" [minuteStep]="minuteStep" [spinners]="false"></ngb-timepicker>
+                    </div>
                   </div>
                   
                   <fa name="angle-double-right"></fa>
                   <div>
                     <span class="field-name">To</span>
-                    <input class="form-control" placeholder="yyyy-mm-dd" name="end-date" [(ngModel)]="toDate" ngbDatepicker [markDisabled]="isDisabled"
-                      #d="ngbDatepicker">
-                  </div>
-                  <div>
-                    <span class="field-name">Todal {{ (product)?.pricePer}}s</span>
-                    <input class="form-control" type="number" [(ngModel)]="count">
+                    <div class="d-flex align-items-center">
+                      <input class="form-control" placeholder="yyyy-mm-dd" name="end-date" [(ngModel)]="toDate" ngbDatepicker [markDisabled]="isDisabled"
+                        #d="ngbDatepicker">
+                      <ngb-timepicker [(ngModel)]="toTime" [seconds]="false" [hourStep]="hourStep" [minuteStep]="minuteStep" [spinners]="false"></ngb-timepicker>
+                    </div>
                   </div>
                 </div>
                 <div class="rent-wrapper__segment">
-                  <div>
-                    <span class="field-name">Quantity</span>
-                    <div class="quantity-wrapper">
-                      <span (click)="quantityMinus()">-</span>
-                      <input type="number" value="1" min="1" max="100" [(ngModel)]="quantity">
-                      <span (click)="quantityPlus()">+</span>
+                  <div class="d-flex">
+                    <div class="align-self-start mr-15">
+                      <span class="field-name">Todal {{ (product)?.pricePer}}s</span>
+                      <input class="form-control" type="number" [(ngModel)]="count" disabled>
+                    </div>
+                    <div>
+                      <span class="field-name">Quantity</span>
+                      <div class="quantity-wrapper">
+                        <span (click)="quantityMinus()">-</span>
+                        <input type="number" value="1" min="1" max="100" [(ngModel)]="quantity">
+                        <span (click)="quantityPlus()">+</span>
+                      </div>
                     </div>
                   </div>
                   <div>
@@ -63,7 +73,7 @@
                     <span *ngIf="count>=0" class="price">{{ (product)?.price*count*quantity }}€</span>
                   </div>
                 </div>
-                <button class="button">Rent it!</button>
+                <button class="button" (click)="showRentModal()">Rent it!</button>
               </div>
               <!-- <button class="button">Rent it!</button> -->
             </div>
@@ -77,3 +87,5 @@
     </div>
   </div>
 </section>
+
+</main>
