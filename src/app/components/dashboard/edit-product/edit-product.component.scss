@@ -127,6 +127,16 @@ h4 {
     }
 }
 
+.button{
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: solid 1px $secondary;
+    border-radius: 2px;
+}
+
 .button-save{
     height: 40px;
     padding: 3px 15px;

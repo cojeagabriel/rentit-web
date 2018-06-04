@@ -59,7 +59,7 @@
         </div>
       </div>
       <div class="d-flex flex-column mb-15">
-        <label  [ngClass]="{'text-danger':(formTest.submitted && !form.controls['address'].valid), 'text-success':(formTest.submitted &&
+        <label [ngClass]="{'text-danger':(formTest.submitted && !form.controls['address'].valid), 'text-success':(formTest.submitted &&
         form.controls['address'].valid)}">Address</label>
         <input type="address" formControlName="address" [ngClass]="{'has-error':(formTest.submitted && !form.controls['address'].valid), 'has-success':(formTest.submitted && form.controls['address'].valid)}">
       </div>

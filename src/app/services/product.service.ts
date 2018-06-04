@@ -17,6 +17,10 @@ export class ProductService {
     return this.http.put(`${environment.apiUrl}/api/products/update/${id}`, product);
   }
 
+  delete(product: Product): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/api/products/delete`, product);
+  }
+
   getProducts(): Observable<Product[]>{
     return this.http.get<Product[]>(`${environment.apiUrl}/api/products`);
   }

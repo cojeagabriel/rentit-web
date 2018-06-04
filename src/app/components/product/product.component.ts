@@ -93,10 +93,10 @@ export class ProductComponent implements OnInit {
     this.quantity = 1;
   }
 
-  isDisabled(date: NgbDateStruct) {
-    const d = new Date(date.year, date.month - 1, date.day);
-    return d.getDay() === 0 || d.getDay() === 6;
-  }
+  // isDisabled(date: NgbDateStruct) {
+  //   const d = new Date(date.year, date.month - 1, date.day);
+  //   return d.getDay() === 0 || d.getDay() === 6;
+  // }
 
   ngOnInit() {
     this.product$ = this.activatedRoute.params.pipe(

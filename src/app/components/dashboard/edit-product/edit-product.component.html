@@ -64,8 +64,15 @@
                 <small *ngIf="formTest.submitted && form.controls['pricePer'].hasError('required')" class="text-danger">This field is mandatory</small>
               </div>
             </div>
-            <button type="submit" class="button-save" form="ngForm">
-              <fa name="save"></fa>Save product</button>
+            <div class="align-self-end d-flex">
+              <button type="button" class="button mr-15" mwlConfirmationPopover [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage" placement="top"
+                (confirm)="deleteProduct()" (cancel)="cancelClicked = true" (click)="confirmClicked = false; cancelClicked = false">
+                <fa name="trash"></fa>
+              </button>
+              <button type="submit" class="button-save" form="ngForm">
+                <fa name="save"></fa>Save product</button>
+            </div>
+            
           </form>
           <div *ngIf="errors" class="alert alert-danger">
             {{ errors }}

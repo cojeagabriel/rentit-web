@@ -36,7 +36,7 @@ import { MyProductsComponent } from './components/dashboard/my-products/my-produ
 import { EditProductComponent } from './components/dashboard/edit-product/edit-product.component';
 import { RentModalComponent } from './components/product/rent-modal/rent-modal.component';
 import { OrderComponent } from './components/order/order.component';
-
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 
 @NgModule({
   declarations: [
@@ -86,7 +86,10 @@ import { OrderComponent } from './components/order/order.component';
     AngularFontAwesomeModule,
     BrowserAnimationsModule,
     MatSidenavModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    ConfirmationPopoverModule.forRoot({
+      confirmButtonType: 'danger'
+    })
   ],
   providers: [
     AuthService,

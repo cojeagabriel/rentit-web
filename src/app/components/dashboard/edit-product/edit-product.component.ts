@@ -14,6 +14,10 @@ import { Observable } from 'rxjs/Observable';
 })
 export class EditProductComponent implements OnInit {
 
+  popoverMessage: string = 'Are you sure you want to delete this product?';
+  confirmClicked: boolean = false;
+  cancelClicked: boolean = false;
+
   form: FormGroup;
   product: Product;
   errors: string;
@@ -86,12 +90,23 @@ export class EditProductComponent implements OnInit {
       });
     }
   }
+  
   quantityMinus(): void {
     if (this.form.get('quantity').value > 1) {
       this.form.patchValue({
         quantity: this.form.get('quantity').value - 1
       });
     }
+  }
+
+  deleteProduct(): void {
+    this.productService.delete(this.product)
+      .catch(err => {
+        return Observable.throw(err);
+      })
+      .subscribe(res => {
+        this.router.navigate(['/dashboard/my-products']);
+      });
   }
 
 

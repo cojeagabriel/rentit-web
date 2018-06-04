@@ -74,4 +74,21 @@ router.put('/update/:id', (req, res, next) => {
 });
 
 
+// Delete
+
+router.post('/delete', (req, res) => {
+    Product.remove({ _id: req.body._id }, function (err) {
+        if (!err) {
+            res.json({
+                success: true,
+                message: 'Product deleted'
+            });
+        }
+        else {
+            res.status(403).send({ success: false, message: 'Could not delete product' });
+        }
+    });
+});
+
+
 module.exports = router;
