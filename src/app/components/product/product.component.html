@@ -15,7 +15,7 @@
               <p>Location: &nbsp;<span>Bucharest</span></p>
               <div class="product-info-group">
                 <p>Available: &nbsp;
-                  <span class="available">{{ (product)?.available }} available</span>
+                  <span class="available">{{ (product)?.quantity }} available</span>
                 </p>
                 <p>Price: &nbsp;
                   <span class="price">{{ (product)?.price }}€</span>
@@ -24,7 +24,7 @@
               </div>
               <div class="rent-wrapper card">
                 <span class="field-name">Period</span>
-                <ngb-datepicker #dp ngModel (ngModelChange)="onDateChange($event)" [displayMonths]="2" [dayTemplate]="t" [markDisabled]="isDisabled">
+                <ngb-datepicker #dp ngModel (ngModelChange)="onDateChange($event)" [displayMonths]="2" [dayTemplate]="t" [markDisabled]="isDisabled" (navigate)="onNavigateEvent($event)">
                 </ngb-datepicker>
                 
                 <ng-template #t let-date="date" let-focused="focused">
@@ -63,7 +63,7 @@
                       <span class="field-name">Quantity</span>
                       <div class="quantity-wrapper">
                         <span (click)="quantityMinus()">-</span>
-                        <input type="number" value="1" min="1" max="100" [(ngModel)]="quantity">
+                        <input type="number" value="1" min="1" max="100" [(ngModel)]="quantity" (ngModelChange)="doSomething($event)">
                         <span (click)="quantityPlus()">+</span>
                       </div>
                     </div>

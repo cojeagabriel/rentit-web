@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 var Order = require('../models/order');
+var Product = require('../models/product');
 
 var config = require('../config');
 var requireAuthenticated = require('../require-authenticated');
@@ -17,6 +18,15 @@ var requireAuthenticated = require('../require-authenticated');
 router.get('/owner:id', (req, res, next) => {
     Order.find({ _rentorId: req.params.id }, function (err, orders) {
         res.json(orders);
+    });
+});
+
+// Get all orders of an user based on product
+router.get('/product:id', (req, res, next) => {
+    Product.find({_id: req.params.id}, function (err, product){
+        Order.find({_rentorId: product[0]._ownerId, _productId: product[0].id}, function (err, orders) {
+            res.json(orders);
+        });
     });
 });
 

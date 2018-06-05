@@ -63,7 +63,7 @@ export class NewProductComponent implements OnInit {
   }
 
   create(): void{
-    this.form.patchValue({
+    this.form.setValue({
       available: this.form.get('quantity').value
     });
     if (this.form.valid) {

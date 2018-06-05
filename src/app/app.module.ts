@@ -37,6 +37,7 @@ import { EditProductComponent } from './components/dashboard/edit-product/edit-p
 import { RentModalComponent } from './components/product/rent-modal/rent-modal.component';
 import { OrderComponent } from './components/order/order.component';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
+import * as moment from 'moment';
 
 @NgModule({
   declarations: [

@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { UserService } from './../../services/user.service';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../types/product';
 import { switchMap } from 'rxjs/operators';
@@ -13,6 +13,10 @@ import { NgbDateStruct, NgbCalendar, NgbDatepickerConfig, NgbDateParserFormatter
 import { BsModalService } from 'ngx-bootstrap';
 import { RentModalComponent } from './rent-modal/rent-modal.component';
 import { Order } from '../../types/order';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-date';
+import { NavigationEvent } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker-view-model';
+import * as moment from 'moment';
+
 
 const equals = (one: NgbDateStruct, two: NgbDateStruct) =>
   one && two && two.year === one.year && two.month === one.month && two.day === one.day;
@@ -75,6 +79,12 @@ export class ProductComponent implements OnInit {
     status: null
   };
 
+  orders: Order[];
+  points: any;
+  intervals: any;
+  disabledDates = [
+    new Date(2017, 5, 13)];
+
   constructor(
     private modalService: BsModalService,
     private productService: ProductService,
@@ -88,17 +98,21 @@ export class ProductComponent implements OnInit {
   ) { 
     this.today = calendar.getToday();
     this.fromDate = calendar.getToday();
-    this.toDate = calendar.getNext(calendar.getToday(), 'd', 1);
+    this.fromDate.day -= 1;
+    this.toDate = calendar.getToday();
     config.minDate = { year: this.today.year, month: this.toDate.month, day: this.today.day-1 };
     this.quantity = 1;
   }
 
-  // isDisabled(date: NgbDateStruct) {
-  //   const d = new Date(date.year, date.month - 1, date.day);
-  //   return d.getDay() === 0 || d.getDay() === 6;
-  // }
+  isDisabled = (date: NgbDateStruct) => {
+    const d = new Date(date.year, date.month - 1, date.day);
+    var idx = this.disabledDates.map(Number).indexOf(+d);
+    return idx != -1;
+  }
+
 
   ngOnInit() {
+
     this.product$ = this.activatedRoute.params.pipe(
       switchMap(params => {
         return this.productService.getById(params.id)
@@ -113,6 +127,59 @@ export class ProductComponent implements OnInit {
         })
         .subscribe(user =>{
           this.user = user[0];
+
+          this.orderService.getOrdersByProductId(this.product._id)
+            .catch(err => {
+              return Observable.throw(new Error(`${err.status} ${err.msg}`));
+            })
+            .subscribe(orders => {
+              this.orders = orders;
+              let points = [];
+
+              this.orders.forEach(order => {
+                if (order.status == 'reserved' || order.status == 'started') {
+                  var t = new Date();
+                  t.setHours(0,0,0,0);
+                  var today = moment(t);
+                  var from = moment(new Date(order.fromDateYear, order.fromDateMonth-1, order.fromDateDay));
+                  var to = moment(new Date(order.toDateYear, order.toDateMonth-1, order.toDateDay));
+                  var c = from.diff(today, 'days');
+                  points.push({ node: c, count: order.quantity });
+                  var c = to.diff(today, 'days');
+                  points.push({ node: c, count: -order.quantity });
+                }
+              });
+
+              function compare(a, b) {
+
+                let comparison = 0;
+                if (a.node > b.node) {
+                  comparison = 1;
+                } else if (a.node < b.node) {
+                  comparison = -1;
+                }
+                return comparison;
+              }
+              points.sort(compare);
+              this.points = points;
+
+              var intervals = [];
+              var sum = 0;
+              for (var i = 0; i < points.length - 1; i++)
+                if (points[i].node == points[i + 1].node)
+                  sum += points[i].count;
+                else {
+                  sum += points[i].count;
+                  if (sum != 0) {
+                    intervals.push({ start: points[i].node, end: points[i + 1].node, count: sum })
+                  }
+                }
+
+              this.intervals = intervals;
+
+              this.calculateIntervals();
+              this.calculateIsDisabled();
+            });
         });
     });
 
@@ -120,6 +187,41 @@ export class ProductComponent implements OnInit {
       .subscribe(user => {
         this.me = user;
       });
+  }
+
+  calculateIntervals(): void{
+    this.intervals.forEach(interval => {
+      for (var i = interval.start; i <= interval.end; i++)
+        if (this.product.quantity - interval.count < this.quantity) {
+          var t = new Date();
+          t.setHours(0,0,0,0);
+          var myMoment = moment(t);
+          myMoment.add(i,'day');
+          this.disabledDates.push(myMoment.toDate());
+        }
+    });
+  }
+
+  calculateIsDisabled(): void{
+    this.isDisabled = (date: NgbDateStruct) => {
+      const d = new Date(date.year, date.month - 1, date.day);
+      var idx = this.disabledDates.map(Number).indexOf(+d);
+      return idx != -1;
+    }
+  }
+
+  onNavigateEvent(event: NavigationEvent) {
+
+    this.calculateIsDisabled();
+
+    switch (event) {
+      case NavigationEvent.PREV:
+        this._service.open(this._calendar.getPrev(this.model.firstDate, 'm', 1));
+        break;
+      case NavigationEvent.NEXT:
+        this._service.open(this._calendar.getNext(this.model.firstDate, 'm', 1));
+        break;
+    }
   }
 
   onDateChange(date: NgbDateStruct) {
@@ -154,16 +256,34 @@ export class ProductComponent implements OnInit {
   isFrom = date => equals(date, this.fromDate);
   isTo = date => equals(date, this.toDate);
 
+
+  doSomething(newValue){
+    if(newValue > this.product.quantity)
+      this.quantity = this.product.quantity;
+    if(parseInt(newValue) < 1)
+      this.quantity = 1;
+  }
+
   quantityPlus(): void {
-    if (this.quantity <= 100) {
+    if (this.quantity < this.product.quantity) {
         this.quantity= this.quantity + 1
     }
+
+    this.disabledDates = [];
+
+    this.calculateIntervals();
+    this.calculateIsDisabled();
   }
 
   quantityMinus(): void {
     if (this.quantity > 1) {
         this.quantity= this.quantity - 1
     }
+
+    this.disabledDates = [];
+
+    this.calculateIntervals();
+    this.calculateIsDisabled();
   }
 
   showRentModal() {
