@@ -84,6 +84,7 @@ export class ProductComponent implements OnInit {
   intervals: any;
   disabledDates = [
     new Date(2017, 5, 13)];
+  maxim: number;
 
   constructor(
     private modalService: BsModalService,
@@ -97,10 +98,10 @@ export class ProductComponent implements OnInit {
     private orderService: OrderService
   ) { 
     this.today = calendar.getToday();
-    this.fromDate = calendar.getToday();
-    this.fromDate.day -= 1;
-    this.toDate = calendar.getToday();
-    config.minDate = { year: this.today.year, month: this.toDate.month, day: this.today.day-1 };
+    // this.fromDate = calendar.getToday();
+    // this.fromDate.day -= 1;
+    // this.toDate = calendar.getToday();
+    config.minDate = { year: this.today.year, month: this.today.month, day: this.today.day };
     this.quantity = 1;
   }
 
@@ -158,24 +159,19 @@ export class ProductComponent implements OnInit {
                 } else if (a.node < b.node) {
                   comparison = -1;
                 }
+                else{
+                  if(a.count >= b.count)
+                    comparison = -1;
+                  else
+                    comparison = 1;
+                }
                 return comparison;
               }
+
               points.sort(compare);
               this.points = points;
 
-              var intervals = [];
-              var sum = 0;
-              for (var i = 0; i < points.length - 1; i++)
-                if (points[i].node == points[i + 1].node)
-                  sum += points[i].count;
-                else {
-                  sum += points[i].count;
-                  if (sum != 0) {
-                    intervals.push({ start: points[i].node, end: points[i + 1].node, count: sum })
-                  }
-                }
-
-              this.intervals = intervals;
+              this.buildIntervals();
 
               this.calculateIntervals();
               this.calculateIsDisabled();
@@ -187,6 +183,65 @@ export class ProductComponent implements OnInit {
       .subscribe(user => {
         this.me = user;
       });
+  }
+
+  buildIntervals(): void{
+    console.log(this.points);
+    var intervals = [];
+    var s = 0;
+    var last = {
+      node: 0,
+      count: 0
+    }
+    var i, j;
+    if(this.points.length)
+      last={node: this.points[0].node, count: this.points[0].count};
+    i=1;
+    while(i < this.points.length){
+      if(this.points[i].count > 0){
+        while (this.points[i].node == last.node && this.points[i].count > 0) {
+          last.count += this.points[i].count;
+          i++;
+        }
+        if (this.points[i].node == last.node) {
+          s=0;
+          while (this.points[i].node == last.node && this.points[i].count < 0) {
+            s += this.points[i].count;
+            i++;
+          }
+          intervals.push({ start: last.node, end: last.node, count: last.count });
+          last = {node: last.node+1, count: last.count+s};
+        }
+        else if (this.points[i].count > 0){
+          intervals.push({ start: last.node, end: this.points[i].node - 1, count: last.count });
+          last = { node: this.points[i].node, count: last.count};
+        }
+        else if (this.points[i].count < 0){
+          s = this.points[i].count;
+          i++;
+          while (i < this.points.length && this.points[i].node == this.points[i-1].node) {
+            s += this.points[i].count;
+            i++;
+          }
+          intervals.push({ start: last.node, end: this.points[i-1].node, count: last.count });
+          last = { node: this.points[i-1].node + 1, count: last.count + s};
+        }
+
+      }
+      else{
+        s = this.points[i].count;
+        i++;
+        while (i < this.points.length && this.points[i].node == this.points[i-1].node && this.points[i].count < 0) {
+          s += this.points[i].count;
+          i++;
+        }
+        intervals.push({ start: last.node, end: this.points[i-1].node, count: last.count });
+        last = { node: last.node + 1, count: last.count + s };
+      }
+      
+    }
+    this.intervals = intervals;
+    console.log(this.intervals);
   }
 
   calculateIntervals(): void{
@@ -210,6 +265,78 @@ export class ProductComponent implements OnInit {
     }
   }
 
+  calculateIntersection(from: NgbDateStruct, to: NgbDateStruct): boolean{
+    let parsedFrom = moment(this.ngbDateParserFormatter.format(from));
+    let parsedTo = moment(this.ngbDateParserFormatter.format(to));
+    let t = new Date();
+    t.setHours(0, 0, 0, 0);
+    let today = moment(t);
+    let node1 = parsedFrom.diff(today, 'days');
+    let node2 = parsedTo.diff(today, 'days');
+    this.maxim = 0;
+    let ok = true;
+    this.intervals.forEach(interval => {
+      if ((interval.start >= node1 && interval.start <= node2) || (interval.end >= node1 && interval.end <= node2))
+        if(interval.count > this.maxim)
+          this.maxim = interval.count;
+      if ((this.product.quantity - this.quantity < interval.count) && ((interval.start >= node1 && interval.start <= node2) || (interval.end >= node1 && interval.end <= node2)))
+        ok = false;
+    });
+    return ok;
+  }
+
+  revertFromDate(newValue) {
+    let parsedFrom = moment(this.ngbDateParserFormatter.format(this.fromDate));
+    let t = new Date();
+    t.setHours(0, 0, 0, 0);
+    let today = moment(t);
+    let c = parsedFrom.diff(today, 'days');
+    
+    if(c<0){
+      this.fromDate = null;
+    }
+    let ok = true;
+    this.intervals.forEach(interval => {
+      if ((this.product.quantity - this.quantity < interval.count) && (c >= interval.start && c <= interval.end))
+        ok = false;
+    });
+    if(!ok)
+      this.fromDate = null;
+  }
+
+  revertToDate(newValue) {
+    if(!this.fromDate){
+      this.toDate = null;
+    }
+    else{
+      let parsedFrom = moment(this.ngbDateParserFormatter.format(this.fromDate));
+      let parsedTo = moment(this.ngbDateParserFormatter.format(this.toDate));
+      let t = new Date();
+      t.setHours(0, 0, 0, 0);
+      let today = moment(t);
+      let c = parsedTo.diff(today, 'days');
+
+      if (c < 0) {
+        this.toDate = null;
+      }
+      if (parsedTo.diff(parsedFrom, 'days') < 0) {
+        this.toDate = this.fromDate;
+      }
+
+      let c2 = parsedFrom.diff(today, 'days');
+      console.log(c + " " + c2);
+      let ok = true;
+      this.intervals.forEach(interval => {
+        if ((this.product.quantity - this.quantity < interval.count) && (c >= interval.start && c <= interval.end))
+          ok = false;
+        if ((this.product.quantity - this.quantity < interval.count) && ((interval.start >= c2 && interval.start <= c) || (interval.end >= c2 && interval.end <= c)))
+          ok = false;
+      });
+      if (!ok)
+        this.toDate = null;
+    }
+  }
+
   onNavigateEvent(event: NavigationEvent) {
 
     this.calculateIsDisabled();
@@ -224,24 +351,58 @@ export class ProductComponent implements OnInit {
     }
   }
 
-  onDateChange(date: NgbDateStruct) {
+  onDateSelection(date: NgbDateStruct) {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
-    } else if (this.fromDate && !this.toDate && after(date, this.fromDate)) {
+    } else if (this.fromDate && !this.toDate && this.isAfterOrSame(date, this.fromDate)) {
       this.toDate = date;
+      if(this.calculateIntersection(this.fromDate, this.toDate)==false){
+        this.toDate = null;
+        this.fromDate = null;
+      }
     } else {
       this.toDate = null;
       this.fromDate = date;
     }
 
+    this.intervalIntersect();
     this.periodCount();
+  }
+
+  intervalIntersect(){
+    var t = new Date();
+    t.setHours(0, 0, 0, 0);
+    var today = moment(t);
+    var from = moment(new Date(this.from));
+    var to = moment(new Date(this.to));
+    var c = from.diff(today, 'days');
+  }
+
+  private isAfterOrSame(one: NgbDateStruct, two: NgbDateStruct) {
+    if (!one || !two) {
+      return false;
+    }
+
+    let parsedFrom = this.ngbDateParserFormatter.format(one);
+    let parsedTo = this.ngbDateParserFormatter.format(two);
+    if (moment(parsedFrom).isAfter(parsedTo) || moment(parsedFrom).isSame(parsedTo)) {
+      return true;
+    }
+
+    return false;
   }
 
   periodCount():void{
     this.from = new Date(this.ngbDateParserFormatter.format(this.fromDate));
     this.to = new Date(this.ngbDateParserFormatter.format(this.toDate));
     if(this.product.pricePer=='Day'){
-      this.count = (this.to.getTime() - this.from.getTime()) / this.one_day ;
+      var from = moment(this.from);
+      var to = moment(this.to);
+      var t = new Date();
+      t.setHours(0, 0, 0, 0);
+      var today = moment(t);
+      this.count = to.diff(from, 'days') + 1;
+      // this.count = (this.to.getTime() - this.from.getTime()) / this.one_day ;
     }
     else if (this.product.pricePer =='Hour'){
       this.count = (this.to.getTime() - this.from.getTime()) / this.one_hour;
@@ -273,6 +434,10 @@ export class ProductComponent implements OnInit {
 
     this.calculateIntervals();
     this.calculateIsDisabled();
+    if(this.calculateIntersection(this.fromDate, this.toDate)==false){
+        this.toDate = null;
+        this.fromDate = null;
+      }
   }
 
   quantityMinus(): void {
@@ -284,6 +449,10 @@ export class ProductComponent implements OnInit {
 
     this.calculateIntervals();
     this.calculateIsDisabled();
+    if(this.calculateIntersection(this.fromDate, this.toDate)==false){
+        this.toDate = null;
+        this.fromDate = null;
+      }
   }
 
   showRentModal() {

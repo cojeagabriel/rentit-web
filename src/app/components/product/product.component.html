@@ -14,17 +14,14 @@
               <p>Rentor: &nbsp;<span>{{ (user)?.lastName }}</span></p>
               <p>Location: &nbsp;<span>Bucharest</span></p>
               <div class="product-info-group">
-                <p>Available: &nbsp;
-                  <span class="available">{{ (product)?.quantity }} available</span>
-                </p>
                 <p>Price: &nbsp;
                   <span class="price">{{ (product)?.price }}€</span>
                   <span class="price-per">/{{ (product)?.pricePer }}</span>
                 </p>
               </div>
-              <div class="rent-wrapper card">
+              <div class="rent-wrapper">
                 <span class="field-name">Period</span>
-                <ngb-datepicker #dp ngModel (ngModelChange)="onDateChange($event)" [displayMonths]="2" [dayTemplate]="t" [markDisabled]="isDisabled" (navigate)="onNavigateEvent($event)">
+                <ngb-datepicker #dp ngModel (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" [markDisabled]="isDisabled" (navigate)="onNavigateEvent($event)">
                 </ngb-datepicker>
                 
                 <ng-template #t let-date="date" let-focused="focused">
@@ -37,8 +34,8 @@
                   <div>
                     <span class="field-name">From</span>
                     <div class="d-flex align-items-center">
-                      <input class="form-control" placeholder="yyyy-mm-dd" name="start-date" [(ngModel)]="fromDate" ngbDatepicker [markDisabled]="isDisabled"
-                        #d="ngbDatepicker">
+                      <input class="form-control" placeholder="yyyy-mm-dd" name="start-date" [(ngModel)]="fromDate" (ngModelChange)="revertFromDate($event)" ngbDatepicker [markDisabled]="isDisabled"
+                        #d="ngbDatepicker" disabled>
                       <ngb-timepicker [(ngModel)]="fromTime" [seconds]="false" [hourStep]="hourStep" [minuteStep]="minuteStep" [spinners]="false"></ngb-timepicker>
                     </div>
                   </div>
@@ -47,11 +44,15 @@
                   <div>
                     <span class="field-name">To</span>
                     <div class="d-flex align-items-center">
-                      <input class="form-control" placeholder="yyyy-mm-dd" name="end-date" [(ngModel)]="toDate" ngbDatepicker [markDisabled]="isDisabled"
-                        #d="ngbDatepicker">
+                      <input class="form-control" placeholder="yyyy-mm-dd" name="end-date" [(ngModel)]="toDate" (ngModelChange)="revertToDate($event)" ngbDatepicker [markDisabled]="isDisabled"
+                        #d="ngbDatepicker" disabled>
                       <ngb-timepicker [(ngModel)]="toTime" [seconds]="false" [hourStep]="hourStep" [minuteStep]="minuteStep" [spinners]="false"></ngb-timepicker>
                     </div>
                   </div>
+                </div>
+                <div class="mb-7 d-flex w-100 justify-content-center">
+                    <span class="available">maximum {{ (product)?.quantity }} available <span *ngIf="fromDate && toDate">, out of witch {{(product)?.quantity - maxim}} during this period</span>
+                    </span>
                 </div>
                 <div class="rent-wrapper__segment">
                   <div class="d-flex">
