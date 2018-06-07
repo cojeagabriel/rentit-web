@@ -97,7 +97,7 @@
         <button *ngIf="(order)?.status=='reserved'" class="button button-cancel align-self-end mr-15" (click)="cancelOrder()"><fa name="trash"></fa>Cancel order</button>
         <button *ngIf="(order)?.status=='reserved'" class="button align-self-end mr-15" (click)="acceptOrder()"><fa name="play"></fa>Accept order</button>
         <button *ngIf="(order)?.status=='started'" class="button align-self-end mr-15" (click)="endOrder()"><fa name="square"></fa>Finish order</button>
-        <button class="button align-self-end" (click)="revert()">Revert</button>
+        <!-- <button class="button align-self-end" (click)="revert()">Revert</button> -->
       </div>
       
     </div>
