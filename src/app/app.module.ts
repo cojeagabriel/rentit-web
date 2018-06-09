@@ -1,3 +1,4 @@
+import { ImageService } from './image.service';
 import { CommentService } from './services/comment.service';
 import { MessageService } from './services/message.service';
 import { MyOrdersComponent } from './components/dashboard/my-orders/my-orders.component';
@@ -130,7 +131,8 @@ import { ProductImageUploadComponent } from './product-image-upload/product-imag
     OrderService,
     MessageService,
     CommentService,
-    ReviewService
+    ReviewService,
+    ImageService
   ],
   entryComponents: [
     LoginModalComponent,

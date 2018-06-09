@@ -6,7 +6,7 @@
       <div class="col-12 card mb-15">
         <div class="row">
           <div class="col-6 product-gallery">
-            <img src="assets/img/item1.jpg">
+            <img [src]="mainImageUrl">
           </div>
           <div class="col-6 product-info">
             <div class="product-info-wrapper">
@@ -25,10 +25,10 @@
                   </div>
                   <a *ngIf="reviews.length" class="d-flex align-self-end mr-15" href="./"><small>{{ (reviews)?.length }} reviews</small></a>
                 </div>
-                
+
               </div>
-              
-             
+
+
               <p>Rentor: &nbsp;<a [routerLink]="'../../profile/'+ (user)?._id">{{ (user)?.firstName }} {{ (user)?.lastName }}</a></p>
               <p>Location: &nbsp;<span>Bucharest</span></p>
               <div class="product-info-group">
@@ -41,7 +41,7 @@
                 <span class="field-name">Period</span>
                 <ngb-datepicker #dp ngModel (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" [markDisabled]="isDisabled" (navigate)="onNavigateEvent($event)">
                 </ngb-datepicker>
-                
+
                 <ng-template #t let-date="date" let-focused="focused">
                   <span class="custom-day" [class.focused]="focused" [class.range]="isFrom(date) || isTo(date) || isInside(date) || isHovered(date)"
                     [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">
@@ -57,7 +57,7 @@
                       <ngb-timepicker [(ngModel)]="fromTime" [seconds]="false" [hourStep]="hourStep" [minuteStep]="minuteStep" [spinners]="false"></ngb-timepicker>
                     </div>
                   </div>
-                  
+
                   <fa name="angle-double-right"></fa>
                   <div>
                     <span class="field-name">To</span>
@@ -102,9 +102,9 @@
             <!-- <span class="tab-space"></span> -->
             <pre><p>{{ (product)?.description }}</p></pre>
           </div>
-        </div>        
+        </div>
       </div>
-      
+
       <div class="col-12 card mb-15">
         <button *ngIf="!reviewd" type="button" class="button-save" (click)="showRateModal()">
           <fa name="paper-plane"></fa>Review</button>
@@ -119,7 +119,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="col-12 card">
         <form (ngSubmit)="postComment()" id="ngForm1" [formGroup]="formComments" #formTest="ngForm" novalidate class="d-flex flex-column">
           <textarea placeholder="" formControlName="comment" [ngClass]="{'has-error':(formTest.submitted && !formComments.controls['comment'].valid), 'has-success':(formTest.submitted && formComments.controls['comment'].valid)}"></textarea>

@@ -1,6 +1,6 @@
-import { Image } from './../types/image';
+import { ImageService } from 'app/image.service';
+import { Image } from 'app/types/image';
 import { Component, OnInit, HostBinding, Input, Output, EventEmitter } from '@angular/core';
-import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-product-image-preview',
@@ -14,13 +14,12 @@ export class ProductImagePreviewComponent implements OnInit {
 
   @HostBinding('style.background-image')
   get backgroundImage(): string {
-    const url = this.image ? `${environment.apiUrl}/${this.image.path}` : this.defaultImageUrl;
-    return `url(${url})`;
+    return this.imageService.getImageStyleUrl(this.image);
   }
 
-  private defaultImageUrl = 'https://placehold.it/100x100';
-
-  constructor() { }
+  constructor(
+    private imageService: ImageService
+  ) { }
 
   ngOnInit() {
   }

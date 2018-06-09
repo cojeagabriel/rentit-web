@@ -41,5 +41,4 @@ export class ProductService {
   removeImage(product: Product, image: Image) {
     return this.http.delete<Product>(`${environment.apiUrl}/api/products/${product._id}/images/${image._id}`);
   }
-
 }

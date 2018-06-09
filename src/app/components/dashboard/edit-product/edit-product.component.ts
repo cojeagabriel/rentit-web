@@ -8,6 +8,7 @@ import { ProductService } from 'app/services/product.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { UploadOutput, UploadInput } from 'ngx-uploader';
+import { ImageService } from 'app/image.service';
 
 @Component({
   selector: 'app-edit-product',
@@ -33,7 +34,8 @@ export class EditProductComponent implements OnInit {
     private productService: ProductService,
     private tokenService: TokenService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private imageService: ImageService
   ) { }
 
   ngOnInit() {
@@ -143,11 +145,7 @@ export class EditProductComponent implements OnInit {
   }
 
   get mainImageUrl(): string {
-    if (this.product && this.product.images.length) {
-      return `${environment.apiUrl}/${this.product.images[0].path}`;
-    } else {
-      return'http://via.placeholder.com/500x500';
-    }
+    return this.imageService.getImageUrl(this.product.images[0]);
   }
 
 }
