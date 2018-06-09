@@ -1,3 +1,4 @@
+import { ImageService } from './image.service';
 import { CommentService } from './services/comment.service';
 import { MessageService } from './services/message.service';
 import { MyOrdersComponent } from './components/dashboard/my-orders/my-orders.component';
@@ -47,6 +48,9 @@ import { NewMessageModalComponent } from './components/new-message-modal/new-mes
 import { MyMessagesComponent } from './components/dashboard/my-messages/my-messages.component';
 import { ReviewService } from './services/review.service';
 import { RateModalComponent } from './components/product/rate-modal/rate-modal.component';
+import { NgxUploaderModule } from 'ngx-uploader';
+import { ProductImagePreviewComponent } from './product-image-preview/product-image-preview.component';
+import { ProductImageUploadComponent } from './product-image-upload/product-image-upload.component';
 import { MessageComponent } from './components/message/message.component';
 
 @NgModule({
@@ -75,6 +79,8 @@ import { MessageComponent } from './components/message/message.component';
     NewMessageModalComponent,
     MyMessagesComponent,
     RateModalComponent,
+    ProductImagePreviewComponent,
+    ProductImageUploadComponent,
     MessageComponent
   ],
   imports: [
@@ -89,11 +95,11 @@ import { MessageComponent } from './components/message/message.component';
       { path: '', component: HomeComponent},
       { path: 'product/:id', component: ProductComponent},
       { path: 'profile/:id', component: ProfileComponent},
-      { path: 'my-profile', component: MyProfileComponent, 
+      { path: 'my-profile', component: MyProfileComponent,
         children: [
           { path: 'edit', component: EditProfileComponent }
       ]},
-      { path: 'dashboard', component: DashboardComponent, 
+      { path: 'dashboard', component: DashboardComponent,
         children: [
           { path: 'new-product', component: NewProductComponent},
           { path: 'my-products', component: MyProductsComponent},
@@ -112,7 +118,8 @@ import { MessageComponent } from './components/message/message.component';
     NgbModule.forRoot(),
     ConfirmationPopoverModule.forRoot({
       confirmButtonType: 'danger'
-    })
+    }),
+    NgxUploaderModule
   ],
   providers: [
     AuthService,
@@ -127,7 +134,8 @@ import { MessageComponent } from './components/message/message.component';
     OrderService,
     MessageService,
     CommentService,
-    ReviewService
+    ReviewService,
+    ImageService
   ],
   entryComponents: [
     LoginModalComponent,

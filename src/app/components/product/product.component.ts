@@ -1,3 +1,4 @@
+import { ImageService } from 'app/image.service';
 import { ReviewService } from './../../services/review.service';
 import { CommentService } from './../../services/comment.service';
 import { OrderService } from './../../services/order.service';
@@ -117,10 +118,11 @@ export class ProductComponent implements OnInit {
     private ngbDateParserFormatter: NgbDateParserFormatter,
     private orderService: OrderService,
     private formBuilder: FormBuilder,
-  ) { 
+    private imageService: ImageService,
+  ) {
     this.today = calendar.getToday();
     config.minDate = { year: this.today.year, month: this.today.month, day: this.today.day };
-    this.quantity = 1;  
+    this.quantity = 1;
     this.formComments = this.createFormComments();
   }
 
@@ -359,7 +361,7 @@ export class ProductComponent implements OnInit {
         intervals.push({ start: last.node, end: this.points[i-1].node, count: last.count });
         last = { node: last.node + 1, count: last.count + s };
       }
-      
+
     }
     this.intervals = intervals;
   }
@@ -411,7 +413,7 @@ export class ProductComponent implements OnInit {
     t.setHours(0, 0, 0, 0);
     let today = moment(t);
     let c = parsedFrom.diff(today, 'days');
-    
+
     if(c<0){
       this.fromDate = null;
     }
@@ -591,6 +593,10 @@ export class ProductComponent implements OnInit {
     this.order.toDateMinute = this.toTime.minute;
     this.orderService.setOrder(this.order);
     this.modalService.show(RentModalComponent);
+  }
+
+  get mainImageUrl(): string {
+    return this.imageService.getImageUrl(this.product.images[0]);
   }
 
 }

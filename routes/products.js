@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const formidable = require('formidable');
+const fs = require('fs');
 
 var Product = require('../models/product');
+var Image = require('../models/image');
 
 var config = require('../config');
 var requireAuthenticated = require('../require-authenticated');
@@ -62,7 +65,8 @@ router.put('/update/:id', (req, res, next) => {
         quantity: req.body.quantity,
         available: req.body.available,
         price: req.body.price,
-        pricePer: req.body.pricePer
+        pricePer: req.body.pricePer,
+        images: req.body.images
     }, (err, product) => {
         if (err) {
             res.status(403).json({ success: false, msg: err });
@@ -90,5 +94,60 @@ router.post('/delete', (req, res) => {
     });
 });
 
+// Upload image
+router.post('/:productId/images', (req, res) => {
+    const form = new formidable.IncomingForm();
+
+    form.uploadDir = 'uploads';
+    form.keepExtensions = true;
+
+    form.parse(req, (err, fields, files) => {
+        if (err) {
+            res.status(403).json({ success: false, msg: err });
+        } else {
+            var newImage = new Image({
+                name: files.file.name,
+                path: files.file.path,
+                type: files.file.type,
+                size: files.file.size
+            });
+
+            Product.findByIdAndUpdate(req.params.productId, {
+                $push: { images: newImage }
+            }, { 'new': true }, (err, product) => {
+                if (err) {
+                    res.status(403).json({ success: false, msg: err });
+                }
+                else {
+                    res.json(product);
+                }
+            });
+        }
+    });
+});
+
+// Delete image
+router.delete('/:productId/images/:imageId', (req, res) => {
+    Product.findById(req.params.productId, (err, product) => {
+        if (err) {
+            res.status(403).json({ success: false, msg: err });
+        } else {
+            const image = product.images.id(req.params.imageId);
+            fs.unlinkSync(image.path);
+            if (err) {
+                res.status(403).json({ success: false, msg: err });
+            } else {
+                product.images.pull(req.params.imageId);
+                product.save((err, product) => {
+                    if (err) {
+                        res.status(403).json({ success: false, msg: err });
+                    } else {
+                        res.json(product);
+                    }
+                })
+            }
+        }
+    })
+});
 
 module.exports = router;

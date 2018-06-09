@@ -1,11 +1,14 @@
-import { Product } from './../../../types/product.d';
-import { Component, OnInit } from '@angular/core';
+import { Image } from 'app/types/image';
+import { environment } from 'environments/environment';
+import { TokenService } from 'app/services/token.service';
+import { Product } from 'app/types/product';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { User } from '../../../types/user';
-import { ProductService } from '../../../services/product.service';
-import { UserService } from '../../../services/user.service';
+import { ProductService } from 'app/services/product.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { UploadOutput, UploadInput } from 'ngx-uploader';
+import { ImageService } from 'app/image.service';
 
 @Component({
   selector: 'app-edit-product',
@@ -24,12 +27,15 @@ export class EditProductComponent implements OnInit {
   category: string[] = ['Electronics', 'Tools', 'Gardening'];
   per: string[] = ['Hour', 'Day', 'Month', 'Year'];
 
+  uploadInput = new EventEmitter<UploadInput>();
+
   constructor(
     private formBuilder: FormBuilder,
     private productService: ProductService,
-    private userService: UserService,
+    private tokenService: TokenService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private imageService: ImageService
   ) { }
 
   ngOnInit() {
@@ -90,7 +96,7 @@ export class EditProductComponent implements OnInit {
       });
     }
   }
-  
+
   quantityMinus(): void {
     if (this.form.get('quantity').value > 1) {
       this.form.patchValue({
@@ -109,5 +115,37 @@ export class EditProductComponent implements OnInit {
       });
   }
 
+  onUploadOutput(output: UploadOutput): void {
+    if (output.type === 'allAddedToQueue') { // when all files added in queue
+      this.startUpload();
+    } else if (output.type === 'done') { // when a file finished uploading
+      this.product = output.file.response;
+    }
+  }
+
+  startUpload(): void {
+    const event: UploadInput = {
+      type: 'uploadAll',
+      url: `${environment.apiUrl}/api/products/${this.product._id}/images`,
+      method: 'POST',
+      headers: {
+        'x-access-token': this.tokenService.getToken()
+      }
+    };
+
+    this.uploadInput.emit(event);
+  }
+
+  removeImage(image: Image) {
+    this.productService.removeImage(this.product, image).subscribe((product) => {
+      this.product = product;
+    }, () => {
+      alert("Failed to delete image!");
+    });
+  }
+
+  get mainImageUrl(): string {
+    return this.imageService.getImageUrl(this.product.images[0]);
+  }
 
 }

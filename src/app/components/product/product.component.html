@@ -6,7 +6,7 @@
       <div class="col-12 card mb-15">
         <div class="row">
           <div class="col-6 product-gallery">
-            <img src="assets/img/item1.jpg">
+            <img [src]="mainImageUrl">
           </div>
           <div class="col-6 product-info">
             <div class="product-info-wrapper">
@@ -25,10 +25,10 @@
                   </div>
                   <a *ngIf="(reviews)?.length" class="d-flex align-self-end mr-15" href="./"><small>{{ (reviews)?.length }} reviews</small></a>
                 </div>
-                
+
               </div>
-              
-             
+
+
               <p>
                 <small class="info-label">Owner:</small>
                 <!-- <img src="assets/img/user.png"> -->
@@ -50,7 +50,7 @@
                 <!-- <span class="field-name">Period</span> -->
                 <ngb-datepicker #dp ngModel (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" [markDisabled]="isDisabled" (navigate)="onNavigateEvent($event)">
                 </ngb-datepicker>
-                
+
                 <ng-template #t let-date="date" let-focused="focused">
                   <span class="custom-day" [class.focused]="focused" [class.range]="isFrom(date) || isTo(date) || isInside(date) || isHovered(date)"
                     [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">
@@ -66,7 +66,7 @@
                       <ngb-timepicker [(ngModel)]="fromTime" [seconds]="false" [hourStep]="hourStep" [minuteStep]="minuteStep" [spinners]="false"></ngb-timepicker>
                     </div>
                   </div>
-                  
+
                   <fa name="angle-double-right"></fa>
                   <div>
                     <span class="field-name">To</span>
@@ -111,9 +111,9 @@
             <!-- <span class="tab-space"></span> -->
             <pre class="mb-0"><p>{{ (product)?.description }}</p></pre>
           </div>
-        </div>        
+        </div>
       </div>
-      
+
       <div class="col-12 card mb-15 p-0 reviews-section">
         <div class="rating-info d-flex w-100 flex-column">
           <h5 class="section-title">Reviews</h5>
@@ -194,9 +194,9 @@
             </div>
 
         </div>
-  
+
       </div>
-      
+
       <div class="col-12 card comments-section">
         <div class="d-flex w-100 flex-column">
           <div class="d-flex justify-content-between">
@@ -216,7 +216,7 @@
               <button type="button" class="button button-empty" (click)="isCollapsed = !isCollapsed" aria-controls="ngForm1">Cancel
               </button>
             </div>
-            
+
           </div>
         </form>
         <div class="comments d-flex flex-column w-100">
@@ -232,7 +232,7 @@
               <a [routerLink]="'../../profile/'+ c._senderId" class="user-name">
                 <span>{{c.senderFirstName}} {{c.senderLastName}}</span>
               </a>
-              <small class="date mb-7">{{c.dateDay}}/{{c.dateMonth}}/{{c.dateYear}}</small> 
+              <small class="date mb-7">{{c.dateDay}}/{{c.dateMonth}}/{{c.dateYear}}</small>
               <pre><p>{{c.comment}}</p></pre>
             </div>
           </div>

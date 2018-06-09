@@ -8,9 +8,19 @@
     <div class="col-12 card">
       <div class="row">
         <div class="col-4 images-upload-wrapper">
-          <img src="http://via.placeholder.com/500x500">
-          <button class="button-upload">
-            <fa name="upload"></fa>Upload image</button>
+          <img [src]="mainImageUrl">
+
+          <app-product-image-preview
+            *ngFor="let image of product?.images"
+            [image]="image"
+            (onRemove)="removeImage($event)"
+          ></app-product-image-preview>
+
+          <app-product-image-upload
+            (uploadOutput)="onUploadOutput($event)"
+            [uploadInput]="uploadInput"
+          ></app-product-image-upload>
+
         </div>
         <div class="col-8 info-wrapper">
           <form (ngSubmit)="update()" id="ngForm" [formGroup]="form" #formTest="ngForm" novalidate>
@@ -72,7 +82,7 @@
               <button type="submit" class="button-save" form="ngForm">
                 <fa name="save"></fa>Save product</button>
             </div>
-            
+
           </form>
           <div *ngIf="errors" class="alert alert-danger">
             {{ errors }}

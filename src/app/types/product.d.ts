@@ -1,3 +1,5 @@
+import { Image } from "./image";
+
 export interface Product {
     _id?: string,
     title: string,
@@ -7,5 +9,6 @@ export interface Product {
     quantity: number,
     available: number,
     price: number,
-    pricePer: string
+    pricePer: string,
+    images: Image[]
 }

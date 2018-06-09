@@ -1,8 +1,9 @@
-import { Router } from '@angular/router';
+import { ImageService } from './../../../image.service';
 import { ProductService } from './../../../services/product.service';
 import { Observable } from 'rxjs/Observable';
 import { Component, OnInit, AfterViewInit, ViewChildren, QueryList  } from '@angular/core';
 import { Product } from '../../../types/product';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-products',
@@ -16,11 +17,11 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   constructor(
     private productService: ProductService,
-    private router: Router
+    private imageService: ImageService
   ) { }
 
   ngOnInit() {
-    
+
     this.productService.getProducts()
       .catch(err => {
         return Observable.throw(err);
@@ -45,6 +46,10 @@ export class ProductsComponent implements OnInit, AfterViewInit {
         },
       });
     })
+  }
+
+  getProductImageUrl(product: Product): string {
+    return this.imageService.getImageStyleUrl(product.images[0]);
   }
 
 }

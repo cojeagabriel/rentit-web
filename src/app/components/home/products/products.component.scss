@@ -37,18 +37,18 @@ section{
             box-sizing: border-box;
             padding-bottom: 50px;
             a{
-                
+
                 display: block;
                 height: 100%;
                 width: 100%;
                 background-position: center;
                 background-repeat: no-repeat;
                 background-size: cover;
-                background-image: url('../../../../assets/img/item1.jpg');
+                // background-image: url('../../../../assets/img/item1.jpg');
                 transition: all 0.2s ease-in-out;
             }
-            
-                
+
+
         }
         &:hover{
             .card-wrapper > a{
@@ -116,7 +116,7 @@ section{
 
 .swiper-button-next,
 .swiper-container-rtl .swiper-button-prev,
-.swiper-button-prev, 
+.swiper-button-prev,
 .swiper-container-rtl .swiper-button-next{
     background-image: none;
     svg{

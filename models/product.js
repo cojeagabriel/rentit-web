@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
-var validate = require('mongoose-validator');
-var bcrypt = require('bcrypt-nodejs');
 var config = require('../config');
+var Image = require('../models/image');
 mongoose.connect(config.database);
 
 var Schema = mongoose.Schema;
@@ -12,7 +11,7 @@ module.exports = mongoose.model('Product', new Schema({
         required: true
     },
     _ownerId: {
-        type: Schema.ObjectId, 
+        type: Schema.ObjectId,
         ref: 'User'
     },
     category: {
@@ -39,7 +38,8 @@ module.exports = mongoose.model('Product', new Schema({
         type: String,
         required: true,
         enum: ['Hour', 'Day', 'Week', 'Month']
-    }
+    },
+    images: [Image.schema]
 }));
 
 module.exports.createProduct = function (newProduct, callback) {
