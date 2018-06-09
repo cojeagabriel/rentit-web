@@ -1,13 +1,13 @@
-import { Image } from './../../../types/image.d';
+import { Image } from 'app/types/image';
 import { environment } from 'environments/environment';
-import { TokenService } from './../../../services/token.service';
-import { Product } from './../../../types/product';
+import { TokenService } from 'app/services/token.service';
+import { Product } from 'app/types/product';
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ProductService } from '../../../services/product.service';
+import { ProductService } from 'app/services/product.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { UploaderOptions, UploadFile, UploadOutput, UploadInput } from 'ngx-uploader';
+import { UploadOutput, UploadInput } from 'ngx-uploader';
 
 @Component({
   selector: 'app-edit-product',
