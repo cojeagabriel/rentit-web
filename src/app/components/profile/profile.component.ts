@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit {
 
   user$: any;
   user: User;
-  // messages: Message[];
+  me: User;
 
   constructor(
     private userService: UserService,
@@ -39,20 +39,19 @@ export class ProfileComponent implements OnInit {
       this.user = user[0];
     });
 
-    // this.messageService.getMessages()
-    //   .catch(err => {
-    //     return Observable.throw(new Error(`${err.status} ${err.msg}`));
-    //   })
-    //   .subscribe(messages =>{
-    //     this.messages = messages;
-    //   });
+    this.userService.getMe()
+      .subscribe(user => {
+        this.me = user;
+      });
   }
 
   showMessageModal(){
     this.modalService.show(NewMessageModalComponent, {
       initialState: {
-        message: "Salut!",
-        sender: this.user._id,
+        message: "New message",
+        sender: this.me._id,
+        senderFirstName: this.me.firstName,
+        senderLastName: this.me.lastName,
         reciever: this.user._id
       }
     });

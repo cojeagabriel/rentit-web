@@ -11,6 +11,12 @@ module.exports = mongoose.model('Message', new Schema({
         type: Schema.ObjectId,
         ref: 'User'
     },
+    senderFirstName: {
+        type: String,
+    },
+    senderLastName: {
+        type: String,
+    },
     _recieverId: {
         type: Schema.ObjectId,
         ref: 'User'

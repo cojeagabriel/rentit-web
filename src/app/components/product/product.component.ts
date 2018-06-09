@@ -51,9 +51,16 @@ export class ProductComponent implements OnInit {
 
   formComments: FormGroup;
   comments: Comment[];
+  isCollapsed = true;
   reviews: Review[];
   rating: number;
   reviewd = false;
+  stars5 = 0;
+  stars4 = 0;
+  stars3 = 0;
+  stars2 = 0;
+  stars1 = 0;
+
 
   hoveredDate: NgbDateStruct;
 
@@ -221,8 +228,29 @@ export class ProductComponent implements OnInit {
     let sum = 0;
     this.reviews.forEach(rev => {
       sum += rev.rating;
-      if(this.me._id == rev._userId)
+      if(this.me._id == rev._userId){
         this.reviewd = true;
+      }
+      switch (rev.rating) {
+        case 5:
+          this.stars5++;
+          break;
+        case 4:
+          this.stars4++;
+          break;
+        case 3:
+          this.stars3++;
+          break;
+        case 2:
+          this.stars2++;
+          break;
+        case 1:
+          this.stars1++;
+          break;
+
+        default:
+          break;
+      }
     });
     this.rating = sum/this.reviews.length;
   }
@@ -243,7 +271,7 @@ export class ProductComponent implements OnInit {
   showRateModal(){
     this.modalService.show(RateModalComponent, {
       initialState: {
-        message: "Salut!",
+        message: "Share your opinion!",
         _userId: this.me._id,
         userFirstName: this.me.firstName,
         userLastName: this.me.lastName,

@@ -82,6 +82,10 @@ export class RateModalComponent implements OnInit {
     }
   }
 
+  hide(){
+    this.bsModalRef.hide();
+  }
+
 }
 
   

@@ -11,16 +11,16 @@ export class MessageService {
     private http: HttpClient
   ) { }
 
-  create(product: Message): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/api/messages`, product);
+  create(message: Message): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/api/messages`, message);
   }
 
-  update(product: Message, id: string): Observable<any> {
-    return this.http.put(`${environment.apiUrl}/api/messages/update/${id}`, product);
+  update(message: Message, id: string): Observable<any> {
+    return this.http.put(`${environment.apiUrl}/api/messages/update/${id}`, message);
   }
 
-  delete(product: Message): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/api/messages/delete`, product);
+  delete(message: Message): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/api/messages/delete`, message);
   }
 
   getMessages(): Observable<Message[]> {

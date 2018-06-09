@@ -47,6 +47,7 @@ import { NewMessageModalComponent } from './components/new-message-modal/new-mes
 import { MyMessagesComponent } from './components/dashboard/my-messages/my-messages.component';
 import { ReviewService } from './services/review.service';
 import { RateModalComponent } from './components/product/rate-modal/rate-modal.component';
+import { MessageComponent } from './components/message/message.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { RateModalComponent } from './components/product/rate-modal/rate-modal.c
     MyProfileComponent,
     NewMessageModalComponent,
     MyMessagesComponent,
-    RateModalComponent
+    RateModalComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
@@ -101,6 +103,7 @@ import { RateModalComponent } from './components/product/rate-modal/rate-modal.c
           { path: 'my-rentals', component: MyRentalsComponent },
           { path: 'my-rentals/:id', component: RentalComponent },
           { path: 'my-messages', component: MyMessagesComponent },
+          { path: 'my-messages/:id', component: MessageComponent },
       ]}
     ]),
     AngularFontAwesomeModule,
