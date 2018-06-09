@@ -47,6 +47,7 @@ import { NewMessageModalComponent } from './components/new-message-modal/new-mes
 import { MyMessagesComponent } from './components/dashboard/my-messages/my-messages.component';
 import { ReviewService } from './services/review.service';
 import { RateModalComponent } from './components/product/rate-modal/rate-modal.component';
+import { NgxUploaderModule } from 'ngx-uploader';
 
 @NgModule({
   declarations: [
@@ -87,11 +88,11 @@ import { RateModalComponent } from './components/product/rate-modal/rate-modal.c
       { path: '', component: HomeComponent},
       { path: 'product/:id', component: ProductComponent},
       { path: 'profile/:id', component: ProfileComponent},
-      { path: 'my-profile', component: MyProfileComponent, 
+      { path: 'my-profile', component: MyProfileComponent,
         children: [
           { path: 'edit', component: EditProfileComponent }
       ]},
-      { path: 'dashboard', component: DashboardComponent, 
+      { path: 'dashboard', component: DashboardComponent,
         children: [
           { path: 'new-product', component: NewProductComponent},
           { path: 'my-products', component: MyProductsComponent},
@@ -109,7 +110,8 @@ import { RateModalComponent } from './components/product/rate-modal/rate-modal.c
     NgbModule.forRoot(),
     ConfirmationPopoverModule.forRoot({
       confirmButtonType: 'danger'
-    })
+    }),
+    NgxUploaderModule
   ],
   providers: [
     AuthService,

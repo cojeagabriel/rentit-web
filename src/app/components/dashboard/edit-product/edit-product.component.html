@@ -11,6 +11,23 @@
           <img src="http://via.placeholder.com/500x500">
           <button class="button-upload">
             <fa name="upload"></fa>Upload image</button>
+
+          <div class="drop-container" ngFileDrop [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" [ngClass]="{ 'is-drop-over': dragOver }">
+            <h1>Drag &amp; Drop</h1>
+          </div>
+
+          <label class="upload-button">
+            <input type="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple>
+            or choose file(s)
+          </label>
+
+          <button type="button" class="start-upload-btn" (click)="startUpload()">
+            Start Upload
+          </button>
+
+          <!-- {{imagePreview | json}} -->
+          <img [src]="imagePreview"/>
+
         </div>
         <div class="col-8 info-wrapper">
           <form (ngSubmit)="update()" id="ngForm" [formGroup]="form" #formTest="ngForm" novalidate>
@@ -72,7 +89,7 @@
               <button type="submit" class="button-save" form="ngForm">
                 <fa name="save"></fa>Save product</button>
             </div>
-            
+
           </form>
           <div *ngIf="errors" class="alert alert-danger">
             {{ errors }}

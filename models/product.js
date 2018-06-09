@@ -12,7 +12,7 @@ module.exports = mongoose.model('Product', new Schema({
         required: true
     },
     _ownerId: {
-        type: Schema.ObjectId, 
+        type: Schema.ObjectId,
         ref: 'User'
     },
     category: {
@@ -39,7 +39,27 @@ module.exports = mongoose.model('Product', new Schema({
         type: String,
         required: true,
         enum: ['Hour', 'Day', 'Week', 'Month']
-    }
+    },
+    images: [new Schema({
+        fileName: {
+            type: String,
+            required: true
+        },
+        mimeType: {
+            type: String,
+            required: true,
+            enum: [
+                'image/gif',
+                'image/png',
+                'image/jpeg',
+                'image/bmp'
+            ]
+        },
+        size: {
+            type: Number,
+            required: true
+        }
+    })]
 }));
 
 module.exports.createProduct = function (newProduct, callback) {

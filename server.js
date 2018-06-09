@@ -4,6 +4,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
+var path = require('path');
 
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var config = require('./config'); // get our config file
@@ -27,10 +28,6 @@ app.use(cors());
 // use morgan to log requests to the console
 app.use(morgan('dev'));
 
-// Angular DIST output folder
-// app.use(express.static(path.join(__dirname, 'dist')));
-
-
 const users = require('./routes/users');
 app.use('/api/users', users);
 
@@ -48,6 +45,9 @@ app.use('/api/comments', comments);
 
 const reviews = require('./routes/reviews');
 app.use('/api/reviews', reviews);
+
+// upload files serves as static
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 // Send all other requests to the Angular app
