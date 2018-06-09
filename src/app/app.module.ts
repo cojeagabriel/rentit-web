@@ -48,6 +48,8 @@ import { MyMessagesComponent } from './components/dashboard/my-messages/my-messa
 import { ReviewService } from './services/review.service';
 import { RateModalComponent } from './components/product/rate-modal/rate-modal.component';
 import { NgxUploaderModule } from 'ngx-uploader';
+import { ProductImagePreviewComponent } from './product-image-preview/product-image-preview.component';
+import { ProductImageUploadComponent } from './product-image-upload/product-image-upload.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +76,9 @@ import { NgxUploaderModule } from 'ngx-uploader';
     MyProfileComponent,
     NewMessageModalComponent,
     MyMessagesComponent,
-    RateModalComponent
+    RateModalComponent,
+    ProductImagePreviewComponent,
+    ProductImageUploadComponent
   ],
   imports: [
     BrowserModule,

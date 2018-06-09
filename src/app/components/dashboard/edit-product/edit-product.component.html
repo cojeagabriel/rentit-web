@@ -8,25 +8,18 @@
     <div class="col-12 card">
       <div class="row">
         <div class="col-4 images-upload-wrapper">
-          <img src="http://via.placeholder.com/500x500">
-          <button class="button-upload">
-            <fa name="upload"></fa>Upload image</button>
+          <img [src]="mainImageUrl">
 
-          <div class="drop-container" ngFileDrop [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" [ngClass]="{ 'is-drop-over': dragOver }">
-            <h1>Drag &amp; Drop</h1>
-          </div>
+          <app-product-image-preview
+            *ngFor="let image of product?.images"
+            [image]="image"
+            (onRemove)="removeImage($event)"
+          ></app-product-image-preview>
 
-          <label class="upload-button">
-            <input type="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple>
-            or choose file(s)
-          </label>
-
-          <button type="button" class="start-upload-btn" (click)="startUpload()">
-            Start Upload
-          </button>
-
-          <!-- {{imagePreview | json}} -->
-          <img [src]="imagePreview"/>
+          <app-product-image-upload
+            (uploadOutput)="onUploadOutput($event)"
+            [uploadInput]="uploadInput"
+          ></app-product-image-upload>
 
         </div>
         <div class="col-8 info-wrapper">

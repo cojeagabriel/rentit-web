@@ -1,3 +1,4 @@
+import { Image } from './../../../types/image.d';
 import { environment } from 'environments/environment';
 import { TokenService } from './../../../services/token.service';
 import { Product } from './../../../types/product';
@@ -25,11 +26,7 @@ export class EditProductComponent implements OnInit {
   category: string[] = ['Electronics', 'Tools', 'Gardening'];
   per: string[] = ['Hour', 'Day', 'Month', 'Year'];
 
-  options: UploaderOptions;
-  files: UploadFile[];
-  dragOver: boolean;
-  uploadInput: EventEmitter<UploadInput>;
-  imagePreview: any;
+  uploadInput = new EventEmitter<UploadInput>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -42,9 +39,6 @@ export class EditProductComponent implements OnInit {
   ngOnInit() {
     this.form = this.createForm();
     this.getProduct();
-
-    this.files = []; // local uploading files array
-    this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
   }
 
   createForm() {
@@ -121,34 +115,9 @@ export class EditProductComponent implements OnInit {
 
   onUploadOutput(output: UploadOutput): void {
     if (output.type === 'allAddedToQueue') { // when all files added in queue
-      // uncomment this if you want to auto upload files when added
-      // const event: UploadInput = {
-      //   type: 'uploadAll',
-      //   url: '/upload',
-      //   method: 'POST',
-      //   data: { foo: 'bar' }
-      // };
-      // this.uploadInput.emit(event);
-    } else if (output.type === 'addedToQueue' && typeof output.file !== 'undefined') { // add file to array when added
-      console.log(output);
-      this.previewImagem(output.file.nativeFile).then(response => {
-        this.imagePreview = response; // The image preview
-        this.files.push(output.file);
-      });
-      // this.files.push(output.file);
-    } else if (output.type === 'uploading' && typeof output.file !== 'undefined') {
-      // update current data in files array for uploading file
-      const index = this.files.findIndex(file => typeof output.file !== 'undefined' && file.id === output.file.id);
-      this.files[index] = output.file;
-    } else if (output.type === 'removed') {
-      // remove file from array when removed
-      this.files = this.files.filter((file: UploadFile) => file !== output.file);
-    } else if (output.type === 'dragOver') {
-      this.dragOver = true;
-    } else if (output.type === 'dragOut') {
-      this.dragOver = false;
-    } else if (output.type === 'drop') {
-      this.dragOver = false;
+      this.startUpload();
+    } else if (output.type === 'done') { // when a file finished uploading
+      this.product = output.file.response;
     }
   }
 
@@ -165,17 +134,20 @@ export class EditProductComponent implements OnInit {
     this.uploadInput.emit(event);
   }
 
-  // The preview function
-  previewImagem(file: File) {
-    const fileReader = new FileReader();
-    return new Promise(resolve => {
-      console.log(file);
-      fileReader.readAsDataURL(file);
-      fileReader.onload = function (e: any) {
-        console.log(e);
-        resolve(e.target.result);
-      }
+  removeImage(image: Image) {
+    this.productService.removeImage(this.product, image).subscribe((product) => {
+      this.product = product;
+    }, () => {
+      alert("Failed to delete image!");
     });
+  }
+
+  get mainImageUrl(): string {
+    if (this.product && this.product.images.length) {
+      return `${environment.apiUrl}/${this.product.images[0].path}`;
+    } else {
+      return'http://via.placeholder.com/500x500';
+    }
   }
 
 }

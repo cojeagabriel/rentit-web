@@ -1,8 +1,9 @@
 import { Product } from './../types/product.d';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs/Observable';
+import { Image } from '../types/image';
 
 @Injectable()
 export class ProductService {
@@ -35,6 +36,10 @@ export class ProductService {
 
   getCategories(){
     return this.http.get(`${environment.apiUrl}/api/products/types`);
+  }
+
+  removeImage(product: Product, image: Image) {
+    return this.http.delete<Product>(`${environment.apiUrl}/api/products/${product._id}/images/${image._id}`);
   }
 
 }
