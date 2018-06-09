@@ -31,94 +31,36 @@ router.get('/:id', (req, res, next) => {
 });
 
 
-// Upload file
+// Upload image
 router.post('/:id/images', (req, res) => {
-    // const form = new formidable.IncomingForm();
+    const form = new formidable.IncomingForm();
 
-    // form.uploadDir = 'uploads';
-    // form.keepExtensions = true;
+    form.uploadDir = 'uploads';
+    form.keepExtensions = true;
 
-    Product.findOne({ _id: req.params.id }, (err, product) => {
-        console.log("product", product);
-        product.images.push({
-            fileName: 'test',
-            mimeType: 'image/gif',
-            size: 123
-        });
-        console.log("product before save", product);
-        product.save(((err) => {
-            if (err) {
-                res.status(403).json({ success: false, msg: err });
-            }
-            else {
-                res.status(200).json({ success: true });
-            }
-        }))
+    form.parse(req, (err, fields, files) => {
+        if (err) {
+            res.status(403).json({ success: false, msg: err });
+        } else {
+            var newImage = new Image({
+                name: files.file.name,
+                path: files.file.path,
+                type: files.file.type,
+                size: files.file.size
+            });
+
+            Product.findByIdAndUpdate(req.params.id, {
+                $push: { images: newImage }
+            }, { 'new': true }, (err, product) => {
+                if (err) {
+                    res.status(403).json({ success: false, msg: err });
+                }
+                else {
+                    res.json(product);
+                }
+            });
+        }
     });
-
-
-    // Image.createImage(newImage, (err, image) => {
-    //     if (err) {
-    //         res.status(403).json({ success: false, msg: err });
-    //     }
-    //     else {
-    //         console.log("image", image);
-    //         Product.findOne({ _id: req.params.id }, (err, product) => {
-    //             console.log("product", product);
-    //             product.images.push({
-    //                 fileName: 'test',
-    //                 mimeType: 'image/gif',
-    //                 size: 123
-    //             });
-    //             console.log("product before save", product);
-    //             product.save(((err) => {
-    //                 res.status(200).json({ success: true });
-    //             }))
-    //         });
-    //     }
-    // });
-
-
-
-    // form.parse(req, (err, fields, files) => {
-    //     if (err) {
-    //         res.status(403).json({ success: false, msg: err });
-    //     } else {
-    //         res.writeHead(200, { 'content-type': 'text/plain' });
-    //         res.write('received upload:\n\n');
-    //         res.end(util.inspect({ fields: fields, files: files }));
-
-    //         Product.update({ _id: req.params.id }, {
-    //             title: req.body.title,
-    //             _ownerId: req.body._ownerId,
-    //             category: req.body.category,
-    //             description: req.body.description,
-    //             quantity: req.body.quantity,
-    //             available: req.body.available,
-    //             price: req.body.price,
-    //             pricePer: req.body.pricePer
-    //         }, (err, product) => {
-    //             if (err) {
-    //                 res.status(403).json({ success: false, msg: err });
-    //             }
-    //             else {
-    //                 res.json(product);
-    //             }
-    //         });
-    //     }
-    // });
-    // Product.remove({ _id: req.body._id }, function (err) {
-    //     if (!err) {
-    //         res.json({
-    //             success: true,
-    //             message: 'Product deleted'
-    //         });
-    //     }
-    //     else {
-    //         res.status(403).send({ success: false, message: 'Could not delete product' });
-    //     }
-    // });
-    // res.status(403).json({ success: false });
 });
 
 router.use(requireAuthenticated);

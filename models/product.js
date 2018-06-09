@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
-var validate = require('mongoose-validator');
-var bcrypt = require('bcrypt-nodejs');
 var config = require('../config');
+var Image = require('../models/image');
 mongoose.connect(config.database);
 
 var Schema = mongoose.Schema;
@@ -40,26 +39,7 @@ module.exports = mongoose.model('Product', new Schema({
         required: true,
         enum: ['Hour', 'Day', 'Week', 'Month']
     },
-    images: [new Schema({
-        fileName: {
-            type: String,
-            required: true
-        },
-        mimeType: {
-            type: String,
-            required: true,
-            enum: [
-                'image/gif',
-                'image/png',
-                'image/jpeg',
-                'image/bmp'
-            ]
-        },
-        size: {
-            type: Number,
-            required: true
-        }
-    })]
+    images: [Image.schema]
 }));
 
 module.exports.createProduct = function (newProduct, callback) {

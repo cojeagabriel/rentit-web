@@ -5,11 +5,15 @@ mongoose.connect(config.database);
 var Schema = mongoose.Schema;
 
 module.exports = mongoose.model('Image', new Schema({
-    fileName: {
+    name: {
         type: String,
         required: true
     },
-    mimeType: {
+    path: {
+        type: String,
+        required: true
+    },
+    type: {
         type: String,
         required: true,
         enum: [
