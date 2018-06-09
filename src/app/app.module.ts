@@ -51,6 +51,7 @@ import { RateModalComponent } from './components/product/rate-modal/rate-modal.c
 import { NgxUploaderModule } from 'ngx-uploader';
 import { ProductImagePreviewComponent } from './product-image-preview/product-image-preview.component';
 import { ProductImageUploadComponent } from './product-image-upload/product-image-upload.component';
+import { MessageComponent } from './components/message/message.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { ProductImageUploadComponent } from './product-image-upload/product-imag
     MyMessagesComponent,
     RateModalComponent,
     ProductImagePreviewComponent,
-    ProductImageUploadComponent
+    ProductImageUploadComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
@@ -107,6 +109,7 @@ import { ProductImageUploadComponent } from './product-image-upload/product-imag
           { path: 'my-rentals', component: MyRentalsComponent },
           { path: 'my-rentals/:id', component: RentalComponent },
           { path: 'my-messages', component: MyMessagesComponent },
+          { path: 'my-messages/:id', component: MessageComponent },
       ]}
     ]),
     AngularFontAwesomeModule,

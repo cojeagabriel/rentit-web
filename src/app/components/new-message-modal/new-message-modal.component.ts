@@ -14,6 +14,8 @@ export class NewMessageModalComponent implements OnInit {
 
   message: any;
   sender: string;
+  senderFirstName: string;
+  senderLastName: string;
   reciever: string;
   form: FormGroup;
 
@@ -31,9 +33,11 @@ export class NewMessageModalComponent implements OnInit {
   createForm() {
     return this.formBuilder.group({
       _senderId: this.sender,
+      senderFirstName: this.senderFirstName,
+      senderLastName: this.senderLastName,
       _recieverId: this.reciever,
-      title: this.formBuilder.control('test', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])),      
-      content: this.formBuilder.control('test', Validators.compose([Validators.required, Validators.maxLength(10000)])),
+      title: this.formBuilder.control('', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])),      
+      content: this.formBuilder.control('', Validators.compose([Validators.required, Validators.maxLength(10000)])),
       dateYear: null,
       dateMonth: null,
       dateDay: null,

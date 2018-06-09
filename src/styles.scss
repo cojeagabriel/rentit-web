@@ -119,6 +119,7 @@ label{
 pre{
     font-size: 100%;
     font-family: $font-family-sans-serif;
+    white-space: pre-wrap;
 }
 
 app-root{
@@ -335,11 +336,11 @@ ngb-datepicker{
 
 .star {
     font-size: 1.5rem;
-    color: #b0c4de;
+    color: #d3d3d3;
     font-size: 36px;
 }
 .filled {
-    color: #1e90ff;
+    color: $secondary;
 }
 .bad {
     color: #deb0b0;

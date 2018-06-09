@@ -1,6 +1,8 @@
 export interface Message {
     _id?: string,
     _senderId: string,
+    senderFirstName: string,
+    senderLastName: string,
     _recieverId: string,
     title: string,
     content: string,

@@ -1,10 +1,10 @@
 
-<div class="box-15">
-  <p>
+<div class="box-30 content d-flex flex-column">
+  <h4 class="mb-30 align-self-center">
     {{ message }}
-  </p>
+  </h4>
   <form (ngSubmit)="sendReview()" id="ngForm" [formGroup]="form" #formTest="ngForm" novalidate class="d-flex flex-column">
-    <!-- <label for="rate" >Rate</label> -->
+    <label>Rate:</label>
     <ngb-rating [(rate)]="currentRate" [formControl]="ctrl">
       <ng-template let-fill="fill" let-index="index">
         <span class="star" [class.filled]="fill === 100">&#9733;</span>
@@ -12,15 +12,22 @@
     </ngb-rating>
     <small *ngIf="formTest.submitted && ctrl.invalid" class="text-danger">Please rate us</small>
   
+    <label>Review:</label>
+    <textarea class="mt-15" placeholder="Review" formControlName="review" [ngClass]="{'has-error':(formTest.submitted && !form.controls['review'].valid), 'has-success':(formTest.submitted && form.controls['review'].valid)}"></textarea>
+    <small *ngIf="formTest.submitted && form.controls['review'].hasError('required')" class="text-danger">This field is mandatory</small>
+    <small *ngIf="formTest.submitted && form.controls['review'].hasError('maxlength')" class="text-danger">The rating must contain maximum 10000 characters</small>
+
+    <label>Title(optional):</label>
     <input class="mt-15" [ngClass]="{'has-error':(formTest.submitted && !form.controls['title'].valid), 'has-success':(formTest.submitted && form.controls['title'].valid)}"
       type="text" placeholder="Title" formControlName="title">
     <small *ngIf="formTest.submitted && form.controls['title'].hasError('minlength')" class="text-danger">The title must contain at least 3 characters</small>
     <small *ngIf="formTest.submitted && form.controls['title'].hasError('maxlength')" class="text-danger">The title must contain maximum 50 characters</small>
   
-    <textarea class="mt-15" placeholder="Message" formControlName="review" [ngClass]="{'has-error':(formTest.submitted && !form.controls['review'].valid), 'has-success':(formTest.submitted && form.controls['review'].valid)}"></textarea>
-    <small *ngIf="formTest.submitted && form.controls['review'].hasError('required')" class="text-danger">This field is mandatory</small>
-    <small *ngIf="formTest.submitted && form.controls['review'].hasError('maxlength')" class="text-danger">The rating must contain maximum 10000 characters</small>
-    <button type="submit" class="button-save mt-15" form="ngForm">
-      <fa name="paper-plane"></fa>Post review</button>
+    <div class="d-flex justify-content-center mt-30">
+      <button type="submit" class="button mr-15 " form="ngForm">
+        <fa name="paper-plane" class="mr-7"></fa>Post review</button>
+      <button type="button" class="button button-empty" (click)="hide()">Cancel</button>
+    </div>
+    
   </form>
 </div>

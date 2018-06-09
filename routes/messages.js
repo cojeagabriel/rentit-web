@@ -40,6 +40,8 @@ router.use(requireAuthenticated);
 router.post('/', (req, res, next) => {
     let newMessage = new Message({
         _senderId: req.body._senderId,
+        senderFirstName: req.body.senderFirstName,
+        senderLastName: req.body.senderLastName,
         _recieverId: req.body._recieverId,
         title: req.body.title,
         content: req.body.content,
@@ -64,6 +66,8 @@ router.put('/update/:id', (req, res, next) => {
 
     Message.update({ _id: req.params.id }, {
         _senderId: req.body._senderId,
+        senderFirstName: req.body.senderFirstName,
+        senderLastName: req.body.senderLastName,
         _recieverId: req.body._recieverId,
         title: req.body.title,
         content: req.body.content,

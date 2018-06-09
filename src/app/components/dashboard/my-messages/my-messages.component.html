@@ -5,27 +5,26 @@
 </div>
 <div class="container">
   <div class="row">
-    <div class="col-12 card">
-      <!-- <div class="filters">
-        <button>Name
-          <fa name="sort-down"></fa>
-        </button>
-        <button>Status
-          <fa name="sort-down"></fa>
-        </button>
-      </div> -->
-      <div *ngFor="let m of messages">
-        <!-- <a [routerLink]="p._id" class=" item">
-          <a [routerLink]="p._id" class="img"></a>
-          <h5>{{ p.title }}</h5>
-          <span>Active</span>
-          <div class="actions">
-            <button [routerLink]="p._id">
-              <fa name="pencil"></fa>
-            </button>
+    <div *ngIf="(messages)?.length" class="col-12 card">
+      <div *ngFor="let m of messages" class="message d-flex w-100">
+        <a [routerLink]="m._id" class="d-flex align-items-center w-100 box-15">
+          <div class="d-flex mr-15">
+            <a [routerLink]="'../../profile/'+ m._senderId" class="avatar d-flex align-items-center justify-content-center">
+              <span>{{m.senderFirstName.substring(0,1)}}{{m.senderLastName.substring(0,1)}}</span>
+            </a>
           </div>
-        </a> -->
-        <h5>{{ m.title }}</h5>
+          <div class="d-flex flex-column w-100">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="message-title">{{m.title}}</h5>
+              <div class="d-flex align-items-center">
+                <small class="date mr-7">{{m.dateDay}}/{{m.dateMonth}}/{{m.dateYear}}</small>
+                <!-- <small class="date">{{m.dateHour}}:{{m.dateMinute}}</small> -->
+              </div>
+            </div>
+            <p>{{(m.content.length>150)? (m.content | slice:0:150)+'..':(m.content)}}</p>
+          </div>
+        </a>
+
       </div>
     </div>
   </div>
