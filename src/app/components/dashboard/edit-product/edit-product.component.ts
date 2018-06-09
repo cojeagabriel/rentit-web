@@ -145,7 +145,7 @@ export class EditProductComponent implements OnInit {
   }
 
   get mainImageUrl(): string {
-    return this.imageService.getImageUrl(this.product.images[0]);
+    return this.product ? this.imageService.getImageUrl(this.product.images[0]) : '';
   }
 
 }

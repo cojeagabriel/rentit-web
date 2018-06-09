@@ -49,7 +49,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   }
 
   getProductImageUrl(product: Product): string {
-    return this.imageService.getImageStyleUrl(product.images[0]);
+    return product ? this.imageService.getImageStyleUrl(product.images[0]) : '';
   }
 
 }

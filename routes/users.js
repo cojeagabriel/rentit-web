@@ -116,6 +116,12 @@ router.post('/authenticate', (req, res, next) => {
     });
 });
 
+// Get by id
+router.get('/:id(\\w{24})', (req, res, next) => {
+    User.find({ _id: req.params.id }, function (err, user) {
+        res.json(user);
+    });
+});
 
 router.use(requireAuthenticated);
 
@@ -127,13 +133,13 @@ router.get('/', (req,res,next) => {
 });
 
 router.get('/me', (req, res) => {
+    console.log(req.decoded._id);
     User.findOne({
         _id: req.decoded._id
     }, function (err, user) {
         res.json(user);
     });
 });
-
 
 // Update
 
@@ -193,12 +199,6 @@ router.post('/delete', (req, res) => {
 });
 
 
-// Get by id
-router.get('/:id', (req, res, next) => {
-    User.find({ _id: req.params.id }, function (err, user) {
-        res.json(user);
-    });
-});
 
 
 module.exports = router;

@@ -217,6 +217,7 @@ export class ProductComponent implements OnInit {
 
     this.userService.getMe()
       .subscribe(user => {
+        console.log(user);
         this.me = user;
         this.formComments.patchValue({
           _senderId: this.me._id,
@@ -596,7 +597,7 @@ export class ProductComponent implements OnInit {
   }
 
   get mainImageUrl(): string {
-    return this.imageService.getImageUrl(this.product.images[0]);
+    return this.product ? this.imageService.getImageUrl(this.product.images[0]) : '';
   }
 
 }
