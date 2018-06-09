@@ -30,39 +30,6 @@ router.get('/:id', (req, res, next) => {
     });
 });
 
-
-// Upload image
-router.post('/:id/images', (req, res) => {
-    const form = new formidable.IncomingForm();
-
-    form.uploadDir = 'uploads';
-    form.keepExtensions = true;
-
-    form.parse(req, (err, fields, files) => {
-        if (err) {
-            res.status(403).json({ success: false, msg: err });
-        } else {
-            var newImage = new Image({
-                name: files.file.name,
-                path: files.file.path,
-                type: files.file.type,
-                size: files.file.size
-            });
-
-            Product.findByIdAndUpdate(req.params.id, {
-                $push: { images: newImage }
-            }, { 'new': true }, (err, product) => {
-                if (err) {
-                    res.status(403).json({ success: false, msg: err });
-                }
-                else {
-                    res.json(product);
-                }
-            });
-        }
-    });
-});
-
 router.use(requireAuthenticated);
 
 // Create
@@ -122,6 +89,38 @@ router.post('/delete', (req, res) => {
         }
         else {
             res.status(403).send({ success: false, message: 'Could not delete product' });
+        }
+    });
+});
+
+// Upload image
+router.post('/:id/images', (req, res) => {
+    const form = new formidable.IncomingForm();
+
+    form.uploadDir = 'uploads';
+    form.keepExtensions = true;
+
+    form.parse(req, (err, fields, files) => {
+        if (err) {
+            res.status(403).json({ success: false, msg: err });
+        } else {
+            var newImage = new Image({
+                name: files.file.name,
+                path: files.file.path,
+                type: files.file.type,
+                size: files.file.size
+            });
+
+            Product.findByIdAndUpdate(req.params.id, {
+                $push: { images: newImage }
+            }, { 'new': true }, (err, product) => {
+                if (err) {
+                    res.status(403).json({ success: false, msg: err });
+                }
+                else {
+                    res.json(product);
+                }
+            });
         }
     });
 });

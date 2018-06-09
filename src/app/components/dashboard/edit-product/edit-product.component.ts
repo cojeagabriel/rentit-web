@@ -1,10 +1,9 @@
 import { environment } from 'environments/environment';
-import { Product } from './../../../types/product.d';
+import { TokenService } from './../../../services/token.service';
+import { Product } from './../../../types/product';
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { User } from '../../../types/user';
 import { ProductService } from '../../../services/product.service';
-import { UserService } from '../../../services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { UploaderOptions, UploadFile, UploadOutput, UploadInput } from 'ngx-uploader';
@@ -35,7 +34,7 @@ export class EditProductComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private productService: ProductService,
-    private userService: UserService,
+    private tokenService: TokenService,
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) { }
@@ -151,14 +150,6 @@ export class EditProductComponent implements OnInit {
     } else if (output.type === 'drop') {
       this.dragOver = false;
     }
-
-    // // Following the current example
-    // if (output.type === 'addedToQueue') {
-    //   this.previewImagem(output.nativeFile).then(response => {
-    //     this.imagePreview = response; // The image preview
-    //     this.files.push(output.file);
-    //   });
-    // }
   }
 
   startUpload(): void {
@@ -166,7 +157,9 @@ export class EditProductComponent implements OnInit {
       type: 'uploadAll',
       url: `${environment.apiUrl}/api/products/${this.product._id}/images`,
       method: 'POST',
-      data: { foo: 'bar' }
+      headers: {
+        'x-access-token': this.tokenService.getToken()
+      }
     };
 
     this.uploadInput.emit(event);
