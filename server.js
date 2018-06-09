@@ -40,6 +40,15 @@ app.use('/api/products', products);
 const orders = require('./routes/orders');
 app.use('/api/orders', orders);
 
+const messages = require('./routes/messages');
+app.use('/api/messages', messages);
+
+const comments = require('./routes/comments');
+app.use('/api/comments', comments);
+
+const reviews = require('./routes/reviews');
+app.use('/api/reviews', reviews);
+
 
 // Send all other requests to the Angular app
 // app.get('*', (req, res) => {

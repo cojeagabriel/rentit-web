@@ -6,21 +6,38 @@
       </div>
       <div class="col-10 profile-info">
         <div>
-          <h4>{{ (user$ | async)?.firstName }} {{ (user$ | async)?.lastName }}</h4>
+          <h4>{{ (user)?.firstName }} {{ (user)?.lastName }}</h4>
           <ul>
             <li>Email:
-              <span>{{ (user$ | async)?.email }}</span>
+              <span>{{ (user)?.email }}</span>
             </li>
-            <li *ngIf="(user$ | async) != null && (user$ | async).telephone != null">Telephone:
-              <span>0{{ (user$ | async)?.telephone }}</span>
+            <li *ngIf="user != null && user.telephone != null">Telephone:
+              <span>0{{ (user)?.telephone }}</span>
             </li>
           </ul>
         </div>
-        <button routerLink="edit">Edit info</button>
+        <button (click)="showMessageModal()" class="align-self-start">Send message</button>
       </div>
     </div>
   </div>
 </section>
+<!-- <section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="d-flex">
+          <div *ngFor="let m of messages">
+            <p>Sender: {{m._senderId}}</p>
+            <p>Reciever: {{m._recieverId}}</p>
+            <h5>{{ m.title }}</h5>
+            <p>{{ m.content }}</p>
+            <small>{{ m.dateYear }}-{{m.dateMonth}}-{{m.dateDay}} {{m.dateHour}}:{{m.dateMinute}}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
 <main>
   <router-outlet>
   </router-outlet>

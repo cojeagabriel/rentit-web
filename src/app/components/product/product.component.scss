@@ -56,6 +56,13 @@ section{
 }
 
 .product-info{
+    ngb-rating{
+        margin-top: -5px;
+    }
+
+    .star{
+        font-size: 24px;
+    }
     .product-info-wrapper{
         display: flex;
         flex-direction: column;
@@ -226,4 +233,23 @@ ngb-datepicker{
         background-color: $secondary;
         border-color: $secondary-dark;
     }
+}
+
+.star {
+    position: relative;
+    display: inline-block;
+    font-size: 30px;
+    color: #d3d3d3;
+}
+.full {
+    color: $secondary;
+}
+.half {
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    color: $secondary;
+}
+.filled {
+    color: $secondary;
 }

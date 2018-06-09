@@ -48,7 +48,7 @@
               <input [ngClass]="{'has-error':(formTest.submitted && !formPersonalInfo.controls['telephone'].valid), 'has-success':(formTest.submitted
               && formPersonalInfo.controls['telephone'].valid)}" type="telephone" placeholder="Telephone number" formControlName="telephone">
               <small *ngIf="formTest.submitted && formPersonalInfo.controls['telephone'].hasError('required')" class="text-danger">This field is mandatory.</small>
-              <small *ngIf="formTest.submitted && !formPersonalInfo.controls['telephone'].hasError('required') && (formPersonalInfo.controls['telephon'].hasError('maxlength') || formPersonalInfo.controls['telephon'].hasError('minlength'))" class="text-danger">You telephone number must contain exactly 10 characters</small>
+              <small *ngIf="formTest.submitted && !formPersonalInfo.controls['telephone'].hasError('required') && (formPersonalInfo.controls['telephone'].hasError('maxlength') || formPersonalInfo.controls['telephone'].hasError('minlength'))" class="text-danger">You telephone number must contain exactly 10 characters</small>
               <small *ngIf="formTest.submitted && !formPersonalInfo.controls['telephone'].hasError('required') && !formPersonalInfo.controls['telephone'].hasError('minlength')
               && !formPersonalInfo.controls['telephone'].hasError('maxlength') && formPersonalInfo.controls['telephone'].hasError('pattern')"
                 class="text-danger">Your telephone number should contain only numbers</small>

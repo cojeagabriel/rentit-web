@@ -1,5 +1,7 @@
+import { ReviewService } from './../../services/review.service';
+import { CommentService } from './../../services/comment.service';
 import { OrderService } from './../../services/order.service';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from './../../services/user.service';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,6 +18,9 @@ import { Order } from '../../types/order';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-date';
 import { NavigationEvent } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker-view-model';
 import * as moment from 'moment';
+import { Comment } from '../../types/comment';
+import { Review } from '../../types/review';
+import { RateModalComponent } from './rate-modal/rate-modal.component';
 
 
 const equals = (one: NgbDateStruct, two: NgbDateStruct) =>
@@ -43,6 +48,12 @@ export class ProductComponent implements OnInit {
   me: User;
   product: Product;
   product$: any;
+
+  formComments: FormGroup;
+  comments: Comment[];
+  reviews: Review[];
+  rating: number;
+  reviewd = false;
 
   hoveredDate: NgbDateStruct;
 
@@ -90,27 +101,21 @@ export class ProductComponent implements OnInit {
     private modalService: BsModalService,
     private productService: ProductService,
     private userService: UserService,
+    private commentService: CommentService,
+    private reviewService: ReviewService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     calendar: NgbCalendar,
     config: NgbDatepickerConfig,
     private ngbDateParserFormatter: NgbDateParserFormatter,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private formBuilder: FormBuilder,
   ) { 
     this.today = calendar.getToday();
-    // this.fromDate = calendar.getToday();
-    // this.fromDate.day -= 1;
-    // this.toDate = calendar.getToday();
     config.minDate = { year: this.today.year, month: this.today.month, day: this.today.day };
-    this.quantity = 1;
+    this.quantity = 1;  
+    this.formComments = this.createFormComments();
   }
-
-  isDisabled = (date: NgbDateStruct) => {
-    const d = new Date(date.year, date.month - 1, date.day);
-    var idx = this.disabledDates.map(Number).indexOf(+d);
-    return idx != -1;
-  }
-
 
   ngOnInit() {
 
@@ -121,6 +126,28 @@ export class ProductComponent implements OnInit {
     );
     this.product$.subscribe(product =>{
       this.product = product[0];
+
+      this.commentService.getCommentsByProductId(this.product._id)
+        .catch(err => {
+          return Observable.throw(new Error(`${err.status} ${err.msg}`));
+        })
+        .subscribe(comments => {
+          this.comments = comments;
+        });
+
+      this.reviewService.getReviewsByProductId(this.product._id)
+        .catch(err => {
+          return Observable.throw(new Error(`${err.status} ${err.msg}`));
+        })
+        .subscribe(reviews => {
+          this.reviews = reviews;
+          this.calculateRating();
+        });
+
+      this.formComments.patchValue({
+        _productId: this.product._id
+      });
+
       this.periodCount();
       this.userService.getById(this.product._ownerId)
         .catch(err => {
@@ -182,11 +209,77 @@ export class ProductComponent implements OnInit {
     this.userService.getMe()
       .subscribe(user => {
         this.me = user;
+        this.formComments.patchValue({
+          _senderId: this.me._id,
+          senderFirstName: this.me.firstName,
+          senderLastName: this.me.lastName
+        });
       });
   }
 
+  calculateRating(){
+    let sum = 0;
+    this.reviews.forEach(rev => {
+      sum += rev.rating;
+      if(this.me._id == rev._userId)
+        this.reviewd = true;
+    });
+    this.rating = sum/this.reviews.length;
+  }
+
+  createFormComments() {
+    return this.formBuilder.group({
+      _senderId: '',
+      senderFirstName: '',
+      senderLastName: '',
+      _productId: '',
+      comment: this.formBuilder.control('', Validators.compose([Validators.required, Validators.maxLength(10000)])),
+      dateYear: null,
+      dateMonth: null,
+      dateDay: null
+    });
+  }
+
+  showRateModal(){
+    this.modalService.show(RateModalComponent, {
+      initialState: {
+        message: "Salut!",
+        _userId: this.me._id,
+        userFirstName: this.me.firstName,
+        userLastName: this.me.lastName,
+        _productId: this.product._id
+      }
+    });
+  }
+
+  postComment() {
+
+    var t = new Date();
+    var today = moment(t);
+    if (this.formComments.valid) {
+      this.formComments.patchValue({
+        dateYear: today.year(),
+        dateMonth: today.month(),
+        dateDay: today.date()
+      });
+      this.commentService.create(this.formComments.value)
+        .catch(err => {
+          return Observable.throw(new Error(`${err.status} ${err.msg}`));
+        })
+        .subscribe(comment => {
+        })
+    }
+
+  }
+
+  isDisabled = (date: NgbDateStruct) => {
+    const d = new Date(date.year, date.month - 1, date.day);
+    var idx = this.disabledDates.map(Number).indexOf(+d);
+    return idx != -1;
+  }
+
+
   buildIntervals(): void{
-    console.log(this.points);
     var intervals = [];
     var s = 0;
     var last = {
@@ -241,7 +334,6 @@ export class ProductComponent implements OnInit {
       
     }
     this.intervals = intervals;
-    console.log(this.intervals);
   }
 
   calculateIntervals(): void{
@@ -324,7 +416,6 @@ export class ProductComponent implements OnInit {
       }
 
       let c2 = parsedFrom.diff(today, 'days');
-      console.log(c + " " + c2);
       let ok = true;
       this.intervals.forEach(interval => {
         if ((this.product.quantity - this.quantity < interval.count) && (c >= interval.start && c <= interval.end))

@@ -1,3 +1,5 @@
+import { CommentService } from './services/comment.service';
+import { MessageService } from './services/message.service';
 import { MyOrdersComponent } from './components/dashboard/my-orders/my-orders.component';
 import { OrderService } from './services/order.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -38,6 +40,13 @@ import { RentModalComponent } from './components/product/rent-modal/rent-modal.c
 import { OrderComponent } from './components/order/order.component';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import * as moment from 'moment';
+import { MyRentalsComponent } from './components/dashboard/my-rentals/my-rentals.component';
+import { RentalComponent } from './components/rental/rental.component';
+import { MyProfileComponent } from './components/my-profile/my-profile.component';
+import { NewMessageModalComponent } from './components/new-message-modal/new-message-modal.component';
+import { MyMessagesComponent } from './components/dashboard/my-messages/my-messages.component';
+import { ReviewService } from './services/review.service';
+import { RateModalComponent } from './components/product/rate-modal/rate-modal.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +67,13 @@ import * as moment from 'moment';
     EditProductComponent,
     RentModalComponent,
     MyOrdersComponent,
-    OrderComponent
+    OrderComponent,
+    MyRentalsComponent,
+    RentalComponent,
+    MyProfileComponent,
+    NewMessageModalComponent,
+    MyMessagesComponent,
+    RateModalComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +86,8 @@ import * as moment from 'moment';
     RouterModule.forRoot([
       { path: '', component: HomeComponent},
       { path: 'product/:id', component: ProductComponent},
-      { path: 'profile', component: ProfileComponent, 
+      { path: 'profile/:id', component: ProfileComponent},
+      { path: 'my-profile', component: MyProfileComponent, 
         children: [
           { path: 'edit', component: EditProfileComponent }
       ]},
@@ -82,6 +98,9 @@ import * as moment from 'moment';
           { path: 'my-products/:id', component: EditProductComponent},
           { path: 'my-orders', component: MyOrdersComponent},
           { path: 'my-orders/:id', component: OrderComponent},
+          { path: 'my-rentals', component: MyRentalsComponent },
+          { path: 'my-rentals/:id', component: RentalComponent },
+          { path: 'my-messages', component: MyMessagesComponent },
       ]}
     ]),
     AngularFontAwesomeModule,
@@ -102,13 +121,18 @@ import * as moment from 'moment';
       multi: true
     },
     ProductService,
-    OrderService
+    OrderService,
+    MessageService,
+    CommentService,
+    ReviewService
   ],
   entryComponents: [
     LoginModalComponent,
     RegisterModalComponent,
     DeleteModalComponent,
-    RentModalComponent
+    RentModalComponent,
+    NewMessageModalComponent,
+    RateModalComponent
   ],
   bootstrap: [AppComponent]
 })

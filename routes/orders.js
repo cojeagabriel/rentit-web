@@ -21,6 +21,13 @@ router.get('/owner:id', (req, res, next) => {
     });
 });
 
+// Get all orders of a client
+router.get('/client:id', (req, res, next) => {
+    Order.find({ _clientId: req.params.id }, function (err, orders) {
+        res.json(orders);
+    });
+});
+
 // Get all orders of an user based on product
 router.get('/product:id', (req, res, next) => {
     Product.find({_id: req.params.id}, function (err, product){

@@ -80,7 +80,7 @@ export class EditProfileComponent implements OnInit {
         })
         .subscribe((data) => {
           this.userService.getMe().subscribe();
-          this.back();
+          // this.back();
         });
     }
   }

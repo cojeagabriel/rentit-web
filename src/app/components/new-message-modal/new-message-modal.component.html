@@ -1,0 +1,16 @@
+<p>
+  {{ message }}
+</p>
+
+<form (ngSubmit)="sendMessage()" id="ngForm" [formGroup]="form" #formTest="ngForm" novalidate class="d-flex flex-column">
+              <input [ngClass]="{'has-error':(formTest.submitted && !form.controls['title'].valid), 'has-success':(formTest.submitted && form.controls['title'].valid)}" type="text" placeholder="Title" formControlName="title">
+            <small *ngIf="formTest.submitted && form.controls['title'].hasError('required')" class="text-danger">This field is mandatory</small>
+            <small *ngIf="formTest.submitted && form.controls['title'].hasError('minlength')" class="text-danger">The title must contain at least 3 characters</small>
+            <small *ngIf="formTest.submitted && form.controls['title'].hasError('maxlength')" class="text-danger">The title must contain maximum 50 characters</small>
+
+            <textarea placeholder="Message" formControlName="content" [ngClass]="{'has-error':(formTest.submitted && !form.controls['content'].valid), 'has-success':(formTest.submitted && form.controls['content'].valid)}"></textarea>
+            <small *ngIf="formTest.submitted && form.controls['content'].hasError('required')" class="text-danger">This field is mandatory</small>
+            <small *ngIf="formTest.submitted && form.controls['content'].hasError('maxlength')" class="text-danger">The message must contain maximum 10000 characters</small>
+  <button type="submit" class="button-save" form="ngForm">
+    <fa name="paper-plane"></fa>Send message</button>
+</form>

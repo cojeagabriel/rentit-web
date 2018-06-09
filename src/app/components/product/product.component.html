@@ -3,15 +3,33 @@
 <section>
   <div class="container">
     <div class="row">
-      <div class="col-12 card">
+      <div class="col-12 card mb-15">
         <div class="row">
           <div class="col-6 product-gallery">
             <img src="assets/img/item1.jpg">
           </div>
           <div class="col-6 product-info">
             <div class="product-info-wrapper">
-              <h4 class="title">{{ (product)?.title }}</h4>
-              <p>Rentor: &nbsp;<span>{{ (user)?.lastName }}</span></p>
+              <div class="d-flex w-100 align-items-top mb-15">
+                <h4 class="title w-100 mb-0 mt-7">{{ (product)?.title }}</h4>
+                <div class="d-flex flex-column justify-content-end">
+                  <div class="d-flex align-items-center">
+                    <ngb-rating [rate]="rating" [readonly]="true" [max]="5">
+                      <ng-template let-fill="fill" let-index="index">
+                        <span class="star" [class.full]="fill === 100">
+                          <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+                        </span>
+                      </ng-template>
+                    </ngb-rating>
+                    <small class="ml-7 mr-15">{{rating | number : '1.2-2'}}</small>
+                  </div>
+                  <a *ngIf="reviews.length" class="d-flex align-self-end mr-15" href="./"><small>{{ (reviews)?.length }} reviews</small></a>
+                </div>
+                
+              </div>
+              
+             
+              <p>Rentor: &nbsp;<a [routerLink]="'../../profile/'+ (user)?._id">{{ (user)?.firstName }} {{ (user)?.lastName }}</a></p>
               <p>Location: &nbsp;<span>Bucharest</span></p>
               <div class="product-info-group">
                 <p>Price: &nbsp;
@@ -81,9 +99,41 @@
           </div>
           <div class="col-12 description">
             <h5 class="mb-7">Description</h5>
-            <pre><p><span class="tab-space"></span> {{ (product)?.description }}</p></pre>
+            <!-- <span class="tab-space"></span> -->
+            <pre><p>{{ (product)?.description }}</p></pre>
           </div>
         </div>        
+      </div>
+      
+      <div class="col-12 card mb-15">
+        <button *ngIf="!reviewd" type="button" class="button-save" (click)="showRateModal()">
+          <fa name="paper-plane"></fa>Review</button>
+        <div class="reviews d-flex flex-column w-100">
+          <div *ngFor="let r of reviews" class="card mt-15">
+            <p>{{r.review}}</p>
+            <ngb-rating [rate]="r.rating" [readonly]="true" [max]="5">
+              <ng-template let-fill="fill" let-index="index">
+                <span class="star" [class.filled]="fill === 100">&#9733;</span>
+              </ng-template>
+            </ngb-rating>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-12 card">
+        <form (ngSubmit)="postComment()" id="ngForm1" [formGroup]="formComments" #formTest="ngForm" novalidate class="d-flex flex-column">
+          <textarea placeholder="" formControlName="comment" [ngClass]="{'has-error':(formTest.submitted && !formComments.controls['comment'].valid), 'has-success':(formTest.submitted && formComments.controls['comment'].valid)}"></textarea>
+          <small *ngIf="formTest.submitted && formComments.controls['comment'].hasError('required')" class="text-danger">This field is mandatory</small>
+          <small *ngIf="formTest.submitted && formComments.controls['comment'].hasError('maxlength')" class="text-danger">The message must contain maximum 10000 characters</small>
+          <button type="submit" class="button-save" form="ngForm1">
+            <fa name="paper-plane"></fa>Post</button>
+        </form>
+        <div class="comments d-flex flex-column w-100">
+          <div *ngFor="let c of comments" class="card mt-15">
+            <a [routerLink]="'../../profile/' + c._senderId">{{c.senderFirstName}} {{c.senderLastName}}</a>
+            <p>{{c.comment}}</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
