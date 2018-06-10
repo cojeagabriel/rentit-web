@@ -20,11 +20,11 @@ router.post('/register', (req, res, next) => {
         password: req.body.password
     });
 
-    if (req.body.firstName == '' || req.body.firstName == null || req.body.lastName == '' || req.body.lastName == null || req.body.email == '' || req.body.email == null || req.body.password == '' || req.body.password == null)
-    {
-        res.status(403).send({success: false, msg: 'Ensure first name, last-name, email and password are provided'});
-    }
-    else{
+    if (!req.body.firstName || !req.body.lastName || !req.body.email || !req.body.password) {
+        res.status(400).send({ success: false, msg: 'Ensure first name, last-name, email and password are provided' });
+    } else if (req.body.password.length < 3 || req.body.password > 20) {
+        res.status(400).send({ success: false, msg: 'Password should be between 3 and 20 characters' });
+    } else {
         User.findOne({
             email: req.body.email
         }, function (err, user) {
@@ -70,8 +70,8 @@ router.post('/register', (req, res, next) => {
             }
         });
     }
-    
-    
+
+
 });
 
 // Authenticate
@@ -159,7 +159,7 @@ router.put('/update', (req, res) => {
     }
     else{
         res.status(403).send({ success: false, message: 'Wrong phone number' });
-    }   
+    }
 });
 
 
@@ -191,7 +191,7 @@ router.post('/delete', (req, res) => {
                             res.status(403).send({ success: false, message: 'Could not delete user' });
                         }
                     });
-                    
+
                 }
             });
         }

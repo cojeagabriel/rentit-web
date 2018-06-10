@@ -44,14 +44,6 @@ var emailValidator = [
     })
 ]
 
-var passwordValidator = [
-    validate({
-        validator: 'isLength',
-        arguments: [3, 20],
-        message: 'Password should be between {ARGS[0]} and {ARGS[1]} characters'
-    })
-]
-
 var phoneValidator = [
     validate({
         validator: 'matches',
@@ -87,12 +79,11 @@ module.exports = mongoose.model('User', new Schema({
     },
     password: {
         type: String,
-        required: true,
-        validate: passwordValidator
+        required: true
     },
     admin: Boolean,
     products: [{
-        type: Schema.ObjectId, 
+        type: Schema.ObjectId,
         ref: 'Product'
     }]
 }));

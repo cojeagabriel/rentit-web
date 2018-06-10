@@ -6,8 +6,11 @@ var morgan = require('morgan');
 var mongoose = require('mongoose');
 var path = require('path');
 
-var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
-var config = require('./config'); // get our config file
+const argv = require('yargs').argv;
+
+var configFile = argv.config ? './config.' + argv.config : './config';
+var config = require(configFile); // get our config file
+console.log("\nCONFIG FILE:", configFile, '\n\n');
 
 // =======================
 // configuration =========
