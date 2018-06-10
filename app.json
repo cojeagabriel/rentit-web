@@ -2,7 +2,8 @@
   "environments": {
     "test": {
       "env": {
-        "MONGO_URL": "mongodb://admin:wCUAdLAMTXybrQaMiqQE2NKf@ds253960.mlab.com:53960/rentit-dev"
+        "MONGO_URL": "mongodb://admin:wCUAdLAMTXybrQaMiqQE2NKf@ds253960.mlab.com:53960/rentit-dev",
+        "TEST": "test"
       }
     },
     "scripts": {
