@@ -1,1 +1,1 @@
-web: cd backend && npm run server.js --config=prod
+web: node server.js
