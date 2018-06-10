@@ -11,7 +11,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "mongod": "mongod",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "postinstall": "ng build --aot -prod"
   },
   "private": true,
   "dependencies": {
@@ -31,12 +32,14 @@
     "angular-font-awesome": "^3.1.2",
     "bootstrap": "^4.0.0-beta.2",
     "core-js": "^2.4.1",
+    "express": "^4.16.3",
     "font-awesome": "^4.7.0",
     "moment": "^2.22.2",
     "ngx-bootstrap": "^2.0.1",
     "ngx-dropdown": "0.0.22",
     "ngx-modal-dialog": "^2.0.1",
     "ngx-uploader": "^6.0.0",
+    "path": "^0.12.7",
     "rxjs": "^5.5.2",
     "swiper": "^4.1.6",
     "zone.js": "^0.8.14"

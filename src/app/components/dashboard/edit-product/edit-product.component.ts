@@ -17,6 +17,7 @@ import { ImageService } from 'app/image.service';
 })
 export class EditProductComponent implements OnInit {
 
+  popoverTitle: string = 'Confirm delete';
   popoverMessage: string = 'Are you sure you want to delete this product?';
   confirmClicked: boolean = false;
   cancelClicked: boolean = false;

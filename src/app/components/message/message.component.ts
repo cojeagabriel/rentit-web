@@ -18,7 +18,8 @@ export class MessageComponent implements OnInit {
   message: Message;
   user: User;
 
-  popoveuserssage: string = 'Are you sure you want to delete this message?';
+  popoverTitle: string = 'Confirm delete';
+  popoverMessage: string = 'Are you sure you want to delete this message?';
   confirmClicked: boolean = false;
   cancelClicked: boolean = false;
 

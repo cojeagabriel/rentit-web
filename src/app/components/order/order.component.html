@@ -1,6 +1,6 @@
 <div class="title title-thin">
   <div class="container">
-    <h4>Order #{{ (order)?._id }}</h4>
+    <h4>Order #{{ (order)?.id }}</h4>
     <span class="order-status" [ngClass]="{'reserved':((order)?.status=='reserved'),'started':((order)?.status=='started'),'ended':((order)?.status=='ended'),'canceled':((order)?.status=='canceled')}">{{ (order)?.status }}</span>
   </div>
 </div>

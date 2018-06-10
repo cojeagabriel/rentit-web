@@ -2,6 +2,7 @@ import { NgbDateStruct, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 
 export interface Order {
     _id?: string,
+    id?: number,
     _rentorId: string,
     _clientId: string,
     address?: string,
