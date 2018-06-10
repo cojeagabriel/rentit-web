@@ -1,6 +1,6 @@
 <div class="title title-thin">
   <div class="container">
-    <h4>Order #{{ (order)?.id }}</h4>
+    <h4>Order #{{ (order)?._id }}</h4>
     <span class="order-status" [ngClass]="{'reserved':((order)?.status=='reserved'),'started':((order)?.status=='started'),'ended':((order)?.status=='ended'),'canceled':((order)?.status=='canceled')}">{{ (order)?.status }}</span>
   </div>
 </div>
@@ -19,7 +19,7 @@
               <p>0{{ (client)?.telephone }}</p>
             </div>
           </div>
-          
+
           <div class="d-flex flex-row justify-content-between">
             <div class="d-flex flex-column mr-30">
               <label>From</label>
@@ -34,11 +34,11 @@
                 <span *ngIf="(order)?.fromDateMinute < 10">0</span>{{ (order)?.fromDateMinute }}
               </span>
             </div>
-        
+
             <div class="d-flex align-items-center">
               <fa class="text-white" name="angle-double-right"></fa>
             </div>
-        
+
             <div class="d-flex flex-column ml-30">
               <label>To</label>
               <span>
@@ -99,7 +99,7 @@
         <button *ngIf="(order)?.status=='started'" class="button align-self-end mr-15" (click)="endOrder()"><fa name="square"></fa>Finish order</button>
         <!-- <button class="button align-self-end" (click)="revert()">Revert</button> -->
       </div>
-      
+
     </div>
     <div class="col-2 submenu">
       <div class="card box-15">
