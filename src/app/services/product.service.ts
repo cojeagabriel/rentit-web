@@ -11,7 +11,7 @@ export class ProductService {
   constructor(private http: HttpClient) { }
 
   create(product: Product): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/api/products`, product);
+    return this.http.post<Product>(`${environment.apiUrl}/api/products`, product);
   }
 
   update(product: Product, id: string): Observable<any> {

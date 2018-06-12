@@ -72,8 +72,8 @@ export class NewProductComponent implements OnInit {
           this.errors = err.error.msg;
           return Observable.throw(new Error(`${err.status} ${err.msg}`));
         })
-        .subscribe(() => {
-          this.router.navigate(["/"]);
+        .subscribe((product) => {
+          this.router.navigate(["/dashboard/my-products", product._id]);
         });
     }
   }
