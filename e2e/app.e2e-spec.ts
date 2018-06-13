@@ -1,7 +1,7 @@
 import { AppPage } from './app.po';
 import { browser, by, element, Key, ExpectedConditions as EC } from 'protractor';
 
-describe('project2 App', () => {
+describe('rentit web', () => {
   let page: AppPage;
 
   beforeAll(() => {
