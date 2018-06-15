@@ -8,13 +8,13 @@
     <div class="col-12 card">
       <div class="filters">
         <button>Name <fa name="sort-down"></fa></button>
-        <button>Status <fa name="sort-down"></fa></button>
+        <!-- <button>Status <fa name="sort-down"></fa></button> -->
       </div>
-      <div *ngFor="let p of products">
+      <div *ngFor="let p of products" class="item-wrapper">
         <a [routerLink]="p._id" class=" item">
           <a [routerLink]="p._id" class="img"></a>
           <h5>{{ p.title }}</h5>
-          <span>Active</span>
+          <!-- <span>Active</span> -->
           <div class="actions">
             <button [routerLink]="p._id">
               <fa name="pencil"></fa>

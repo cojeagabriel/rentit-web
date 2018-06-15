@@ -53,15 +53,19 @@ h4 {
     }
 }
 
+.item-wrapper{
+    border-bottom: solid 1px #eee;
+    &:last-child{
+        border-bottom: 0;
+    }
+}
+
 .item{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     height: 80px;
-    &:not(:last-child){
-        border-bottom: solid 1px #eee;
-    }
 
     &:hover{
         background-color: #f8f8f8;

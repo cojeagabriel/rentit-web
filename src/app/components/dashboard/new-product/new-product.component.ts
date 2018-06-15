@@ -18,7 +18,7 @@ export class NewProductComponent implements OnInit {
   user: User | null;
   userId: string;
   errors: string;
-  category: string[]=['Electronics','Tools','Gardening'];
+  category: string[] = ['Electronics', 'Tools', 'Equipments', 'Sports', 'Furniture', 'Automobiles', 'Apartments'];
   per: string[]=['Hour','Day','Month','Year'];
 
   constructor(

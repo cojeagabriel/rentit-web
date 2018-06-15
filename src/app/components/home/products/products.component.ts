@@ -27,7 +27,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
         return Observable.throw(err);
       })
       .subscribe(products => {
-        this.products = products;
+        this.products = products.reverse();
       })
   }
 
@@ -49,7 +49,11 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   }
 
   getProductImageUrl(product: Product): string {
-    return product ? this.imageService.getImageStyleUrl(product.images[0]) : '';
+    if(product.images)
+      return this.imageService.getImageStyleUrl(product.images[0]);
+    else
+      return '';
+    // return product ? this.imageService.getImageStyleUrl(product.images[0]) : '';
   }
 
 }

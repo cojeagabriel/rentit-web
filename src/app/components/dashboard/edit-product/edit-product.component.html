@@ -11,7 +11,7 @@
           <img [src]="mainImageUrl">
 
           <app-product-image-preview
-            *ngFor="let image of product?.images"
+            *ngFor="let image of (product)?.images"
             [image]="image"
             (onRemove)="removeImage($event)"
           ></app-product-image-preview>

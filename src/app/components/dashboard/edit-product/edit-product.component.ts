@@ -25,7 +25,7 @@ export class EditProductComponent implements OnInit {
   form: FormGroup;
   product: Product;
   errors: string;
-  category: string[] = ['Electronics', 'Tools', 'Gardening'];
+  category: string[] = ['Electronics', 'Tools', 'Equipments', 'Sports', 'Furniture', 'Automobiles', 'Apartments']
   per: string[] = ['Hour', 'Day', 'Month', 'Year'];
 
   uploadInput = new EventEmitter<UploadInput>();

@@ -1,12 +1,12 @@
 <div class="title title-thin">
   <div class="container">
-    <h4>Rental #{{ (order)?._id }}</h4>
+    <h4>Rental #{{ (order)?.id }}</h4>
     <span class="order-status" [ngClass]="{'reserved':((order)?.status=='reserved'),'started':((order)?.status=='started'),'ended':((order)?.status=='ended'),'canceled':((order)?.status=='canceled')}">{{ (order)?.status }}</span>
   </div>
 </div>
 <div class="container mt-15">
   <div class="row d-flex align-items-start">
-    <div class="col-10 order-wrapper d-flex flex-column">
+    <div class="col-12 order-wrapper d-flex flex-column">
       <div class="card mb-15">
         <div class="w-100 client-info-box text-light d-flex justify-content-between box-30">
           <div class="d-flex">
@@ -92,11 +92,11 @@
       </div>
 
     </div>
-    <div class="col-2 submenu">
+    <!-- <div class="col-2 submenu">
       <div class="card box-15">
         <p>Send Email</p>
         <p>New Contract</p>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>

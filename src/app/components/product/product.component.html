@@ -78,7 +78,7 @@
                   </div>
                 </div>
                 <div class="mb-7 d-flex w-100 justify-content-center">
-                    <span class="available">maximum {{ (product)?.quantity }} available <span *ngIf="fromDate && toDate">, out of witch {{(product)?.quantity - maxim}} during this period</span>
+                    <span class="available">{{ (product)?.quantity }} available <span *ngIf="fromDate && toDate">, out of witch {{(product)?.quantity - maxim}} during this period</span>
                     </span>
                 </div>
                 <div class="rent-wrapper__segment">
