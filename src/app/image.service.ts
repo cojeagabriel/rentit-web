@@ -5,7 +5,7 @@ import { environment } from 'environments/environment';
 @Injectable()
 export class ImageService {
 
-  private defaultImage = 'http://placehold.it/200x300?text=No+preview'
+  private defaultImage = 'http://placehold.it/400x400?text=No+preview'
 
   constructor() { }
 
@@ -14,7 +14,7 @@ export class ImageService {
   }
 
   getImageUrl(image: Image): string {
-    return image ? `${environment.apiUrl}/${image.path}` : `${this.defaultImage}`;
+    return image ? image.url : this.defaultImage;
   }
 
 }
