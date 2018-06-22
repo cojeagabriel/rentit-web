@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { ImageService } from 'app/image.service';
 import { ReviewService } from './../../services/review.service';
 import { CommentService } from './../../services/comment.service';
@@ -6,7 +7,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from './../../services/user.service';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, ViewChildren, QueryList } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../types/product';
 import { switchMap } from 'rxjs/operators';
@@ -22,6 +23,9 @@ import * as moment from 'moment';
 import { Comment } from '../../types/comment';
 import { Review } from '../../types/review';
 import { RateModalComponent } from './rate-modal/rate-modal.component';
+import { Subscription } from 'rxjs';
+import { LoginModalComponent } from '../login-modal/login-modal.component';
+import { Image } from '../../types/image';
 
 
 const equals = (one: NgbDateStruct, two: NgbDateStruct) =>
@@ -49,6 +53,9 @@ export class ProductComponent implements OnInit {
   me: User;
   product: Product;
   product$: any;
+  user$: Observable<User>;
+  userSubscribe: Subscription;
+  authenticated: any;
 
   formComments: FormGroup;
   comments: Comment[];
@@ -61,7 +68,6 @@ export class ProductComponent implements OnInit {
   stars3 = 0;
   stars2 = 0;
   stars1 = 0;
-
 
   hoveredDate: NgbDateStruct;
 
@@ -105,10 +111,14 @@ export class ProductComponent implements OnInit {
     new Date(2017, 5, 13)];
   maxim: number;
 
+  images: String[] = [];
+  currentUrl: String = 'http://placehold.it/400x400?text=No+preview';
+
   constructor(
     private modalService: BsModalService,
     private productService: ProductService,
     private userService: UserService,
+    private authService: AuthService,
     private commentService: CommentService,
     private reviewService: ReviewService,
     private activatedRoute: ActivatedRoute,
@@ -135,13 +145,16 @@ export class ProductComponent implements OnInit {
     );
     this.product$.subscribe(product =>{
       this.product = product[0];
+      this.getImageUrl();
+      if(this.product)
+        this.currentUrl = this.imageService.getImageUrl(this.product.images[0]);
 
       this.commentService.getCommentsByProductId(this.product._id)
         .catch(err => {
           return Observable.throw(new Error(`${err.status} ${err.msg}`));
         })
         .subscribe(comments => {
-          this.comments = comments;
+          this.comments = comments.reverse();
         });
 
       this.reviewService.getReviewsByProductId(this.product._id)
@@ -149,7 +162,7 @@ export class ProductComponent implements OnInit {
           return Observable.throw(new Error(`${err.status} ${err.msg}`));
         })
         .subscribe(reviews => {
-          this.reviews = reviews;
+          this.reviews = reviews.reverse();
           this.calculateRating();
         });
 
@@ -188,23 +201,14 @@ export class ProductComponent implements OnInit {
               });
 
               function compare(a, b) {
-
-                let comparison = 0;
-                if (a.node > b.node) {
-                  comparison = 1;
-                } else if (a.node < b.node) {
-                  comparison = -1;
-                }
-                else{
-                  if(a.count >= b.count)
-                    comparison = -1;
-                  else
-                    comparison = 1;
-                }
-                return comparison;
+                if (a.node > b.node) return 1;
+                else if (a.node < b.node) return -1;
+                else
+                  if(a.count >= b.count) return -1;
+                  else return 1;
               }
-
               points.sort(compare);
+
               this.points = points;
 
               this.buildIntervals();
@@ -215,15 +219,25 @@ export class ProductComponent implements OnInit {
         });
     });
 
-    this.userService.getMe()
+    this.user$ = this.userService.me$;
+    this.userSubscribe = this.authService.authenticated()
+      .switchMap(authenticated => {
+        if (authenticated) {
+          return this.userService.getMe();
+        } else {
+          return Observable.of(null);
+        }
+      })
       .subscribe(user => {
-        console.log(user);
         this.me = user;
-        this.formComments.patchValue({
-          _senderId: this.me._id,
-          senderFirstName: this.me.firstName,
-          senderLastName: this.me.lastName
-        });
+        if(user){
+          this.authenticated = true;
+          this.formComments.patchValue({
+            _senderId: this.me._id,
+            senderFirstName: this.me.firstName,
+            senderLastName: this.me.lastName
+          });
+        }
       });
   }
 
@@ -272,35 +286,50 @@ export class ProductComponent implements OnInit {
   }
 
   showRateModal(){
-    this.modalService.show(RateModalComponent, {
-      initialState: {
-        message: "Share your opinion!",
-        _userId: this.me._id,
-        userFirstName: this.me.firstName,
-        userLastName: this.me.lastName,
-        _productId: this.product._id
-      }
-    });
+    if(this.authenticated){
+      this.modalService.show(RateModalComponent, {
+        initialState: {
+          message: "Share your opinion!",
+          _userId: this.me._id,
+          userFirstName: this.me.firstName,
+          userLastName: this.me.lastName,
+          _productId: this.product._id
+        }
+      });
+    }
+    else{
+      this.modalService.show(LoginModalComponent);
+    }
   }
 
   postComment() {
-
-    var t = new Date();
-    var today = moment(t);
-    if (this.formComments.valid) {
-      this.formComments.patchValue({
-        dateYear: today.year(),
-        dateMonth: today.month(),
-        dateDay: today.date()
-      });
-      this.commentService.create(this.formComments.value)
-        .catch(err => {
-          return Observable.throw(new Error(`${err.status} ${err.msg}`));
-        })
-        .subscribe(comment => {
-        })
+    if(this.authenticated){
+      var t = new Date();
+      var today = moment(t);
+      if (this.formComments.valid) {
+        this.formComments.patchValue({
+          dateYear: today.year(),
+          dateMonth: today.month(),
+          dateDay: today.date()
+        });
+        this.commentService.create(this.formComments.value)
+          .catch(err => {
+            return Observable.throw(new Error(`${err.status} ${err.msg}`));
+          })
+          .subscribe(comment => {
+          });
+        this.commentService.getCommentsByProductId(this.product._id)
+          .catch (err => {
+            return Observable.throw(new Error(`${err.status} ${err.msg}`));
+          })
+          .subscribe(comments => {
+            this.comments = comments.reverse();
+          });
+      }
     }
-
+    else{
+      this.modalService.show(LoginModalComponent);
+    }
   }
 
   isDisabled = (date: NgbDateStruct) => {
@@ -371,11 +400,9 @@ export class ProductComponent implements OnInit {
     this.intervals.forEach(interval => {
       for (var i = interval.start; i <= interval.end; i++)
         if (this.product.quantity - interval.count < this.quantity) {
-          var t = new Date();
-          t.setHours(0,0,0,0);
-          var myMoment = moment(t);
-          myMoment.add(i,'day');
-          this.disabledDates.push(myMoment.toDate());
+          var disabledDate = moment(new Date());
+          disabledDate.add(i,'day');
+          this.disabledDates.push(disabledDate.toDate());
         }
     });
   }
@@ -578,26 +605,59 @@ export class ProductComponent implements OnInit {
   }
 
   showRentModal() {
-    this.order._rentorId = this.product._ownerId;
-    this.order._clientId = this.me._id;
-    this.order._productId = this.product._id;
-    this.order.quantity = this.quantity;
-    this.order.fromDateYear = this.fromDate.year;
-    this.order.fromDateMonth = this.fromDate.month;
-    this.order.fromDateDay = this.fromDate.day;
-    this.order.fromDateHour = this.fromTime.hour;
-    this.order.fromDateMinute = this.fromTime.minute;
-    this.order.toDateYear = this.toDate.year;
-    this.order.toDateMonth = this.toDate.month;
-    this.order.toDateDay = this.toDate.day;
-    this.order.toDateHour = this.toTime.hour;
-    this.order.toDateMinute = this.toTime.minute;
-    this.orderService.setOrder(this.order);
-    this.modalService.show(RentModalComponent);
+    if(this.authenticated == true){
+      this.order._rentorId = this.product._ownerId;
+      this.order._clientId = this.me._id;
+      this.order._productId = this.product._id;
+      this.order.quantity = this.quantity;
+      this.order.fromDateYear = this.fromDate.year;
+      this.order.fromDateMonth = this.fromDate.month;
+      this.order.fromDateDay = this.fromDate.day;
+      this.order.fromDateHour = this.fromTime.hour;
+      this.order.fromDateMinute = this.fromTime.minute;
+      this.order.toDateYear = this.toDate.year;
+      this.order.toDateMonth = this.toDate.month;
+      this.order.toDateDay = this.toDate.day;
+      this.order.toDateHour = this.toTime.hour;
+      this.order.toDateMinute = this.toTime.minute;
+      this.orderService.setOrder(this.order);
+      this.modalService.show(RentModalComponent);
+    }
+    else{
+      this.modalService.show(LoginModalComponent);
+    }
   }
 
   get mainImageUrl(): string {
     return this.product ? this.imageService.getImageUrl(this.product.images[0]) : '';
+  }
+
+  
+
+  getImageUrl(){
+    this.product.images.forEach(img => {
+      this.images.push(this.imageService.getImageUrl(img))
+    });
+    console.log(this.images);
+  }
+
+  @ViewChildren('allTheseThings') things: QueryList<any>;
+
+  ngAfterViewInit() {
+    this.things.changes.subscribe(t => {
+      var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 'auto',
+        spaceBetween: 3,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+      });
+    })
   }
 
 }

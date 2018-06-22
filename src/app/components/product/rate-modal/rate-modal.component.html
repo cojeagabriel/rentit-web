@@ -5,11 +5,13 @@
   </h4>
   <form (ngSubmit)="sendReview()" id="ngForm" [formGroup]="form" #formTest="ngForm" novalidate class="d-flex flex-column">
     <label>Rate:</label>
+    
     <ngb-rating [(rate)]="currentRate" [formControl]="ctrl">
       <ng-template let-fill="fill" let-index="index">
         <span class="star" [class.filled]="fill === 100">&#9733;</span>
       </ng-template>
     </ngb-rating>
+
     <small *ngIf="formTest.submitted && ctrl.invalid" class="text-danger">Please rate us</small>
   
     <label>Review:</label>

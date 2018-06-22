@@ -43,7 +43,7 @@ describe('rentit web', () => {
     expect(page.loginButton.isPresent()).toBe(false);
     expect(page.addItemButton.isPresent()).toBe(true);
     expect(page.userMenuToggle.isPresent()).toBe(true);
-    expect(page.userMenuToggle.getText()).toContain('Hi, te');
+    expect(page.userMenuToggle.getText()).toContain('Hi, test');
   });
 
   it('should logout', async () => {

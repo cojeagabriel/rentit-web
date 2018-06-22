@@ -6,11 +6,15 @@ main{
 }
 
 section{
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: -245px;
+    // position: absolute;
+    // left: 0;
+    // right: 0;
+    
     padding: 30px 0;
+}
+
+.container{
+    margin-top: -245px;
 }
 
 .card{
@@ -126,13 +130,6 @@ section{
     p{
         margin: 0;
         color: #3f4c52;
-    }
-}
-
-.product-gallery{
-    >img{
-        width: 100%;
-        height: auto;
     }
 }
 
@@ -372,4 +369,83 @@ ngb-datepicker{
 }
 .filled {
     color: $secondary;
+}
+
+.swiper-slide{
+    cursor: pointer;
+    width: 100px;
+    height: 100px;
+    img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.swiper-button-next,
+.swiper-container-rtl .swiper-button-prev,
+.swiper-button-prev,
+.swiper-container-rtl .swiper-button-next{
+    background-image: none;
+    svg{
+        fill: $primary !important;
+    }
+}
+
+.swiper-button-next{
+margin-top: 0px;
+position: absolute;
+height: 100%;
+width: 30px;
+top: 0;
+display: flex;
+align-items: center;
+justify-content: center;
+background-color: #f8f8f8;
+right: 0px;
+transition: all 100ms ease-in-out;
+z-index: 99;
+border-left: solid 1px #ddd;
+}
+.swiper-button-prev{
+  position: absolute;
+  height: 100%;
+  width: 30px;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f8f8;
+  left: 0px;
+  margin-top: 0px;
+  transition: all 100ms ease-in-out;
+  z-index: 99;
+  border-right: solid 1px #ddd;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover{
+    background-color: $secondary;
+}
+
+.big-image{
+    height: 0;
+    padding-bottom: 100%;
+    position: relative;
+    >div{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        >img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}
+
+.swiper{
+    padding: 0 30px;
+    border: solid 1px #ddd;
+    position: relative;
 }
