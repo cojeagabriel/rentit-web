@@ -2,7 +2,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { UserService } from './../../../services/user.service';
 import { ProductService } from './../../../services/product.service';
 import { OrderService } from './../../../services/order.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbDateStruct, NgbTimeStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { Order } from '../../../types/order';
 import { Product } from '../../../types/product';
@@ -10,6 +10,7 @@ import { User } from '../../../types/user';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import { BsModalRef } from 'ngx-bootstrap';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-rent-modal',
@@ -32,6 +33,8 @@ export class RentModalComponent implements OnInit {
   toDate: NgbDateStruct;
   fromTime: NgbTimeStruct;
   toTime: NgbTimeStruct;
+
+  @Output() onResponse: EventEmitter<boolean> = new EventEmitter();
   
   constructor(
     private ngbDateParserFormatter: NgbDateParserFormatter,
@@ -92,13 +95,13 @@ export class RentModalComponent implements OnInit {
   }
 
   periodCount(): void {
-    let from = new Date(this.order.fromDateYear,this.order.fromDateMonth,this.order.fromDateDay);
-    let to = new Date(this.order.toDateYear, this.order.toDateMonth, this.order.toDateDay);
     if (this.product.pricePer == 'Day') {
-      this.count = (to.getTime() - from.getTime()) / this.one_day;
+      var from = moment(new Date(this.order.fromDateYear, this.order.fromDateMonth, this.order.fromDateDay));
+      var to = moment(new Date(this.order.toDateYear, this.order.toDateMonth, this.order.toDateDay));
+      this.count = to.diff(from, 'days') + 1;
     }
     else if (this.product.pricePer == 'Hour') {
-      this.count = (to.getTime() - from.getTime()) / this.one_hour;
+      // this.count = (this.to.getTime() - this.from.getTime()) / this.one_hour;
     }
     else {
       this.count = 0;
@@ -129,6 +132,7 @@ export class RentModalComponent implements OnInit {
           return Observable.throw(new Error(`${err.status} ${err.msg}`));
         })
         .subscribe(order => {
+          this.onResponse.emit(true);
           this.bsModalRef.hide();
         })
     }

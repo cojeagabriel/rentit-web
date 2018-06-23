@@ -8,6 +8,7 @@ import { Product } from '../../types/product';
 import { User } from '../../types/user';
 import { Observable } from 'rxjs/Observable';
 import { NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-order',
@@ -25,6 +26,12 @@ export class OrderComponent implements OnInit {
   to: Date;
   one_day = 1000 * 60 * 60 * 24;
   one_hour = 1000 * 60 * 60;
+
+  orders: Order[];
+  points: any;
+  intervals: any;
+  disabledDates: Date[] = [];
+  maxim: number;
 
   constructor(
     private orderService: OrderService,
@@ -58,30 +65,161 @@ export class OrderComponent implements OnInit {
           .subscribe(product => {
             this.product = product[0];
             this.periodCount();
+
+            this.orderService.getOrdersByProductId(this.product._id)
+              .catch(err => {
+                return Observable.throw(new Error(`${err.status} ${err.msg}`));
+              })
+              .subscribe(orders => {
+                this.orders = orders;
+                let points = [];
+
+                this.orders.forEach(order => {
+                  if ((order.status == 'reserved' || order.status == 'started') && order._id != this.order._id) {
+                    var t = new Date();
+                    t.setHours(0, 0, 0, 0);
+                    var today = moment(t);
+                    var from = moment(new Date(order.fromDateYear, order.fromDateMonth - 1, order.fromDateDay));
+                    var to = moment(new Date(order.toDateYear, order.toDateMonth - 1, order.toDateDay));
+                    var c = from.diff(today, 'days');
+                    points.push({ node: c, count: order.quantity });
+                    var c = to.diff(today, 'days');
+                    points.push({ node: c, count: -order.quantity });
+                  }
+                });
+
+                function compare(a, b) {
+                  if (a.node > b.node) return 1;
+                  else if (a.node < b.node) return -1;
+                  else
+                    if (a.count >= b.count) return -1;
+                    else return 1;
+                }
+                points.sort(compare);
+
+                this.points = points;
+
+                this.buildIntervals();
+
+                this.calculateIntervals();
+                // this.calculateIsDisabled();
+                this.calculateIntersection(this.from, this.to);
+              });
+
           });
       })
   }
 
-  quantityPlus(): void {
-    if (this.quantity < this.product.available) {
-      this.quantity = this.quantity + 1
+  buildIntervals(): void {
+    var intervals = [];
+    var s = 0;
+    var last = {
+      node: 0,
+      count: 0
     }
+    var i, j;
+    if (this.points.length)
+      last = { node: this.points[0].node, count: this.points[0].count };
+    i = 1;
+    while (i < this.points.length) {
+      if (this.points[i].count > 0) {
+        while (this.points[i].node == last.node && this.points[i].count > 0) {
+          last.count += this.points[i].count;
+          i++;
+        }
+        if (this.points[i].node == last.node) {
+          s = 0;
+          while (this.points[i].node == last.node && this.points[i].count < 0) {
+            s += this.points[i].count;
+            i++;
+          }
+          intervals.push({ start: last.node, end: last.node, count: last.count });
+          last = { node: last.node + 1, count: last.count + s };
+        }
+        else if (this.points[i].count > 0) {
+          intervals.push({ start: last.node, end: this.points[i].node - 1, count: last.count });
+          last = { node: this.points[i].node, count: last.count };
+        }
+        else if (this.points[i].count < 0) {
+          s = this.points[i].count;
+          i++;
+          while (i < this.points.length && this.points[i].node == this.points[i - 1].node) {
+            s += this.points[i].count;
+            i++;
+          }
+          intervals.push({ start: last.node, end: this.points[i - 1].node, count: last.count });
+          last = { node: this.points[i - 1].node + 1, count: last.count + s };
+        }
+
+      }
+      else {
+        s = this.points[i].count;
+        i++;
+        while (i < this.points.length && this.points[i].node == this.points[i - 1].node && this.points[i].count < 0) {
+          s += this.points[i].count;
+          i++;
+        }
+        intervals.push({ start: last.node, end: this.points[i - 1].node, count: last.count });
+        last = { node: last.node + 1, count: last.count + s };
+      }
+
+    }
+    this.intervals = intervals;
+    // console.log(this.intervals);
+  }
+
+  calculateIntervals(): void {
+    this.intervals.forEach(interval => {
+      for (var i = interval.start; i <= interval.end; i++)
+        if (this.product.quantity - interval.count < this.quantity) {
+          var disabledDate = moment(new Date());
+          disabledDate.add(i, 'day');
+          this.disabledDates.push(disabledDate.toDate());
+        }
+    });
+  }
+
+  calculateIntersection(from: Date, to: Date) {
+    from.setMonth(from.getMonth()-1);
+    to.setMonth(to.getMonth()-1);
+    let parsedFrom = moment(from.setHours(0, 0, 0, 0));
+    let parsedTo = moment(to.setHours(0, 0, 0, 0));
+    let t = new Date();
+    t.setHours(0, 0, 0, 0);
+    let today = moment(t);
+    let node1 = parsedFrom.diff(today, 'days');
+    let node2 = parsedTo.diff(today, 'days');
+    this.maxim = 0;
+    let ok = true;
+    this.intervals.forEach(interval => {
+      if ((interval.start >= node1 && interval.start <= node2) || (interval.end >= node1 && interval.end <= node2))
+        if (interval.count > this.maxim)
+          this.maxim = interval.count;
+      if ((this.product.quantity - this.quantity < interval.count) && ((interval.start >= node1 && interval.start <= node2) || (interval.end >= node1 && interval.end <= node2)))
+        ok = false;
+    });
+  }
+
+  quantityPlus(): void {
+    if (this.quantity < this.product.quantity - this.maxim)
+      this.quantity = this.quantity + 1;
   }
 
   quantityMinus(): void {
-    if (this.quantity > 1) {
-      this.quantity = this.quantity - 1
-    }
+    if (this.quantity > 1)
+      this.quantity = this.quantity - 1;
   }
 
   periodCount(): void {
-    let from = new Date(this.order.fromDateYear, this.order.fromDateMonth, this.order.fromDateDay);
-    let to = new Date(this.order.toDateYear, this.order.toDateMonth, this.order.toDateDay);
+    this.from = new Date(this.order.fromDateYear, this.order.fromDateMonth, this.order.fromDateDay);
+    this.to = new Date(this.order.toDateYear, this.order.toDateMonth, this.order.toDateDay);
     if (this.product.pricePer == 'Day') {
-      this.count = (to.getTime() - from.getTime()) / this.one_day;
+      var from = moment(this.from);
+      var to = moment(this.to);
+      this.count = to.diff(from, 'days') + 1;
     }
     else if (this.product.pricePer == 'Hour') {
-      this.count = (to.getTime() - from.getTime()) / this.one_hour;
+      this.count = (this.to.getTime() - this.from.getTime()) / this.one_hour;
     }
     else {
       this.count = 0;
@@ -96,7 +234,6 @@ export class OrderComponent implements OnInit {
     else
       this.order.status='reserved';
 
-    this.product.available=this.product.available-this.quantity;
     this.productService.update(this.product, this.product._id)
       .catch(err => {
         return Observable.throw(new Error(`${err.status} ${err.msg}`));
@@ -114,7 +251,6 @@ export class OrderComponent implements OnInit {
 
   cancelOrder(): void{
     this.order.status='canceled';
-    this.product.available += this.order.quantity;
 
     this.productService.update(this.product, this.product._id)
       .catch(err => {
@@ -135,7 +271,6 @@ export class OrderComponent implements OnInit {
 
   endOrder(): void{
     this.order.status = 'ended';
-    this.product.available += this.order.quantity;
     this.productService.update(this.product, this.product._id)
       .catch(err => {
         return Observable.throw(new Error(`${err.status} ${err.msg}`));
@@ -153,7 +288,6 @@ export class OrderComponent implements OnInit {
 
   revert(): void{
     this.order.status = 'reserved';
-    this.product.available = this.product.quantity;
 
     this.productService.update(this.product, this.product._id)
       .catch(err => {

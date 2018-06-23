@@ -8,6 +8,7 @@ import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { User } from '../../types/user';
 import { Product } from '../../types/product';
 import { Order } from '../../types/order';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-rental',
@@ -63,13 +64,15 @@ export class RentalComponent implements OnInit {
   }
 
   periodCount(): void {
-    let from = new Date(this.order.fromDateYear, this.order.fromDateMonth, this.order.fromDateDay);
-    let to = new Date(this.order.toDateYear, this.order.toDateMonth, this.order.toDateDay);
+    this.from = new Date(this.order.fromDateYear, this.order.fromDateMonth, this.order.fromDateDay);
+    this.to = new Date(this.order.toDateYear, this.order.toDateMonth, this.order.toDateDay);
     if (this.product.pricePer == 'Day') {
-      this.count = (to.getTime() - from.getTime()) / this.one_day;
+      var from = moment(this.from);
+      var to = moment(this.to);
+      this.count = to.diff(from, 'days') + 1;
     }
     else if (this.product.pricePer == 'Hour') {
-      this.count = (to.getTime() - from.getTime()) / this.one_hour;
+      this.count = (this.to.getTime() - this.from.getTime()) / this.one_hour;
     }
     else {
       this.count = 0;

@@ -243,6 +243,11 @@ export class ProductComponent implements OnInit {
 
   calculateRating(){
     let sum = 0;
+    this.stars1 = 0;
+    this.stars2 = 0;
+    this.stars3 = 0;
+    this.stars4 = 0;
+    this.stars5 = 0;
     this.reviews.forEach(rev => {
       sum += rev.rating;
       if(this.me._id == rev._userId){
@@ -287,13 +292,26 @@ export class ProductComponent implements OnInit {
 
   showRateModal(){
     if(this.authenticated){
-      this.modalService.show(RateModalComponent, {
+      const modalRef = this.modalService.show(RateModalComponent, {
         initialState: {
           message: "Share your opinion!",
           _userId: this.me._id,
           userFirstName: this.me.firstName,
           userLastName: this.me.lastName,
           _productId: this.product._id
+        }
+      });
+      const modalContent = modalRef.content as RateModalComponent;
+      modalContent.onResponse.subscribe(res => {
+        if(res){
+          this.reviewService.getReviewsByProductId(this.product._id)
+            .catch(err => {
+              return Observable.throw(new Error(`${err.status} ${err.msg}`));
+            })
+            .subscribe(reviews => {
+              this.reviews = reviews.reverse();
+              this.calculateRating();
+            });
         }
       });
     }
@@ -400,7 +418,9 @@ export class ProductComponent implements OnInit {
     this.intervals.forEach(interval => {
       for (var i = interval.start; i <= interval.end; i++)
         if (this.product.quantity - interval.count < this.quantity) {
-          var disabledDate = moment(new Date());
+          var t = new Date();
+          t.setHours(0, 0, 0, 0);
+          var disabledDate = moment(t);
           disabledDate.add(i,'day');
           this.disabledDates.push(disabledDate.toDate());
         }
@@ -575,9 +595,9 @@ export class ProductComponent implements OnInit {
   }
 
   quantityPlus(): void {
-    if (this.quantity < this.product.quantity) {
+    if (this.quantity < this.product.quantity)
         this.quantity= this.quantity + 1
-    }
+    
 
     this.disabledDates = [];
 
@@ -621,7 +641,55 @@ export class ProductComponent implements OnInit {
       this.order.toDateHour = this.toTime.hour;
       this.order.toDateMinute = this.toTime.minute;
       this.orderService.setOrder(this.order);
-      this.modalService.show(RentModalComponent);
+      const modalRef = this.modalService.show(RentModalComponent);
+      const modalContent = modalRef.content as RentModalComponent;
+      modalContent.onResponse.subscribe(res => {
+        if(res){
+          this.orderService.getOrdersByProductId(this.product._id)
+            .catch(err => {
+              return Observable.throw(new Error(`${err.status} ${err.msg}`));
+            })
+            .subscribe(orders => {
+              this.orders = orders;
+              let points = [];
+
+              this.orders.forEach(order => {
+                if (order.status == 'reserved' || order.status == 'started') {
+                  var t = new Date();
+                  t.setHours(0, 0, 0, 0);
+                  var today = moment(t);
+                  var from = moment(new Date(order.fromDateYear, order.fromDateMonth - 1, order.fromDateDay));
+                  var to = moment(new Date(order.toDateYear, order.toDateMonth - 1, order.toDateDay));
+                  var c = from.diff(today, 'days');
+                  points.push({ node: c, count: order.quantity });
+                  var c = to.diff(today, 'days');
+                  points.push({ node: c, count: -order.quantity });
+                }
+              });
+
+              function compare(a, b) {
+                if (a.node > b.node) return 1;
+                else if (a.node < b.node) return -1;
+                else
+                  if (a.count >= b.count) return -1;
+                  else return 1;
+              }
+              points.sort(compare);
+
+              this.points = points;
+
+              this.buildIntervals();
+
+              this.calculateIntervals();
+              this.calculateIsDisabled();
+              this.quantity = 1;
+              if (this.calculateIntersection(this.fromDate, this.toDate) == false) {
+                this.toDate = null;
+                this.fromDate = null;
+              }
+            });
+        }
+      });
     }
     else{
       this.modalService.show(LoginModalComponent);

@@ -25,13 +25,11 @@
               <label>From</label>
               <span>
                 <fa name="calendar" class="mr-7"></fa>
-                <span *ngIf="(order)?.fromDateDay < 10">0</span>{{ (order)?.fromDateDay }}-
-                <span *ngIf="(order)?.fromDateMonth < 10">0</span>{{ (order)?.fromDateMonth + '-' + (order)?.fromDateYear }}
+                <span *ngIf="(order)?.fromDateDay < 10">0</span>{{ (order)?.fromDateDay }}-<span *ngIf="(order)?.fromDateMonth < 10">0</span>{{ (order)?.fromDateMonth + '-' + (order)?.fromDateYear }}
               </span>
               <span>
                 <fa name="clock-o" class="mr-7"></fa>
-                <span *ngIf="(order)?.fromDateHour < 10">0</span>{{ (order)?.fromDateHour }}:
-                <span *ngIf="(order)?.fromDateMinute < 10">0</span>{{ (order)?.fromDateMinute }}
+                <span *ngIf="(order)?.fromDateHour < 10">0</span>{{ (order)?.fromDateHour }}:<span *ngIf="(order)?.fromDateMinute < 10">0</span>{{ (order)?.fromDateMinute }}
               </span>
             </div>
 
@@ -43,13 +41,11 @@
               <label>To</label>
               <span>
                 <fa name="calendar" class="mr-7"></fa>
-                <span *ngIf="(order)?.toDateDay < 10">0</span>{{ (order)?.toDateDay }}-
-                <span *ngIf="(order)?.toDateMonth < 10">0</span>{{ (order)?.toDateMonth + '-' + (order)?.toDateYear }}
+                <span *ngIf="(order)?.toDateDay < 10">0</span>{{ (order)?.toDateDay }}-<span *ngIf="(order)?.toDateMonth < 10">0</span>{{ (order)?.toDateMonth + '-' + (order)?.toDateYear }}
               </span>
               <span>
                 <fa name="clock-o" class="mr-7"></fa>
-                <span *ngIf="(order)?.toDateHour < 10">0</span>{{ (order)?.toDateHour }}:
-                <span *ngIf="(order)?.toDateMinute < 10">0</span>{{ (order)?.toDateMinute }}
+                <span *ngIf="(order)?.toDateHour < 10">0</span>{{ (order)?.toDateHour }}:<span *ngIf="(order)?.toDateMinute < 10">0</span>{{ (order)?.toDateMinute }}
               </span>
             </div>
           </div>
@@ -71,8 +67,8 @@
           <span class="img mr-15">
           </span>
           <span class="product-name">{{ (product)?.title }}</span>
-          <span class="available mr-30" *ngIf="(order)?.status=='reserved'">{{ (product)?.available - quantity }} left</span>
-          <span class="available mr-30" *ngIf="(order)?.status!='reserved'">{{ (product)?.available }} left</span>
+          <span class="available mr-30" *ngIf="(order)?.status=='reserved'">{{ (product)?.quantity - maxim - quantity }} left</span>
+          <!-- <span class="available mr-30" *ngIf="(order)?.status!='reserved'">{{ maximum }} left</span> -->
           <div class="mr-30">
             <div class="quantity-wrapper" *ngIf="(order)?.status=='reserved'">
               <span (click)="quantityMinus()">-</span>

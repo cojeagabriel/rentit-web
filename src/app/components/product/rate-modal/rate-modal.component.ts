@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
@@ -22,6 +22,8 @@ export class RateModalComponent implements OnInit {
   currentRate = 0;
 
   ctrl = new FormControl(null, Validators.required);
+
+  @Output() onResponse: EventEmitter<boolean> = new EventEmitter();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -69,6 +71,7 @@ export class RateModalComponent implements OnInit {
           return Observable.throw(new Error(`${err.status} ${err.msg}`));
         })
         .subscribe(review => {
+          this.onResponse.emit(true);
           this.bsModalRef.hide();
         })
     }

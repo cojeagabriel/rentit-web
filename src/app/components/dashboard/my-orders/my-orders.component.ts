@@ -26,7 +26,7 @@ export class MyOrdersComponent implements OnInit {
             return Observable.throw(err);
           })
           .subscribe(orders => {
-            this.orders = orders;
+            this.orders = orders.reverse();
           });
       });
   }
