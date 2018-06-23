@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../../../types/product';
 import { ProductService } from '../../../services/product.service';
 import { Observable } from 'rxjs/Observable';
+import { ImageService } from '../../../image.service';
 
 @Component({
   selector: 'app-my-products',
@@ -15,7 +16,8 @@ export class MyProductsComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private userService: UserService
+    private userService: UserService,
+    private imageService: ImageService
   ) { }
 
   ngOnInit() {
@@ -29,7 +31,10 @@ export class MyProductsComponent implements OnInit {
             this.products = products;
           });
       });
-    
+  }
+
+  mainImageUrl(product: Product): string {
+    return product ? this.imageService.getImageUrl(product.images[0]) : '';
   }
 
 }

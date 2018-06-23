@@ -28,12 +28,11 @@
               
                     <div class="swiper-slide" *ngFor="let img of images">
                       <div>
-                        <img [src]="img">
+                        <img [src]="img" (click)="currentUrl = img">
                       </div>
                     </div>
                     
                   </div>
-                  <!-- <div class="swiper-pagination"></div> -->
                 </div>
               
                 <div class="swiper-button-prev">

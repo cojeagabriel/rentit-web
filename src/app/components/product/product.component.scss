@@ -405,7 +405,6 @@ background-color: #f8f8f8;
 right: 0px;
 transition: all 100ms ease-in-out;
 z-index: 99;
-border-left: solid 1px #ddd;
 }
 .swiper-button-prev{
   position: absolute;
@@ -420,7 +419,6 @@ border-left: solid 1px #ddd;
   margin-top: 0px;
   transition: all 100ms ease-in-out;
   z-index: 99;
-  border-right: solid 1px #ddd;
 }
 
 .swiper-button-next:hover,
@@ -448,4 +446,8 @@ border-left: solid 1px #ddd;
     padding: 0 30px;
     border: solid 1px #ddd;
     position: relative;
+    .slider{
+        border-left: solid 1px #ddd;
+        border-right: solid 1px #ddd;
+    }
 }

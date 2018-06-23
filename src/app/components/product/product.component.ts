@@ -25,7 +25,6 @@ import { Review } from '../../types/review';
 import { RateModalComponent } from './rate-modal/rate-modal.component';
 import { Subscription } from 'rxjs';
 import { LoginModalComponent } from '../login-modal/login-modal.component';
-import { Image } from '../../types/image';
 
 
 const equals = (one: NgbDateStruct, two: NgbDateStruct) =>
@@ -626,70 +625,72 @@ export class ProductComponent implements OnInit {
 
   showRentModal() {
     if(this.authenticated == true){
-      this.order._rentorId = this.product._ownerId;
-      this.order._clientId = this.me._id;
-      this.order._productId = this.product._id;
-      this.order.quantity = this.quantity;
-      this.order.fromDateYear = this.fromDate.year;
-      this.order.fromDateMonth = this.fromDate.month;
-      this.order.fromDateDay = this.fromDate.day;
-      this.order.fromDateHour = this.fromTime.hour;
-      this.order.fromDateMinute = this.fromTime.minute;
-      this.order.toDateYear = this.toDate.year;
-      this.order.toDateMonth = this.toDate.month;
-      this.order.toDateDay = this.toDate.day;
-      this.order.toDateHour = this.toTime.hour;
-      this.order.toDateMinute = this.toTime.minute;
-      this.orderService.setOrder(this.order);
-      const modalRef = this.modalService.show(RentModalComponent);
-      const modalContent = modalRef.content as RentModalComponent;
-      modalContent.onResponse.subscribe(res => {
-        if(res){
-          this.orderService.getOrdersByProductId(this.product._id)
-            .catch(err => {
-              return Observable.throw(new Error(`${err.status} ${err.msg}`));
-            })
-            .subscribe(orders => {
-              this.orders = orders;
-              let points = [];
+      if(this.fromDate && this.toDate){
+        this.order._rentorId = this.product._ownerId;
+        this.order._clientId = this.me._id;
+        this.order._productId = this.product._id;
+        this.order.quantity = this.quantity;
+        this.order.fromDateYear = this.fromDate.year;
+        this.order.fromDateMonth = this.fromDate.month;
+        this.order.fromDateDay = this.fromDate.day;
+        this.order.fromDateHour = this.fromTime.hour;
+        this.order.fromDateMinute = this.fromTime.minute;
+        this.order.toDateYear = this.toDate.year;
+        this.order.toDateMonth = this.toDate.month;
+        this.order.toDateDay = this.toDate.day;
+        this.order.toDateHour = this.toTime.hour;
+        this.order.toDateMinute = this.toTime.minute;
+        this.orderService.setOrder(this.order);
+        const modalRef = this.modalService.show(RentModalComponent);
+        const modalContent = modalRef.content as RentModalComponent;
+        modalContent.onResponse.subscribe(res => {
+          if (res) {
+            this.orderService.getOrdersByProductId(this.product._id)
+              .catch(err => {
+                return Observable.throw(new Error(`${err.status} ${err.msg}`));
+              })
+              .subscribe(orders => {
+                this.orders = orders;
+                let points = [];
 
-              this.orders.forEach(order => {
-                if (order.status == 'reserved' || order.status == 'started') {
-                  var t = new Date();
-                  t.setHours(0, 0, 0, 0);
-                  var today = moment(t);
-                  var from = moment(new Date(order.fromDateYear, order.fromDateMonth - 1, order.fromDateDay));
-                  var to = moment(new Date(order.toDateYear, order.toDateMonth - 1, order.toDateDay));
-                  var c = from.diff(today, 'days');
-                  points.push({ node: c, count: order.quantity });
-                  var c = to.diff(today, 'days');
-                  points.push({ node: c, count: -order.quantity });
+                this.orders.forEach(order => {
+                  if (order.status == 'reserved' || order.status == 'started') {
+                    var t = new Date();
+                    t.setHours(0, 0, 0, 0);
+                    var today = moment(t);
+                    var from = moment(new Date(order.fromDateYear, order.fromDateMonth - 1, order.fromDateDay));
+                    var to = moment(new Date(order.toDateYear, order.toDateMonth - 1, order.toDateDay));
+                    var c = from.diff(today, 'days');
+                    points.push({ node: c, count: order.quantity });
+                    var c = to.diff(today, 'days');
+                    points.push({ node: c, count: -order.quantity });
+                  }
+                });
+
+                function compare(a, b) {
+                  if (a.node > b.node) return 1;
+                  else if (a.node < b.node) return -1;
+                  else
+                    if (a.count >= b.count) return -1;
+                    else return 1;
+                }
+                points.sort(compare);
+
+                this.points = points;
+
+                this.buildIntervals();
+
+                this.calculateIntervals();
+                this.calculateIsDisabled();
+                this.quantity = 1;
+                if (this.calculateIntersection(this.fromDate, this.toDate) == false) {
+                  this.toDate = null;
+                  this.fromDate = null;
                 }
               });
-
-              function compare(a, b) {
-                if (a.node > b.node) return 1;
-                else if (a.node < b.node) return -1;
-                else
-                  if (a.count >= b.count) return -1;
-                  else return 1;
-              }
-              points.sort(compare);
-
-              this.points = points;
-
-              this.buildIntervals();
-
-              this.calculateIntervals();
-              this.calculateIsDisabled();
-              this.quantity = 1;
-              if (this.calculateIntersection(this.fromDate, this.toDate) == false) {
-                this.toDate = null;
-                this.fromDate = null;
-              }
-            });
-        }
-      });
+          }
+        });
+      }
     }
     else{
       this.modalService.show(LoginModalComponent);
@@ -706,7 +707,6 @@ export class ProductComponent implements OnInit {
     this.product.images.forEach(img => {
       this.images.push(this.imageService.getImageUrl(img))
     });
-    console.log(this.images);
   }
 
   @ViewChildren('allTheseThings') things: QueryList<any>;
@@ -715,7 +715,7 @@ export class ProductComponent implements OnInit {
     this.things.changes.subscribe(t => {
       var swiper = new Swiper('.swiper-container', {
         slidesPerView: 'auto',
-        spaceBetween: 3,
+        spaceBetween: 0,
         pagination: {
           el: '.swiper-pagination',
           clickable: true,

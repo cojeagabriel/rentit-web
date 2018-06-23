@@ -12,11 +12,13 @@
       </div>
       <div *ngFor="let p of products" class="item-wrapper">
         <a [routerLink]="p._id" class=" item">
-          <a [routerLink]="p._id" class="img"></a>
+          <div class="img">
+            <img [src]="mainImageUrl(p)">
+          </div>
           <h5>{{ p.title }}</h5>
           <!-- <span>Active</span> -->
           <div class="actions">
-            <button [routerLink]="p._id">
+            <button>
               <fa name="pencil"></fa>
             </button>
           </div>

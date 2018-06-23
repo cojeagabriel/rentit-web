@@ -1,9 +1,10 @@
+import { ImageService } from 'app/image.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { UserService } from './../../../services/user.service';
 import { ProductService } from './../../../services/product.service';
 import { OrderService } from './../../../services/order.service';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { NgbDateStruct, NgbTimeStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { NgbDateStruct, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Order } from '../../../types/order';
 import { Product } from '../../../types/product';
 import { User } from '../../../types/user';
@@ -37,12 +38,12 @@ export class RentModalComponent implements OnInit {
   @Output() onResponse: EventEmitter<boolean> = new EventEmitter();
   
   constructor(
-    private ngbDateParserFormatter: NgbDateParserFormatter,
     private orderService: OrderService,
     private productService: ProductService,
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private bsModalRef: BsModalRef
+    private bsModalRef: BsModalRef,
+    private imageService: ImageService
   ) { }
 
   ngOnInit() {
@@ -136,6 +137,10 @@ export class RentModalComponent implements OnInit {
           this.bsModalRef.hide();
         })
     }
+  }
+
+  get mainImageUrl(): string {
+    return this.product ? this.imageService.getImageUrl(this.product.images[0]) : '';
   }
 
 }
