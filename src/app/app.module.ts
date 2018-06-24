@@ -52,6 +52,7 @@ import { NgxUploaderModule } from 'ngx-uploader';
 import { ProductImagePreviewComponent } from './product-image-preview/product-image-preview.component';
 import { ProductImageUploadComponent } from './product-image-upload/product-image-upload.component';
 import { MessageComponent } from './components/message/message.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { MessageComponent } from './components/message/message.component';
     RateModalComponent,
     ProductImagePreviewComponent,
     ProductImageUploadComponent,
-    MessageComponent
+    MessageComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

@@ -30,6 +30,10 @@ export class ProductService {
     return this.http.get<Product[]>(`${environment.apiUrl}/api/products/owner${id}`);
   }
 
+  getProductsByCategory(category: string): Observable<Product[]> {
+    return this.http.get<Product[]>(`${environment.apiUrl}/api/products/category${category}`);
+  }
+
   getById(id: string): Observable<Product>{
     return this.http.get<Product>(`${environment.apiUrl}/api/products/${id}`);
   }

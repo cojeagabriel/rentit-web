@@ -1,5 +1,9 @@
 <app-search></app-search>
 <main class="w-100">
-    <app-products></app-products>
+    <app-products [title]="'Latest products'" [id]="1"></app-products>
+    <app-products [title]="'Tools'" [category]="'Tools'" [id]="2"></app-products>
+    <app-products [title]="'Equipments'" [category]="'Equipments'" [id]="3"></app-products>
 </main>
+<app-footer>
+</app-footer>
 

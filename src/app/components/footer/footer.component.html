@@ -1,0 +1,64 @@
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-3">
+        <a routerLink="/" class="logo-link">
+          <img src="assets/img/logo4.png"> Rent
+          <span>IT</span>
+        </a>
+        <small class="mb-30 d-flex">
+          Rent it is a platform dedicated to renting. You can rent products and post your own products for rent as well.
+        </small>
+        <small>&copy; 2018</small>
+      </div>
+      <div class="col-2 offset-1">
+        <h5 class="footer-title">Rent</h5>
+        <ul>
+          <li><a routerLink="/"><small>Electronics</small></a></li>
+          <li><a routerLink="/"><small>Tools</small></a></li>
+          <li><a routerLink="/"><small>Equipments</small></a></li>
+          <li><a routerLink="/"><small>Sports</small></a></li>
+          <li><a routerLink="/"><small>Furniture</small></a></li>
+          <li><a routerLink="/"><small>Automobiles</small></a></li>
+          <li><a routerLink="/"><small>Aparments</small></a></li>
+        </ul>
+      </div>
+      <div class="col-2 offset-1">
+        <h5 class="footer-title" *ngIf="!user">Become a member</h5>
+        <ul *ngIf="!user">
+          <li>
+            <button (click)="showLoginModal()" class="pl-0">
+              <small>Login</small>
+            </button>
+          </li>
+          <li>
+            <button (click)="showRegisterModal()" class="pl-0">
+              <small>Register</small>
+            </button>
+          </li>
+        </ul>
+        
+        <h5 *ngIf="user" class="user footer-title pl-0">
+          Hi,
+          <span>{{ (user$ | async).firstName}}</span>
+          <span>{{ (user$ | async).lastName}}</span>
+        </h5>
+        <ul *ngIf="user">
+          <li><a routerLink="/dashboard/my-rentals"><small>Rentals</small></a></li>
+          <li><a routerLink="/dashboard/my-products"><small>Products</small></a></li>
+          <li><a routerLink="/dashboard/my-orders"><small>Orders</small></a></li>
+          <li><a routerLink="/dashboard/my-messages"><small>Messages</small></a></li>
+          <li><a routerLink="/dashboard/my-profile"><small>Profile</small></a></li>
+          <li><a routerLink="/" (click)="logout()"><small>Logout</small></a></li>
+        </ul>
+      </div>
+      <div class="col-2 offset-1">
+        <h5 class="footer-title">Folow us</h5>
+        <ul>
+          <li><a routerLink="/" class="d-flex align-items-center"><fa name="facebook-official" class="mr-7"></fa><small>Facebook</small></a></li>
+          <li><a routerLink="/" class="d-flex align-items-center"><fa name="instagram" class="mr-7"></fa><small>Instagram</small></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>

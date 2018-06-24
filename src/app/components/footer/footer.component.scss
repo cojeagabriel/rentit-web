@@ -1,0 +1,42 @@
+@import '~assets/scss/variables.scss';
+
+.logo-link{
+    display: flex;
+    align-items: center;
+    font-family: $font-family-logo;
+    font-weight: 800;
+    font-size: 24px;
+    color: $primary-middle-darker;
+    margin-bottom: 60px;
+    img{
+        width: 70px;
+        margin-right: 15px;
+    }
+    span{
+        margin: 0 10px;
+        color: $secondary;
+    }
+}
+
+.container{
+    > .row:first-child{
+        padding: 60px 0;
+    }
+}
+
+small{
+    color: #999;
+}
+
+.footer-title{
+    font-size: 1em;
+    margin-bottom: 30px;
+}
+
+a small{
+    transition: all 100ms ease-in-out;
+}
+
+a:hover small{
+    color: #333 !important;
+}

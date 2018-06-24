@@ -35,7 +35,7 @@ export class RegisterModalComponent implements OnInit {
     return this.formBuilder.group({
       firstName: this.formBuilder.control('te', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20), Validators.pattern('^[a-zA-Z]{2,20}$')])),
       lastName: this.formBuilder.control('te', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20), Validators.pattern('^[a-zA-Z]{2,20}$')])),
-      email: this.formBuilder.control('test@yahoo.com', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(20), Validators.email])),
+      email: this.formBuilder.control('test@yahoo.com', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(40), Validators.email])),
       password: this.formBuilder.control('parola', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(20)]))
     });
   }

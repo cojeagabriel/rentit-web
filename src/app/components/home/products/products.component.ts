@@ -1,7 +1,7 @@
 import { ImageService } from './../../../image.service';
 import { ProductService } from './../../../services/product.service';
 import { Observable } from 'rxjs/Observable';
-import { Component, OnInit, AfterViewInit, ViewChildren, QueryList  } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChildren, QueryList, Input  } from '@angular/core';
 import { Product } from '../../../types/product';
 import { environment } from 'environments/environment';
 
@@ -14,6 +14,10 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   products: Product[];
   @ViewChildren('allTheseThings') things: QueryList<any>;
+  @Input() title: string;
+  @Input() category: string;
+  @Input() owner: string;
+  @Input() id: string;
 
   constructor(
     private productService: ProductService,
@@ -21,19 +25,38 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-
-    this.productService.getProducts()
-      .catch(err => {
-        return Observable.throw(err);
-      })
-      .subscribe(products => {
-        this.products = products.reverse();
-      })
+    if(this.category){
+      this.productService.getProductsByCategory(this.category)
+        .catch(err => {
+          return Observable.throw(err);
+        })
+        .subscribe(products => {
+          this.products = products.reverse();
+        })
+    }
+    else if(this.owner){
+      this.productService.getProductsByOwnerId(this.owner)
+        .catch(err => {
+          return Observable.throw(err);
+        })
+        .subscribe(products => {
+          this.products = products.reverse();
+        })
+    }
+    else{
+      this.productService.getProducts()
+        .catch(err => {
+          return Observable.throw(err);
+        })
+        .subscribe(products => {
+          this.products = products.reverse();
+        })
+    }
   }
 
   ngAfterViewInit() {
     this.things.changes.subscribe(t => {
-      var swiper = new Swiper('.swiper-container', {
+      var swiper = new Swiper('.swiper-container'+this.id, {
         slidesPerView: 'auto',
         spaceBetween: 15,
         pagination: {
@@ -41,8 +64,8 @@ export class ProductsComponent implements OnInit, AfterViewInit {
           clickable: true,
         },
         navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
+          nextEl: '.swiper-button-next'+this.id,
+          prevEl: '.swiper-button-prev'+this.id,
         },
       });
     })

@@ -73,12 +73,11 @@ export class EditProductComponent implements OnInit {
   }
 
   update(): void {
-    this.form.patchValue({
-      available: this.form.get('quantity').value
-    });
+
     if (this.form.valid) {
       this.productService.update(this.form.value,this.activatedRoute.snapshot.params.id)
         .catch(err => {
+          console.log("aici");
           this.errors = err.error.msg;
           return Observable.throw(new Error(`${err.status} ${err.msg}`));
         })
