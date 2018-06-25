@@ -3,7 +3,7 @@
     <h5 class="title">{{title}}</h5>
     <div class="row">
       <div class="col-12">
-        <div [ngClass]="'swiper-button-next'+id" class="swiper-button-next">
+        <div *ngIf="products" [ngClass]="'swiper-button-next'+id" class="swiper-button-next">
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px"
             width="30px" height="40px" viewBox="0 0 451.846 451.847" style="enable-background:new 0 0 451.846 451.847;" xml:space="preserve">
             <g>
@@ -40,7 +40,7 @@
           <div class="swiper-pagination"></div>
         </div>
 
-        <div [ngClass]="'swiper-button-prev'+id" class="swiper-button-prev">
+        <div *ngIf="products" [ngClass]="'swiper-button-prev'+id" class="swiper-button-prev">
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px"
             width="30px" height="40px" viewBox="0 0 451.847 451.847" style="enable-background:new 0 0 451.847 451.847;" xml:space="preserve">
             <g>

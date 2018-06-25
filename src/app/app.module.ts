@@ -40,7 +40,6 @@ import { EditProductComponent } from './components/dashboard/edit-product/edit-p
 import { RentModalComponent } from './components/product/rent-modal/rent-modal.component';
 import { OrderComponent } from './components/order/order.component';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
-import * as moment from 'moment';
 import { MyRentalsComponent } from './components/dashboard/my-rentals/my-rentals.component';
 import { RentalComponent } from './components/rental/rental.component';
 import { MyProfileComponent } from './components/my-profile/my-profile.component';
@@ -53,9 +52,11 @@ import { ProductImagePreviewComponent } from './product-image-preview/product-im
 import { ProductImageUploadComponent } from './product-image-upload/product-image-upload.component';
 import { MessageComponent } from './components/message/message.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { SearchPipe } from './search.pipe';
 
 @NgModule({
   declarations: [
+    SearchPipe,
     AppComponent,
     NavbarComponent,
     LoginModalComponent,
@@ -83,7 +84,7 @@ import { FooterComponent } from './components/footer/footer.component';
     ProductImagePreviewComponent,
     ProductImageUploadComponent,
     MessageComponent,
-    FooterComponent
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

@@ -4,17 +4,18 @@
       <div class="col-12">
         <div class="search-wrapper">
           <ul class="categories-wrapper">
-            <li class="active"><span>Electronics</span></li>
-            <li><span>Tools</span></li>
-            <li><span>Equipments</span></li>
-            <li><span>Sports</span></li>
-            <li><span>Furniture</span></li>
-            <li><span>Automobiles</span></li>
-            <li><span>Apartments</span></li>
+            <li [ngClass]="selectedCategory == 'Electronics' ? 'active' : ''"><span (click)="selectCategory('Electronics')">Electronics</span></li>
+            <li [ngClass]="selectedCategory == 'Tools' ? 'active' : ''"><span (click)="selectCategory('Tools')">Tools</span></li>
+            <li [ngClass]="selectedCategory == 'Equipments' ? 'active' : ''"><span (click)="selectCategory('Equipments')">Equipments</span></li>
+            <li [ngClass]="selectedCategory == 'Sports' ? 'active' : ''"><span (click)="selectCategory('Sports')">Sports</span></li>
+            <li [ngClass]="selectedCategory == 'Furniture' ? 'active' : ''"><span (click)="selectCategory('Furniture')">Furniture</span></li>
+            <li [ngClass]="selectedCategory == 'Automobiles' ? 'active' : ''"><span (click)="selectCategory('Automobiles')">Automobiles</span></li>
+            <li [ngClass]="selectedCategory == 'Aparments' ? 'active' : ''"><span (click)="selectCategory('Aparments')">Apartments</span></li>
           </ul>
           <div>
-            <input type="search" name="search" placeholder="Search...">
-            <button>
+            <input type="search" name="search" placeholder="Search..." [(ngModel)]="selectedText" (ngModelChange)="doSomething($event)">
+            <button class="clear-button" [ngClass]="selectedText ? 'active' : ''" (click)="clear()"><fa name="times"></fa></button>
+            <button class="search-button" (click)="search()">
               <fa name="search"></fa>
             </button>
           </div>

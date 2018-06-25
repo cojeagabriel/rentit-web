@@ -1,5 +1,40 @@
-<app-search></app-search>
-<main class="w-100">
+<app-search (searchParams)="searchProducts($event)"></app-search>
+<main class="w-100" *ngIf="products && (searchParams.text || searchParams.category)">
+    <div class="container search-container">
+        <h5 class="title">Search result</h5>
+        <div class="row">
+            <div class="col-4" *ngFor="let product of products | search:searchParams">
+                <div class="item">
+                    <div class="card">
+                        <div class="card-wrapper">
+                            <a [routerLink]="'/product/'+ product._id" [style.background-image]="getProductImageUrl(product)"></a>
+                
+                        </div>
+                        <div class="product-info-wrapper">
+                            <div class="product-info">
+                                <p class="product-name">{{ product.title }}</p>
+                                <p>
+                                    <span class="price">{{ product.price }}€</span>
+                                    <span class="price-per">/{{ product.pricePer }}</span>
+                                </p>
+                            </div>
+                            <div class="product-details">
+                                <button>View details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12" *ngIf="(products | search:searchParams).length == 0">
+                <div class="card box-15 d-flex justify-content-center">
+                    <p class="text-center">No products found</p>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</main>
+<main class="w-100" *ngIf="!searchParams.text && !searchParams.category">
     <app-products [title]="'Latest products'" [id]="1"></app-products>
     <app-products [title]="'Tools'" [category]="'Tools'" [id]="2"></app-products>
     <app-products [title]="'Equipments'" [category]="'Equipments'" [id]="3"></app-products>
