@@ -15,7 +15,7 @@ export class ProductService {
     return this.http.post<Product>(`${environment.apiUrl}/api/products`, product);
   }
 
-  createTemp(): Observable<any> {
+  createTemp(): Observable<TempProduct> {
     return this.http.post<TempProduct>(`${environment.apiUrl}/api/products/temp`, {});
   }
 

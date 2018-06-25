@@ -104,7 +104,7 @@ import { SearchPipe } from './search.pipe';
       ]},
       { path: 'dashboard', component: DashboardComponent,
         children: [
-          { path: 'new-product/:tempId', component: NewProductComponent},
+          { path: 'new-product', component: NewProductComponent},
           { path: 'my-products', component: MyProductsComponent},
           { path: 'my-products/:id', component: EditProductComponent},
           { path: 'my-orders', component: MyOrdersComponent},

@@ -40,12 +40,12 @@ export class NewProductComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.tempId = this.activatedRoute.snapshot.params.tempId;
     this.form = this.createForm();
     this.form.patchValue({
       quantity: 1
     });
     this.getUser();
+    this.createTempProduct();
   }
 
   createForm(){
@@ -57,7 +57,7 @@ export class NewProductComponent implements OnInit {
       quantity: this.formBuilder.control('', Validators.compose([Validators.required, Validators.min(1), Validators.max(100)])),
       price: this.formBuilder.control('', Validators.compose([Validators.required, Validators.min(0.001), Validators.max(100000000)])),
       pricePer: this.formBuilder.control('', Validators.required),
-      tempId: this.formBuilder.control(this.tempId)
+      tempId: this.formBuilder.control('', Validators.required)
     });
   }
 
@@ -112,6 +112,10 @@ export class NewProductComponent implements OnInit {
   }
 
   startUpload(): void {
+    if (!this.tempId){
+      return;
+    }
+
     const event: UploadInput = {
       type: 'uploadAll',
       url: `${environment.apiUrl}/api/products/temp/${this.tempId}/images`,
@@ -125,6 +129,10 @@ export class NewProductComponent implements OnInit {
   }
 
   removeImage(image: Image) {
+    if (!this.tempId) {
+      return;
+    }
+
     this.productService.removeTempImage(this.tempId, image).subscribe((tempProduct) => {
       this.images = tempProduct.images;
     }, () => {
@@ -134,6 +142,13 @@ export class NewProductComponent implements OnInit {
 
   get mainImageUrl(): string {
     return this.imageService.getImageUrl(this.images[0]);
+  }
+
+  createTempProduct() {
+    this.productService.createTemp().subscribe(tempProduct => {
+      this.tempId = tempProduct._id;
+      this.form.patchValue({tempId: this.tempId});
+    });
   }
 
 }
