@@ -72,6 +72,7 @@ export class RentModalComponent implements OnInit {
 
   createForm() {
     return this.formBuilder.group({
+      index: null,
       _rentorId: '',
       _clientId: '',
       address: this.formBuilder.control('', Validators.required),
@@ -111,31 +112,49 @@ export class RentModalComponent implements OnInit {
   
   sendOrder(): void{
     if(this.form.valid){
-      this.form.patchValue({
-        _rentorId: this.order._rentorId,
-        _clientId: this.order._clientId,
-        _productId: this.order._productId,
-        quantity: this.order.quantity,
-        price: this.count*this.order.quantity*this.product.price,
-        fromDateYear: this.order.fromDateYear,
-        fromDateMonth: this.order.fromDateMonth,
-        fromDateDay: this.order.fromDateDay,
-        fromDateHour: this.order.fromDateHour,
-        fromDateMinute: this.order.fromDateMinute,
-        toDateYear: this.order.toDateYear,
-        toDateMonth: this.order.toDateMonth,
-        toDateDay: this.order.toDateDay,
-        toDateHour: this.order.toDateHour,
-        toDateMinute: this.order.toDateMinute,
-      });
-      this.orderService.create(this.form.value)
+      this.orderService.getOrdersByOwnerId(this.order._rentorId)
         .catch(err => {
           return Observable.throw(new Error(`${err.status} ${err.msg}`));
         })
-        .subscribe(order => {
-          this.onResponse.emit(true);
-          this.bsModalRef.hide();
-        })
+        .subscribe(orders => {
+          if(orders.length > 0){
+            this.form.patchValue({
+              index: orders[orders.length - 1].index + 1
+            });
+          }
+          else{
+            this.form.patchValue({
+              index: 1
+            });
+          }
+          // console.log(orders[0].index);
+          this.form.patchValue({
+            _rentorId: this.order._rentorId,
+            _clientId: this.order._clientId,
+            _productId: this.order._productId,
+            quantity: this.order.quantity,
+            price: this.count * this.order.quantity * this.product.price,
+            fromDateYear: this.order.fromDateYear,
+            fromDateMonth: this.order.fromDateMonth,
+            fromDateDay: this.order.fromDateDay,
+            fromDateHour: this.order.fromDateHour,
+            fromDateMinute: this.order.fromDateMinute,
+            toDateYear: this.order.toDateYear,
+            toDateMonth: this.order.toDateMonth,
+            toDateDay: this.order.toDateDay,
+            toDateHour: this.order.toDateHour,
+            toDateMinute: this.order.toDateMinute,
+          });
+          this.orderService.create(this.form.value)
+            .catch(err => {
+              return Observable.throw(new Error(`${err.status} ${err.msg}`));
+            })
+            .subscribe(order => {
+              this.onResponse.emit(true);
+              this.bsModalRef.hide();
+            });
+        });
+      
     }
   }
 
