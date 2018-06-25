@@ -77,7 +77,6 @@ export class EditProductComponent implements OnInit {
     if (this.form.valid) {
       this.productService.update(this.form.value,this.activatedRoute.snapshot.params.id)
         .catch(err => {
-          console.log("aici");
           this.errors = err.error.msg;
           return Observable.throw(new Error(`${err.status} ${err.msg}`));
         })
