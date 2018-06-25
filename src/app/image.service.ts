@@ -9,11 +9,11 @@ export class ImageService {
 
   constructor() { }
 
-  getImageStyleUrl(image: Image): string {
+  getImageStyleUrl(image: Image | null | undefined): string {
     return `url(${this.getImageUrl(image)})`;
   }
 
-  getImageUrl(image: Image): string {
+  getImageUrl(image: Image | null | undefined): string {
     return image ? image.url : this.defaultImage;
   }
 

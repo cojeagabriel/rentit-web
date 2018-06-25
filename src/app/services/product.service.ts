@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs/Observable';
-import { Image } from '../types/image';
+import { Image } from 'app/types/image';
+import { TempProduct } from 'app/types/temp-product';
 
 @Injectable()
 export class ProductService {
@@ -12,6 +13,10 @@ export class ProductService {
 
   create(product: Product): Observable<any> {
     return this.http.post<Product>(`${environment.apiUrl}/api/products`, product);
+  }
+
+  createTemp(): Observable<any> {
+    return this.http.post<TempProduct>(`${environment.apiUrl}/api/products/temp`, {});
   }
 
   update(product: Product, id: string): Observable<any> {
@@ -44,5 +49,9 @@ export class ProductService {
 
   removeImage(product: Product, image: Image) {
     return this.http.delete<Product>(`${environment.apiUrl}/api/products/${product._id}/images/${image._id}`);
+  }
+
+  removeTempImage(tempProductId: string, image: Image) {
+    return this.http.delete<Product>(`${environment.apiUrl}/api/products/temp/${tempProductId}/images/${image._id}`);
   }
 }

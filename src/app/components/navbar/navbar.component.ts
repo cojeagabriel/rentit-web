@@ -9,6 +9,8 @@ import "rxjs/add/operator/switchMap";
 import { User } from '../../types/user';
 import { Subscription } from 'rxjs/Subscription';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { ProductService } from 'app/services/product.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -25,7 +27,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(
     private modalService: BsModalService,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private productService: ProductService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -75,4 +79,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.authService.logout();
   }
 
+  createNew() {
+    this.productService.createTemp().subscribe(tempProduct => {
+      this.router.navigate(['/dashboard/new-product', tempProduct._id]);
+    });
+  }
 }
