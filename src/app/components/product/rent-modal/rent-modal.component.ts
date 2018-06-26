@@ -92,7 +92,7 @@ export class RentModalComponent implements OnInit {
       toDateDay: null,
       toDateHour: null,
       toDateMinute: null,
-      status: 'reserved'
+      status: 'reserved',
     });
   }
 

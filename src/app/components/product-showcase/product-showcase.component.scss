@@ -1,0 +1,105 @@
+@import '~assets/scss/variables.scss';
+
+section{
+    padding-top: 30px;
+    padding-bottom: 15px;
+}
+
+.title{
+    font-size: 1em;
+    margin-bottom: 15px;
+    margin-left: 15px;
+}
+
+.product-info{
+    padding: 15px 30px;
+
+    .price-info{
+        white-space: nowrap;
+        .price-per{
+            color: #999;
+            text-transform: lowercase;
+        }
+    }
+
+    .review{
+        .star{
+            font-size: 24px;
+        }
+        ngb-rating{
+            margin-bottom: 7px;
+        }
+        p{
+            color: #333;
+            font-size: 14px;
+        }
+    }
+
+    .review-user-info{
+        margin-right: 30px;
+    }
+}
+
+.product-image-container{
+    position: relative;
+    padding-bottom: 61.8%;
+    .product-image{
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        >img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}
+
+.card{
+    overflow: hidden;
+}
+
+.user-name{
+    color: $primary-dark;
+    font-weight: 600;
+}
+
+.date{
+    color: #999;
+}
+
+
+.star {
+    position: relative;
+    display: inline-block;
+    font-size: 36px;
+    color: #d3d3d3;
+}
+.full {
+    color: $secondary;
+}
+.half {
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    color: $secondary;
+}
+.filled {
+    color: $secondary;
+}
+
+.star-small{
+    font-size: 20px;
+}
+
+.avatar{
+    width: 40px;
+    height: 40px;
+    background-color: $primary;
+    border-radius: 50%;
+    >span{
+        color: white;
+    }
+}

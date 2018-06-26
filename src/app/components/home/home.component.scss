@@ -1,6 +1,10 @@
 @import '~assets/scss/variables.scss';
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
+main{
+    padding-bottom: 60px;
+}
+
 .search-container{
     padding-top: 30px;
 }

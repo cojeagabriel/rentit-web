@@ -53,6 +53,7 @@ import { ProductImageUploadComponent } from './product-image-upload/product-imag
 import { MessageComponent } from './components/message/message.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SearchPipe } from './search.pipe';
+import { ProductShowcaseComponent } from './components/product-showcase/product-showcase.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import { SearchPipe } from './search.pipe';
     ProductImageUploadComponent,
     MessageComponent,
     FooterComponent,
+    ProductShowcaseComponent,
   ],
   imports: [
     BrowserModule,

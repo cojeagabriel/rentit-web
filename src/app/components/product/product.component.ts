@@ -310,6 +310,13 @@ export class ProductComponent implements OnInit {
             .subscribe(reviews => {
               this.reviews = reviews.reverse();
               this.calculateRating();
+              this.product.rating = this.rating;
+              this.productService.update(this.product, this.product._id)
+                .catch(err => {
+                  return Observable.throw(new Error(`${err.status} ${err.msg}`));
+                })
+                .subscribe(() => {
+                });
             });
         }
       });

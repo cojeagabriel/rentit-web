@@ -15,7 +15,7 @@ export class ReviewService {
     return this.http.post(`${environment.apiUrl}/api/reviews`, product);
   }
 
-  update(product: Review, id: string): Observable<any> {
+  update(product: Review, id: String): Observable<any> {
     return this.http.put(`${environment.apiUrl}/api/reviews/update/${id}`, product);
   }
 
@@ -27,15 +27,15 @@ export class ReviewService {
     return this.http.get<Review[]>(`${environment.apiUrl}/api/reviews`);
   }
 
-  getReviewsByUserId(id: string): Observable<Review[]> {
+  getReviewsByUserId(id: String): Observable<Review[]> {
     return this.http.get<Review[]>(`${environment.apiUrl}/api/reviews/user${id}`);
   }
 
-  getReviewsByProductId(id: string): Observable<Review[]> {
+  getReviewsByProductId(id: String): Observable<Review[]> {
     return this.http.get<Review[]>(`${environment.apiUrl}/api/reviews/product${id}`);
   }
 
-  getById(id: string): Observable<Review> {
+  getById(id: String): Observable<Review> {
     return this.http.get<Review>(`${environment.apiUrl}/api/reviews/${id}`);
   }
 

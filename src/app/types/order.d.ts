@@ -23,5 +23,5 @@ export interface Order {
     toDateDay: number,
     toDateHour: number,
     toDateMinute: number,
-    status: string
+    status: string,
 }

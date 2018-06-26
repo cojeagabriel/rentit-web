@@ -1,5 +1,5 @@
 <app-search (searchParams)="searchProducts($event)"></app-search>
-<main class="w-100" *ngIf="products && (searchParams.text || searchParams.category)">
+<main class="w-100 pb-30" *ngIf="products && (searchParams.text || searchParams.category)">
     <div class="container search-container">
         <h5 class="title">Search result</h5>
         <div class="row">
@@ -34,8 +34,9 @@
         </div>
     </div>
 </main>
-<main class="w-100" *ngIf="!searchParams.text && !searchParams.category">
+<main class="w-100 pb-30" *ngIf="!searchParams.text && !searchParams.category">
     <app-products [title]="'Latest products'" [id]="1"></app-products>
+    <app-product-showcase *ngIf="bestRatedProducts" [product]="bestRatedProducts[0]"></app-product-showcase>
     <app-products [title]="'Tools'" [category]="'Tools'" [id]="2"></app-products>
     <app-products [title]="'Equipments'" [category]="'Equipments'" [id]="3"></app-products>
 </main>

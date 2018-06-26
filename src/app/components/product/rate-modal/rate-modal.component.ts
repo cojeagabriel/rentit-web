@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { BsModalRef } from 'ngx-bootstrap';
 import { ReviewService } from '../../../services/review.service';
 import { Observable } from 'rxjs/Observable';
+import { Review } from '../../../types/review';
 
 @Component({
   selector: 'app-rate-modal',
@@ -20,6 +21,7 @@ export class RateModalComponent implements OnInit {
   _productId: String;
   form: FormGroup;
   currentRate = 0;
+
 
   ctrl = new FormControl(null, Validators.required);
 

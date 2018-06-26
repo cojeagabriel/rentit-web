@@ -1,0 +1,88 @@
+<section>
+  <div class="container">
+    <h5 class="title">Best rated product</h5>
+    <div class="row">
+      <div class="col-12">
+        <div class="card d-flex flex-row">
+          <div class="product-info flex-column justify-content-between d-flex w-50">
+            <div class="w-100 d-flex flex-column">
+              <div class="d-flex w-100 align-items-top">
+                <h4 class="product-title w-100 mb-0 mt-7">
+                  <a [routerLink]="'/product/'+ product._id">{{ (product)?.title }}</a>
+                </h4>
+              
+                <div class="product-info-group justify-content-end">
+                  <p class="price-info">
+                    <!-- Price: &nbsp; -->
+                    <span class="price">{{ (product)?.price }}€</span>
+                    <span class="price-per">/{{ (product)?.pricePer }}</span>
+                  </p>
+                </div>
+              </div>
+              
+              <div class="d-flex flex-column justify-content-end mb-15">
+                <div class="d-flex align-items-center">
+                  <ngb-rating [rate]="product.rating" [readonly]="true" [max]="5">
+                    <ng-template let-fill="fill" let-index="index">
+                      <span class="star" [class.full]="fill === 100">
+                        <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+                      </span>
+                    </ng-template>
+                  </ngb-rating>
+                  <small class="ml-7 mr-15">{{product.rating | number : '1.2-2'}}</small>
+                </div>
+                <a *ngIf="(reviews)?.length" class="d-flex align-self-end mr-15" href="./">
+                  <small>{{ (reviews)?.length }} reviews</small>
+                </a>
+              </div>
+              
+              <p>
+                <small class="info-label">Owner:</small>
+                <!-- <img src="assets/img/user.png"> -->
+                &nbsp;
+                <a [routerLink]="'../../profile/'+ (user)?._id">{{ (user)?.firstName }} {{ (user)?.lastName }}</a>
+              </p>
+              <p>
+                <small class="info-label">
+                  <!-- <fa name="map-marker" class="mr-7"></fa> -->
+                  Location:
+                </small>&nbsp;
+                <span>Bucharest</span>
+              </p>
+            </div>
+
+            <div class="d-flex w-100 review-container mb-15">
+              <div class="d-flex flex-column justify-content-center align-items-center review-user-info">
+                <a [routerLink]="'../../profile/'+ (review)?._userId" class="avatar d-flex align-items-center justify-content-center mb-7">
+                  <span>{{(review)?.userFirstName.substring(0,1)}}{{(review)?.userLastName.substring(0,1)}}</span>
+                </a>
+                <a class="user-name" [routerLink]="'../../profile/'+ (review)?._userId">{{ (review)?.userFirstName }} {{ (review)?.userLastName }}</a>
+                <small class="date">
+                  {{(review)?.dateDay}}/{{(review)?.dateMonth}}/{{(review)?.dateYear}}
+                </small>
+              </div>
+
+              <div class="d-flex flex-column">
+                <h3 class="review-title">{{(review)?.title}}</h3>
+                <ngb-rating [rate]="(review)?.rating" [readonly]="true" [max]="5">
+                  <ng-template let-fill="fill" let-index="index">
+                    <span class="star star-small" [class.filled]="fill === 100">&#9733;</span>
+                  </ng-template>
+                </ngb-rating>
+                <pre><p>{{(review)?.review}}</p></pre>
+              </div>
+            </div>
+
+          </div>
+          <div class="d-flex w-50">
+            <div class="d-flex product-image-container w-100">
+              <a [routerLink]="'/product/'+ product._id" class="d-flex product-image">
+                <img [src]="mainImageUrl">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

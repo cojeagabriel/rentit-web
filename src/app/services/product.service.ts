@@ -31,15 +31,15 @@ export class ProductService {
     return this.http.get<Product[]>(`${environment.apiUrl}/api/products`);
   }
 
-  getProductsByOwnerId(id: string): Observable<Product[]> {
+  getProductsByOwnerId(id: String): Observable<Product[]> {
     return this.http.get<Product[]>(`${environment.apiUrl}/api/products/owner${id}`);
   }
 
-  getProductsByCategory(category: string): Observable<Product[]> {
+  getProductsByCategory(category: String): Observable<Product[]> {
     return this.http.get<Product[]>(`${environment.apiUrl}/api/products/category${category}`);
   }
 
-  getById(id: string): Observable<Product>{
+  getById(id: String): Observable<Product>{
     return this.http.get<Product>(`${environment.apiUrl}/api/products/${id}`);
   }
 
@@ -51,7 +51,7 @@ export class ProductService {
     return this.http.delete<Product>(`${environment.apiUrl}/api/products/${product._id}/images/${image._id}`);
   }
 
-  removeTempImage(tempProductId: string, image: Image) {
+  removeTempImage(tempProductId: String, image: Image) {
     return this.http.delete<Product>(`${environment.apiUrl}/api/products/temp/${tempProductId}/images/${image._id}`);
   }
 }

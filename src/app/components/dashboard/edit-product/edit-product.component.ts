@@ -52,7 +52,8 @@ export class EditProductComponent implements OnInit {
       category: this.formBuilder.control('', Validators.required),
       quantity: this.formBuilder.control('', Validators.compose([Validators.required, Validators.min(1), Validators.max(100)])),
       price: this.formBuilder.control('', Validators.compose([Validators.required, Validators.min(0.001), Validators.max(100000000)])),
-      pricePer: this.formBuilder.control('', Validators.required)
+      pricePer: this.formBuilder.control('', Validators.required),
+      rating: null
     });
   }
 
@@ -67,7 +68,8 @@ export class EditProductComponent implements OnInit {
           category: this.product.category,
           quantity: this.product.quantity,
           price: this.product.price,
-          pricePer: this.product.pricePer
+          pricePer: this.product.pricePer,
+          rating: this.product.rating
         })
       });
   }

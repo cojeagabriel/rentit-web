@@ -57,7 +57,8 @@ export class NewProductComponent implements OnInit {
       quantity: this.formBuilder.control('', Validators.compose([Validators.required, Validators.min(1), Validators.max(100)])),
       price: this.formBuilder.control('', Validators.compose([Validators.required, Validators.min(0.001), Validators.max(100000000)])),
       pricePer: this.formBuilder.control('', Validators.required),
-      tempId: this.formBuilder.control('', Validators.required)
+      tempId: this.formBuilder.control('', Validators.required),
+      rating: 0
     });
   }
 

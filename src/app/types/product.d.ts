@@ -10,5 +10,6 @@ export interface Product {
     available: number,
     price: number,
     pricePer: string,
-    images: Image[]
+    images: Image[],
+    rating?: number
 }
