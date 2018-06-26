@@ -12,7 +12,7 @@
               <span>{{ (user$ | async)?.email }}</span>
             </li>
             <li *ngIf="(user$ | async) != null && (user$ | async).telephone != null">Telephone:
-              <span>0{{ (user$ | async)?.telephone }}</span>
+              <span>{{ (user$ | async)?.telephone }}</span>
             </li>
           </ul>
         </div>

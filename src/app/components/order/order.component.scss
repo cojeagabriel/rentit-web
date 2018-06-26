@@ -17,23 +17,24 @@
     padding: 3px 12px;
     text-transform: uppercase;
     font-size: 0.9em;
-    border: solid 1px #ddd;
+    // border: solid 1px #ddd;
     border-radius: 4px;
+    color: white;
     &.reserved{
-        color: #17a2b8;
-        border-color: #17a2b8;
+        // color: #17a2b8;
+        background-color: #17a2b8;
     }
     &.started{
-        color: #28a745;
-        border-color: #28a745;
+        // color: #28a745;
+        background-color: #28a745;
     }
     &.ended{
-        color: #fd7e14;
-        border-color: #fd7e14;
+        // color: #fd7e14;
+        background-color: #fd7e14;
     }
     &.canceled{
-        color: #868e96;
-        border-color: #868e96;
+        // color: #868e96;
+        background-color: #868e96;
     }
 }
 

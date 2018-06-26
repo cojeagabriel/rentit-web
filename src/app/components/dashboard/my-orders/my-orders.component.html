@@ -8,19 +8,19 @@
     <div *ngIf="(orders)?.length" class="col-2 submenu">
       <div class="card box-15">
         <div class="d-flex align-items-center">
-          <input type="checkbox" name="vehicle" value="Reserved" class="mr-15">Reserved
+          <input type="checkbox" name="vehicle" value="Reserved" class="mr-15" (click)="check('Reserved')">Reserved
         </div>
         <div class="d-flex align-items-center">
-          <input type="checkbox" name="vehicle" value="Started" class="mr-15">Started
+          <input type="checkbox" name="vehicle" value="Started" class="mr-15" (click)="check('Started')">Started
         </div>
         <div class="d-flex align-items-center">
-          <input type="checkbox" name="vehicle" value="Stopped" class="mr-15">Stopped
+          <input type="checkbox" name="vehicle" value="Stopped" class="mr-15" (click)="check('Stopped')">Stopped
         </div>
         <div class="d-flex align-items-center">
-          <input type="checkbox" name="vehicle" value="Canceled" class="mr-15">Canceled
+          <input type="checkbox" name="vehicle" value="Canceled" class="mr-15" (click)="check('Canceled')">Canceled
         </div>
         <div class="d-flex align-items-center">
-          <input type="checkbox" name="vehicle" value="Archived" class="mr-15">Archived
+          <input type="checkbox" name="vehicle" value="Archived" class="mr-15" (click)="check('Archived')">Archived
         </div>
       </div>      
     </div>
@@ -54,7 +54,7 @@
           </div>
         </div>
       </div>
-      <div *ngFor="let o of orders" class="d-flex item">
+      <div *ngFor="let o of orders | statusFilter:filters" class="d-flex item">
         <a [routerLink]="o._id" class="w-100 d-flex">
           <div class="row w-100">
             <div class="col-5">

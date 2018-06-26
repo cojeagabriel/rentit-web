@@ -34,6 +34,17 @@
     <small *ngIf="formTest.submitted && form.controls['email'].hasError('maxlength')" class="text-danger">You email must contain maximum 20 characters</small>
     <small *ngIf="formTest.submitted && !form.controls['email'].hasError('required') && !form.controls['email'].hasError('minlength') && !form.controls['email'].hasError('maxlength') && form.controls['email'].hasError('email')"
       class="text-danger">Your email is invalid</small>
+    
+    <label [ngClass]="{'text-danger':(formTest.submitted && !form.controls['telephone'].valid), 'text-success':(formTest.submitted
+                && form.controls['telephone'].valid)}">Telephone</label>
+    <input [ngClass]="{'has-error':(formTest.submitted && !form.controls['telephone'].valid), 'has-success':(formTest.submitted
+                && form.controls['telephone'].valid)}" type="telephone" placeholder="Telephone number" formControlName="telephone">
+    <small *ngIf="formTest.submitted && form.controls['telephone'].hasError('required')" class="text-danger">This field is mandatory.</small>
+    <small *ngIf="formTest.submitted && !form.controls['telephone'].hasError('required') && (form.controls['telephone'].hasError('maxlength') || form.controls['telephone'].hasError('minlength'))"
+      class="text-danger">You telephone number must contain exactly 10 characters</small>
+    <small *ngIf="formTest.submitted && !form.controls['telephone'].hasError('required') && !form.controls['telephone'].hasError('minlength')
+                && !form.controls['telephone'].hasError('maxlength') && form.controls['telephone'].hasError('pattern')"
+      class="text-danger">Your telephone number should contain only numbers</small>
 
     <label [ngClass]="{'text-danger':(formTest.submitted && !form.controls['password'].valid), 'text-success':(formTest.submitted && form.controls['password'].valid)}">Password</label>
     <input [ngClass]="{'has-error':(formTest.submitted && !form.controls['password'].valid), 'has-success':(formTest.submitted && form.controls['password'].valid)}" type="password" placeholder="Please enter password" formControlName="password">

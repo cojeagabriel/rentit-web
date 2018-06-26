@@ -1,13 +1,17 @@
+@import '~assets/scss/variables.scss';
+
 :host {
   display: inline-block;
   width: 100px;
   height: 100px;
-  border: 2px solid black;
+  border: 1px solid #ddd;
   margin: 2px;
   position: relative;
-  background: #ddd;
+  background: #f8f8f8;
+  cursor: pointer;
   &:hover {
-    background: #aaa;
+    border-color: $secondary-middle;
+    background: $secondary;
   }
 }
 

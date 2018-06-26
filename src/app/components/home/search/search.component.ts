@@ -1,5 +1,6 @@
 import { ProductService } from './../../../services/product.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-search',
@@ -20,6 +21,9 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     this.productService.getProducts()
+      .catch(err => {
+        return Observable.throw(err);
+      })
       .subscribe(products =>{
         this.length = products.length;
       });

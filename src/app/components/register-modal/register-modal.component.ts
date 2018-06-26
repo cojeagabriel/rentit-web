@@ -33,10 +33,11 @@ export class RegisterModalComponent implements OnInit {
   createForm(): FormGroup{
     this.submitted = true;
     return this.formBuilder.group({
-      firstName: this.formBuilder.control('te', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20), Validators.pattern('^[a-zA-Z]{2,20}$')])),
-      lastName: this.formBuilder.control('te', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20), Validators.pattern('^[a-zA-Z]{2,20}$')])),
-      email: this.formBuilder.control('test@yahoo.com', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(40), Validators.email])),
-      password: this.formBuilder.control('parola', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(20)]))
+      firstName: this.formBuilder.control('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20), Validators.pattern('^[a-zA-Z]{2,20}$')])),
+      lastName: this.formBuilder.control('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20), Validators.pattern('^[a-zA-Z]{2,20}$')])),
+      email: this.formBuilder.control('', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(40), Validators.email])),
+      telephone: this.formBuilder.control('', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*')])),
+      password: this.formBuilder.control('', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(20)]))
     });
   }
 
