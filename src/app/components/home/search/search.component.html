@@ -16,13 +16,13 @@
             <li [ngClass]="selectedCategory == 'Automobiles' ? 'active' : ''"><span (click)="selectCategory('Automobiles')">Automobiles</span></li>
             <li [ngClass]="selectedCategory == 'Aparments' ? 'active' : ''"><span (click)="selectCategory('Aparments')">Apartments</span></li>
           </ul>
-          <div>
+          <form (ngSubmit)="search()">
             <input type="search" name="search" placeholder="Search..." [(ngModel)]="selectedText" (ngModelChange)="doSomething($event)">
-            <button class="clear-button" [ngClass]="selectedText ? 'active' : ''" (click)="clear()"><fa name="times"></fa></button>
-            <button class="search-button" (click)="search()">
+            <button type="button" class="clear-button" [ngClass]="selectedText ? 'active' : ''" (click)="clear()"><fa name="times"></fa></button>
+            <button type="submit" class="search-button">
               <fa name="search"></fa>
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </div>
