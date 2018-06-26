@@ -38,7 +38,7 @@
               <small *ngIf="formTest.submitted && formPersonalInfo.controls['email'].hasError('required')" class="text-danger">This field is mandatory.</small>
               <small *ngIf="formTest.submitted && !formPersonalInfo.controls['email'].hasError('required') && formPersonalInfo.controls['email'].hasError('minlength')"
                 class="text-danger">Your email must contain at least 3 characters</small>
-              <small *ngIf="formTest.submitted && formPersonalInfo.controls['email'].hasError('maxlength')" class="text-danger">You email must contain at maximum 20 characters</small>
+              <small *ngIf="formTest.submitted && formPersonalInfo.controls['email'].hasError('maxlength')" class="text-danger">You email must contain at maximum 40 characters</small>
               <small *ngIf="formTest.submitted && !formPersonalInfo.controls['email'].hasError('required') && !formPersonalInfo.controls['email'].hasError('minlength') && !formPersonalInfo.controls['email'].hasError('maxlength') && formPersonalInfo.controls['email'].hasError('email')"
                 class="text-danger">Your email is invalid</small>
             </div>

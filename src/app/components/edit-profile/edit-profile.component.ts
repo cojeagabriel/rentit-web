@@ -40,7 +40,7 @@ export class EditProfileComponent implements OnInit {
     return this.formBuilder.group({
       firstName: this.formBuilder.control('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20), Validators.pattern('^[a-zA-Z]{2,20}$')])),
       lastName: this.formBuilder.control('', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20), Validators.pattern('^[a-zA-Z]{2,20}$')])),
-      email: this.formBuilder.control('', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(20), Validators.email])),
+      email: this.formBuilder.control('', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(40), Validators.email])),
       telephone: this.formBuilder.control('', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*')]))
     });
   }

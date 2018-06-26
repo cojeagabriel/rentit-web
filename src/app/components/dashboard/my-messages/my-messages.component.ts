@@ -27,7 +27,6 @@ export class MyMessagesComponent implements OnInit {
           })
           .subscribe(messages => {
             this.messages = messages;
-            console.log(this.messages);
           });
       });
     

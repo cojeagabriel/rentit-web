@@ -5,7 +5,7 @@
 </div>
 <div class="container">
   <div class="row align-items-start">
-    <div class="col-2 submenu">
+    <div *ngIf="(orders)?.length" class="col-2 submenu">
       <div class="card box-15">
         <div class="d-flex align-items-center">
           <input type="checkbox" name="vehicle" value="Reserved" class="mr-15">Reserved
@@ -24,7 +24,7 @@
         </div>
       </div>      
     </div>
-    <div class="col-10 card">
+    <div *ngIf="(orders)?.length" class="col-10 card">
       <div class="container-fluid filters">
         <div class="row w-100">
           <div class="col-5">
@@ -78,6 +78,13 @@
             </div>
           </div>
         </a>
+      </div>
+    </div>
+    <div class="col-12" *ngIf="(orders)?.length == 0">
+      <div class="card">
+        <div class="box-15 w-100 d-flex justify-content-center flex-column align-items-center">
+          <p class="text-center">You don't have any orders.</p>
+        </div>
       </div>
     </div>
   </div>

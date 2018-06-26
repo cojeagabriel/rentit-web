@@ -121,3 +121,13 @@ h4 {
         }
     }
 }
+
+.add-item-button{
+    background-color: $secondary;
+    box-sizing: border-box;
+    padding: 0 20px;
+    height: 46px;
+    fa{
+        margin-right: 7px;
+    }
+}

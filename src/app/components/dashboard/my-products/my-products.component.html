@@ -5,7 +5,7 @@
 </div>
 <div class="container">
   <div class="row">
-    <div class="col-12 card">
+    <div *ngIf="(products)?.length" class="col-12 card">
       <div class="filters">
         <button>Name <fa name="sort-down"></fa></button>
         <!-- <button>Status <fa name="sort-down"></fa></button> -->
@@ -24,6 +24,17 @@
           </div>
         </a>
         
+      </div>
+    </div>
+
+    <div class="col-12" *ngIf="(products)?.length == 0">
+      <div class="card">
+        <div class="box-15 w-100 d-flex justify-content-center flex-column align-items-center">
+          <p class="text-center mb-15">You don't have any products.</p>
+          <button routerLink="/dashboard/new-product" class="add-item-button">
+            <fa name="plus"></fa>Add product
+          </button>
+        </div>
       </div>
     </div>
   </div>
