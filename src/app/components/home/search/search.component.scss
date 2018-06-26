@@ -9,6 +9,23 @@ section{
     padding: 60px 0;
 }
 
+.hero{
+    margin-bottom: 30px;
+    color: white;
+}
+
+.hero-text{
+    font-size: 1.61em;
+    strong{
+        color: $secondary;
+    }
+}
+
+.hero-text-secondary{
+    font-weight: 300;
+    opacity: 0.7;
+}
+
 .search-wrapper{
     box-sizing: border-box;
     padding: 0 15px 15px;

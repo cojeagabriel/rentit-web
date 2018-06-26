@@ -1,7 +1,7 @@
 @import '~assets/scss/variables.scss';
 
 section{
-    padding-top: 30px;
+    padding: 30px 0;
 }
 
 .title{
@@ -130,19 +130,58 @@ section{
     opacity: 0;
 }
 
+.swiper-button-next:hover,
+.swiper-button-prev:hover{
+    border-color: $secondary-middle;
+    background-color: $secondary;
+}
+
+// .swiper-button-next{
+// margin-top: 0px;
+// position: absolute;
+// top: 50%;
+// right: -30px;
+// transform: translateY(-80%);
+// }
+// .swiper-button-prev{
+//   position: absolute;
+//   top: 50%;
+//   left: -30px;
+//   transform: translateY(-80%);
+//   margin-top: 0px;
+// }
+
 .swiper-button-next{
 margin-top: 0px;
 position: absolute;
-top: 50%;
+height: 100px;
+width: 30px;
+top: 43%;
+display: flex;
+align-items: center;
+justify-content: center;
+background-color: white;
 right: -30px;
-transform: translateY(-80%);
+transition: all 100ms ease-in-out;
+z-index: 99;
+border: solid 1px #ddd;
+transform: translateY(-50%);
 }
 .swiper-button-prev{
   position: absolute;
-  top: 50%;
+  height: 100px;
+  width: 30px;
+  top: 43%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
   left: -30px;
-  transform: translateY(-80%);
   margin-top: 0px;
+  transition: all 100ms ease-in-out;
+  z-index: 99;
+  border: solid 1px #ddd;
+  transform: translateY(-50%);
 }
 
 .container{

@@ -1,0 +1,30 @@
+<section>
+  <div class="container">
+    <!-- <h5 class="section-title">Recent reviews from happy people</h5> -->
+    <div class="row row-eq-height">
+      <div class="col-4" *ngFor="let review of reviews; index as i">
+        <div class="review w-100 d-flex flex-column align-items-center justify-content-between">
+          <div class="d-flex flex-column justify-content-center align-items-center review-user-info">
+            <a [routerLink]="'../../profile/'+ review._userId" class="avatar d-flex align-items-center justify-content-center mb-7">
+              <span>{{review.userFirstName.substring(0,1)}}{{review.userLastName.substring(0,1)}}</span>
+            </a>
+            <p><a class="user-name" [routerLink]="'../../profile/'+ review._userId">{{ review.userFirstName }}</a><small class="date">
+               wrote on {{review.dateDay}}/{{review.dateMonth}}/{{review.dateYear}}
+            </small></p>
+          </div>
+          <ngb-rating [rate]="review.rating" [readonly]="true" [max]="5" class="mb-7">
+            <ng-template let-fill="fill" let-index="index">
+              <span class="star" [class.filled]="fill === 100">&#9733;</span>
+            </ng-template>
+          </ngb-rating>
+          <pre><p class="text-center">{{review.review}}</p></pre>
+          <div *ngIf="products[i]" class="d-flex product-image-container w-100 card mt-15">
+            <a [routerLink]="'/product/'+ products[i]._id" class="d-flex product-image">
+              <img [src]="mainImageUrl(products[i])">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -34,7 +34,6 @@ export class HomeComponent implements OnInit {
           else if (a.rating == b.rating) { return 0; }
           else { return -1; }
         }).slice(0,3);
-        console.log(this.bestRatedProducts);
       });
   }
 

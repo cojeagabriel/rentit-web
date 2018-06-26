@@ -54,6 +54,7 @@ import { MessageComponent } from './components/message/message.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SearchPipe } from './search.pipe';
 import { ProductShowcaseComponent } from './components/product-showcase/product-showcase.component';
+import { ReviewShowcaseComponent } from './components/review-showcase/review-showcase.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +88,7 @@ import { ProductShowcaseComponent } from './components/product-showcase/product-
     MessageComponent,
     FooterComponent,
     ProductShowcaseComponent,
+    ReviewShowcaseComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,3 +1,4 @@
+import { ProductService } from './../../../services/product.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -11,9 +12,17 @@ export class SearchComponent implements OnInit {
   selectedText: string = '';
   selectedCategory: string = '';
 
-  constructor() { }
+  length: number;
+
+  constructor(
+    private productService: ProductService
+  ) { }
 
   ngOnInit() {
+    this.productService.getProducts()
+      .subscribe(products =>{
+        this.length = products.length;
+      });
   }
 
   selectCategory(category: string){
