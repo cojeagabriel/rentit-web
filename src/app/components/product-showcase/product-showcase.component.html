@@ -31,9 +31,6 @@
                   </ngb-rating>
                   <small class="ml-7 mr-15">{{product.rating | number : '1.2-2'}}</small>
                 </div>
-                <a *ngIf="(reviews)?.length" class="d-flex align-self-end mr-15" href="./">
-                  <small>{{ (reviews)?.length }} reviews</small>
-                </a>
               </div>
               
               <p>
@@ -69,7 +66,7 @@
                     <span class="star star-small" [class.filled]="fill === 100">&#9733;</span>
                   </ng-template>
                 </ngb-rating>
-                <pre><p>{{(review)?.review}}</p></pre>
+                <pre><small>{{(review)?.review}}</small></pre>
               </div>
             </div>
 
