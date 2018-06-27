@@ -36,6 +36,7 @@ export class SearchComponent implements OnInit {
     else{
       this.selectedCategory = category;
     }
+    this.searchParams.emit({ category: this.selectedCategory, text: this.selectedText });
   }
 
   doSomething(newValue) {

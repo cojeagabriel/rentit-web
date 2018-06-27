@@ -14,7 +14,7 @@
             <li [ngClass]="selectedCategory == 'Sports' ? 'active' : ''"><span (click)="selectCategory('Sports')">Sports</span></li>
             <li [ngClass]="selectedCategory == 'Furniture' ? 'active' : ''"><span (click)="selectCategory('Furniture')">Furniture</span></li>
             <li [ngClass]="selectedCategory == 'Automobiles' ? 'active' : ''"><span (click)="selectCategory('Automobiles')">Automobiles</span></li>
-            <li [ngClass]="selectedCategory == 'Aparments' ? 'active' : ''"><span (click)="selectCategory('Aparments')">Apartments</span></li>
+            <li [ngClass]="selectedCategory == 'Apartments' ? 'active' : ''"><span (click)="selectCategory('Apartments')">Apartments</span></li>
           </ul>
           <form (ngSubmit)="search()">
             <input type="search" name="search" placeholder="Search..." [(ngModel)]="selectedText" (ngModelChange)="doSomething($event)">
