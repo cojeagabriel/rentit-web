@@ -48,7 +48,7 @@
               </p>
             </div>
 
-            <div class="d-flex w-100 review-container mb-15">
+            <div *ngIf="review" class="d-flex w-100 review-container mb-15">
               <div class="d-flex flex-column justify-content-center align-items-center review-user-info">
                 <a [routerLink]="'../../profile/'+ (review)?._userId" class="avatar d-flex align-items-center justify-content-center mb-7">
                   <span>{{(review)?.userFirstName.substring(0,1)}}{{(review)?.userLastName.substring(0,1)}}</span>

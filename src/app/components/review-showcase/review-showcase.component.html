@@ -1,7 +1,7 @@
 <section>
   <div class="container">
     <!-- <h5 class="section-title">Recent reviews from happy people</h5> -->
-    <div class="row row-eq-height">
+    <div class="row row-eq-height" *ngIf="reviews">
       <div class="col-4" *ngFor="let review of reviews; index as i">
         <div class="review w-100 d-flex flex-column align-items-center justify-content-between">
           <div class="d-flex flex-column justify-content-center align-items-center review-user-info">
