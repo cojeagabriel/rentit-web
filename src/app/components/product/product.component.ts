@@ -249,7 +249,9 @@ export class ProductComponent implements OnInit {
     this.stars5 = 0;
     this.reviews.forEach(rev => {
       sum += rev.rating;
-      if(this.me._id == rev._userId){
+      if(!this.me)
+        this.reviewd = true;
+      if(this.me && this.me._id == rev._userId){
         this.reviewd = true;
       }
       switch (rev.rating) {

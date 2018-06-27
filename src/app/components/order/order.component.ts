@@ -129,7 +129,7 @@ export class OrderComponent implements OnInit {
         }
         if (this.points[i].node == last.node) {
           s = 0;
-          while (this.points[i].node == last.node && this.points[i].count < 0) {
+          while (i < this.points.length && this.points[i].node == last.node && this.points[i].count < 0) {
             s += this.points[i].count;
             i++;
           }
@@ -165,7 +165,6 @@ export class OrderComponent implements OnInit {
 
     }
     this.intervals = intervals;
-    // console.log(this.intervals);
   }
 
   calculateIntervals(): void {

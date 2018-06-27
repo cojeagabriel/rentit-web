@@ -278,7 +278,7 @@
                   </a>
                   <small class="date mb-7">{{c.dateDay}}/{{c.dateMonth}}/{{c.dateYear}}</small>
                 </div>
-                <button *ngIf="c._senderId == me._id || product._ownerId == me._id" (click)="deleteComment(c)"><fa name="times" class="text-danger"></fa></button>
+                <button *ngIf="me && (c._senderId == me._id || product._ownerId == me._id)" (click)="deleteComment(c)"><fa name="times" class="text-danger"></fa></button>
               </div>
               
               <pre><p>{{c.comment}}</p></pre>
