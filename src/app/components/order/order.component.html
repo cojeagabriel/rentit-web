@@ -64,7 +64,8 @@
           <label for="quantity" class="mb-0">Total</label>
         </div>
         <div class="w-100 product box-15 d-flex align-items-center">
-          <div class="img mr-15">
+          <div class="product-img mr-15">
+            <img [src]="mainImageUrl">
           </div>
           <span class="product-name">{{ (product)?.title }}</span>
           <span class="available mr-30" *ngIf="(order)?.status=='reserved'">{{ (product)?.quantity - maxim - quantity }} left</span>

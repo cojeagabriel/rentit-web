@@ -418,6 +418,7 @@ export class ProductComponent implements OnInit {
 
     }
     this.intervals = intervals;
+    // console.log(this.intervals);
   }
 
   calculateIntervals(): void{

@@ -10,8 +10,9 @@ import { Product } from '../../../types/product';
 import { User } from '../../../types/user';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
-import { BsModalRef } from 'ngx-bootstrap';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import * as moment from 'moment';
+import { OrderSentConfirmationModalComponent } from '../../order-sent-confirmation-modal/order-sent-confirmation-modal.component';
 
 @Component({
   selector: 'app-rent-modal',
@@ -38,6 +39,7 @@ export class RentModalComponent implements OnInit {
   @Output() onResponse: EventEmitter<boolean> = new EventEmitter();
   
   constructor(
+    private modalService: BsModalService,
     private orderService: OrderService,
     private productService: ProductService,
     private userService: UserService,
@@ -152,6 +154,11 @@ export class RentModalComponent implements OnInit {
             .subscribe(order => {
               this.onResponse.emit(true);
               this.bsModalRef.hide();
+              this.modalService.show(OrderSentConfirmationModalComponent, {
+                initialState: {
+                  _rentalId: order._id,
+                }
+              });
             });
         });
       

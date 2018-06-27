@@ -56,6 +56,7 @@ import { SearchPipe } from './search.pipe';
 import { ProductShowcaseComponent } from './components/product-showcase/product-showcase.component';
 import { ReviewShowcaseComponent } from './components/review-showcase/review-showcase.component';
 import { StatusFilterPipe } from './status-filter.pipe';
+import { OrderSentConfirmationModalComponent } from './components/order-sent-confirmation-modal/order-sent-confirmation-modal.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +92,7 @@ import { StatusFilterPipe } from './status-filter.pipe';
     ProductShowcaseComponent,
     ReviewShowcaseComponent,
     StatusFilterPipe,
+    OrderSentConfirmationModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -152,7 +154,8 @@ import { StatusFilterPipe } from './status-filter.pipe';
     DeleteModalComponent,
     RentModalComponent,
     NewMessageModalComponent,
-    RateModalComponent
+    RateModalComponent,
+    OrderSentConfirmationModalComponent,
   ],
   bootstrap: [AppComponent]
 })

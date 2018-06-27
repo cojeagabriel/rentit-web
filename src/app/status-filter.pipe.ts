@@ -6,7 +6,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class StatusFilterPipe implements PipeTransform {
 
   transform(orders: any, statuses: String[]): any {
-    console.log(statuses);
     if(statuses.length == 0)
       return orders;
     else{

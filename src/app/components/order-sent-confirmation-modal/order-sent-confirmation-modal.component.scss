@@ -1,0 +1,18 @@
+@import '~assets/scss/variables.scss';
+
+.button{
+    height: 40px;
+    padding: 3px 30px;
+    border-radius: 2px;
+    background-color: $secondary;
+    border: solid 1px $secondary;
+    display: flex;
+    align-items: center;
+    align-self: flex-end;
+    justify-content: center;
+    transition: all 100ms ease-in-out;
+    &:hover{
+        background-color: $secondary;
+        border-color: $secondary;
+    }
+}

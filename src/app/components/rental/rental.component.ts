@@ -1,10 +1,10 @@
+import { ImageService } from 'app/image.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { OrderService } from '../../services/order.service';
 import { ProductService } from '../../services/product.service';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { User } from '../../types/user';
 import { Product } from '../../types/product';
 import { Order } from '../../types/order';
@@ -33,7 +33,7 @@ export class RentalComponent implements OnInit {
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private ngbDateParserFormatter: NgbDateParserFormatter,
+    private imageService: ImageService
   ) { }
 
   ngOnInit() {
@@ -99,6 +99,10 @@ export class RentalComponent implements OnInit {
       });
 
     this.router.navigate(['dashboard/my-orders']);
+  }
+
+  get mainImageUrl(): string {
+    return this.product ? this.imageService.getImageUrl(this.product.images[0]) : '';
   }
 
 }

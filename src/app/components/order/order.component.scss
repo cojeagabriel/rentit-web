@@ -171,3 +171,14 @@
         border: solid 1px #ddd;
     }
 }
+
+.product-img{
+    height: 46px;
+    width: 46px;
+    margin: 15px;
+    img{
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+    }
+}

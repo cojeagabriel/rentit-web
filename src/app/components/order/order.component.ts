@@ -1,3 +1,4 @@
+import { ImageService } from './../../image.service';
 import { OrderService } from './../../services/order.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,7 +8,6 @@ import { Order } from '../../types/order';
 import { Product } from '../../types/product';
 import { User } from '../../types/user';
 import { Observable } from 'rxjs/Observable';
-import { NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 
 @Component({
@@ -39,7 +39,7 @@ export class OrderComponent implements OnInit {
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private ngbDateParserFormatter: NgbDateParserFormatter,
+    private imageService: ImageService
   ) { }
 
   ngOnInit() {
@@ -302,5 +302,8 @@ export class OrderComponent implements OnInit {
       })
       .subscribe(() => {
       });
+  }
+  get mainImageUrl(): string {
+    return this.product ? this.imageService.getImageUrl(this.product.images[0]) : '';
   }
 }

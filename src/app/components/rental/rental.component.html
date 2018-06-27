@@ -1,6 +1,6 @@
 <div class="title title-thin">
   <div class="container">
-    <h4>Rental #{{ (order)?.id }}</h4>
+    <h4>Rental #{{ (order)?.index }}</h4>
     <span class="order-status" [ngClass]="{'reserved':((order)?.status=='reserved'),'started':((order)?.status=='started'),'ended':((order)?.status=='ended'),'canceled':((order)?.status=='canceled')}">{{ (order)?.status }}</span>
   </div>
 </div>
@@ -68,8 +68,9 @@
           <label for="quantity" class="mb-0">Total</label>
         </div>
         <div class="w-100 product box-15 d-flex align-items-center">
-          <span class="img mr-15">
-          </span>
+          <div class="product-img mr-15">
+            <img [src]="mainImageUrl">
+          </div>
           <span class="product-name">{{ (product)?.title }}</span>
           <div class="mr-30">
             <div class="quantity-wrapper-disabled">
