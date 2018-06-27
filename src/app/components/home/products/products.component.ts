@@ -49,7 +49,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
           return Observable.throw(err);
         })
         .subscribe(products => {
-          this.products = products.reverse();
+          this.products = products.reverse().slice(0,10);
         })
     }
   }
