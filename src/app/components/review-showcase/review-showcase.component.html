@@ -8,7 +8,7 @@
             <a [routerLink]="'../../profile/'+ review._userId" class="avatar d-flex align-items-center justify-content-center mb-7">
               <span>{{review.userFirstName.substring(0,1)}}{{review.userLastName.substring(0,1)}}</span>
             </a>
-            <p><a class="user-name" [routerLink]="'../../profile/'+ review._userId">{{ review.userFirstName }}</a><small class="date">
+            <p><a class="user-name link" [routerLink]="'../../profile/'+ review._userId">{{ review.userFirstName }}</a><small class="date">
                wrote on {{review.dateDay}}/{{review.dateMonth}}/{{review.dateYear}}
             </small></p>
           </div>

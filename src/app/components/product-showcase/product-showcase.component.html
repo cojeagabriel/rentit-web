@@ -37,7 +37,7 @@
                 <small class="info-label">Owner:</small>
                 <!-- <img src="assets/img/user.png"> -->
                 &nbsp;
-                <a [routerLink]="'../../profile/'+ (user)?._id">{{ (user)?.firstName }} {{ (user)?.lastName }}</a>
+                <a class="link" [routerLink]="'../../profile/'+ (user)?._id">{{ (user)?.firstName }} {{ (user)?.lastName }}</a>
               </p>
               <p>
                 <small class="info-label">
@@ -53,7 +53,7 @@
                 <a [routerLink]="'../../profile/'+ (review)?._userId" class="avatar d-flex align-items-center justify-content-center mb-7">
                   <span>{{(review)?.userFirstName.substring(0,1)}}{{(review)?.userLastName.substring(0,1)}}</span>
                 </a>
-                <a class="user-name" [routerLink]="'../../profile/'+ (review)?._userId">{{ (review)?.userFirstName }} {{ (review)?.userLastName }}</a>
+                <a class="user-name link link-dark" [routerLink]="'../../profile/'+ (review)?._userId">{{ (review)?.userFirstName }} {{ (review)?.userLastName }}</a>
                 <small class="date">
                   {{(review)?.dateDay}}/{{(review)?.dateMonth}}/{{(review)?.dateYear}}
                 </small>

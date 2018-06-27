@@ -73,7 +73,7 @@
               <p>
                 <small class="info-label">Owner:</small>
                 <!-- <img src="assets/img/user.png"> -->
-                &nbsp;<a [routerLink]="'../../profile/'+ (user)?._id">{{ (user)?.firstName }} {{ (user)?.lastName }}</a></p>
+                &nbsp;<a class="link" [routerLink]="'../../profile/'+ (user)?._id">{{ (user)?.firstName }} {{ (user)?.lastName }}</a></p>
               <p>
                 <small class="info-label">
                   <!-- <fa name="map-marker" class="mr-7"></fa> -->
@@ -216,7 +216,7 @@
                 <a [routerLink]="'../../profile/'+ r._userId" class="avatar d-flex align-items-center justify-content-center mb-7">
                   <span>{{r.userFirstName.substring(0,1)}}{{r.userLastName.substring(0,1)}}</span>
                 </a>
-                <a class="user-name" [routerLink]="'../../profile/'+ r._userId">{{ r.userFirstName }} {{ r.userLastName }}</a>
+                <a class="user-name link link-dark" [routerLink]="'../../profile/'+ r._userId">{{ r.userFirstName }} {{ r.userLastName }}</a>
                 <small class="date">
                   {{r.dateDay}}/{{r.dateMonth}}/{{r.dateYear}}
                 </small>
@@ -269,11 +269,18 @@
                 <span>{{c.senderFirstName.substring(0,1)}}{{c.senderLastName.substring(0,1)}}</span>
               </a>
             </div>
-            <div class="d-flex flex-column">
-              <a [routerLink]="'../../profile/'+ c._senderId" class="user-name">
-                <span>{{c.senderFirstName}} {{c.senderLastName}}</span>
-              </a>
-              <small class="date mb-7">{{c.dateDay}}/{{c.dateMonth}}/{{c.dateYear}}</small>
+            <div class="d-flex flex-column w-100">
+              
+              <div class="d-flex justify-content-between align-items-start w-100">
+                <div class="d-flex flex-column">
+                  <a class="user-name link link-dark" [routerLink]="'../../profile/'+ c._senderId">
+                    <span>{{c.senderFirstName}} {{c.senderLastName}}</span>
+                  </a>
+                  <small class="date mb-7">{{c.dateDay}}/{{c.dateMonth}}/{{c.dateYear}}</small>
+                </div>
+                <button *ngIf="c._senderId == me._id || product._ownerId == me._id" (click)="deleteComment(c)"><fa name="times" class="text-danger"></fa></button>
+              </div>
+              
               <pre><p>{{c.comment}}</p></pre>
             </div>
           </div>

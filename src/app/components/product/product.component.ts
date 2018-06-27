@@ -341,19 +341,36 @@ export class ProductComponent implements OnInit {
             return Observable.throw(new Error(`${err.status} ${err.msg}`));
           })
           .subscribe(comment => {
+            this.commentService.getCommentsByProductId(this.product._id)
+              .catch(err => {
+                return Observable.throw(new Error(`${err.status} ${err.msg}`));
+              })
+              .subscribe(comments => {
+                this.comments = comments.reverse();
+              });
           });
-        this.commentService.getCommentsByProductId(this.product._id)
-          .catch (err => {
-            return Observable.throw(new Error(`${err.status} ${err.msg}`));
-          })
-          .subscribe(comments => {
-            this.comments = comments.reverse();
-          });
+        
       }
     }
     else{
       this.modalService.show(LoginModalComponent);
     }
+  }
+
+  deleteComment(comment: Comment){
+    this.commentService.delete(comment)
+      .catch(err => {
+        return Observable.throw(new Error(`${err.status} ${err.msg}`));
+      })
+      .subscribe(() => {
+        this.commentService.getCommentsByProductId(this.product._id)
+          .catch(err => {
+            return Observable.throw(new Error(`${err.status} ${err.msg}`));
+          })
+          .subscribe(comments => {
+            this.comments = comments.reverse();
+          });
+      });
   }
 
   isDisabled = (date: NgbDateStruct) => {
@@ -382,7 +399,7 @@ export class ProductComponent implements OnInit {
         }
         if (this.points[i].node == last.node) {
           s=0;
-          while (this.points[i].node == last.node && this.points[i].count < 0) {
+          while (i < this.points.length && this.points[i].node == last.node && this.points[i].count < 0) {
             s += this.points[i].count;
             i++;
           }
@@ -418,7 +435,6 @@ export class ProductComponent implements OnInit {
 
     }
     this.intervals = intervals;
-    // console.log(this.intervals);
   }
 
   calculateIntervals(): void{

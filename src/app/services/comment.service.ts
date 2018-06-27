@@ -11,16 +11,16 @@ export class CommentService {
     private http: HttpClient
   ) { }
 
-  create(product: Comment): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/api/comments`, product);
+  create(comment: Comment): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/api/comments`, comment);
   }
 
-  update(product: Comment, id: string): Observable<any> {
-    return this.http.put(`${environment.apiUrl}/api/comments/update/${id}`, product);
+  update(comment: Comment, id: string): Observable<any> {
+    return this.http.put(`${environment.apiUrl}/api/comments/update/${id}`, comment);
   }
 
-  delete(product: Comment): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/api/comments/delete`, product);
+  delete(comment: Comment): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/api/comments/delete`, comment);
   }
 
   getComments(): Observable<Comment[]> {

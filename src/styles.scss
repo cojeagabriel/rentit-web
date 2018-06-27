@@ -9,10 +9,10 @@
 body{
     margin: 0;
     // background-color: $neutral-gray-light;
-    background-image: url('assets/img/background3.3.png');
+    background-image: url('assets/img/background-optimized.jpg');
     background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+    background-position: top;
+    background-size: contain;
 }
 
 body, html{
@@ -347,4 +347,16 @@ ngb-datepicker{
 }
 .filled.bad {
     color: #ff1e1e;
+}
+
+.link{
+    color: $primary !important;
+    &:hover{
+        color: $primary-middle !important;
+        text-decoration: underline !important;
+    }
+}
+
+.link-dark{
+    color: $primary-dark !important;
 }
