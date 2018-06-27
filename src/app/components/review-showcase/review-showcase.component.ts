@@ -33,13 +33,13 @@ export class ReviewShowcaseComponent implements OnInit {
           else if (a.rating == b.rating) { return 0; }
           else { return -1; }
         }).slice(0, 3);
-        this.reviews.forEach(review => {
+        this.reviews.forEach((review, index) => {
           this.productService.getById(review._productId)
             .catch(err => {
               return Observable.throw(new Error(`${err.status} ${err.msg}`));
             })
             .subscribe(product => {
-              this.products.push(product[0]);
+              this.products[index] = product[0];
             });
         });
       });
