@@ -1,3 +1,4 @@
+import { BsModalService } from 'ngx-bootstrap';
 import { ImageService } from './../../image.service';
 import { OrderService } from './../../services/order.service';
 import { Component, OnInit, Input } from '@angular/core';
@@ -9,6 +10,7 @@ import { Product } from '../../types/product';
 import { User } from '../../types/user';
 import { Observable } from 'rxjs/Observable';
 import * as moment from 'moment';
+import { NewMessageModalComponent } from '../new-message-modal/new-message-modal.component';
 
 @Component({
   selector: 'app-order',
@@ -32,6 +34,7 @@ export class OrderComponent implements OnInit {
   intervals: any;
   disabledDates: Date[] = [];
   maxim: number;
+  me: User;
 
   constructor(
     private orderService: OrderService,
@@ -39,10 +42,16 @@ export class OrderComponent implements OnInit {
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private modalService: BsModalService,
   ) { }
 
   ngOnInit() {
+    this.userService.getMe()
+      .subscribe(user => {
+        this.me = user;
+      });
+
     this.orderService.getOrderById(this.activatedRoute.snapshot.params.id)
       .catch(err => {
         return Observable.throw(new Error(`${err.status} ${err.msg}`));
@@ -305,4 +314,17 @@ export class OrderComponent implements OnInit {
   get mainImageUrl(): string {
     return this.product ? this.imageService.getImageUrl(this.product.images[0]) : '';
   }
+
+  showMessageModal() {
+    this.modalService.show(NewMessageModalComponent, {
+      initialState: {
+        message: "New message",
+        sender: this.me._id,
+        senderFirstName: this.me.firstName,
+        senderLastName: this.me.lastName,
+        reciever: this.client._id
+      }
+    });
+  }
+
 }

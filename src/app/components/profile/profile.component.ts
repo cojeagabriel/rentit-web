@@ -6,9 +6,7 @@ import { UserService } from '../../services/user.service';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BsModalService } from 'ngx-bootstrap';
-import { Message } from '../../types/message';
 
 @Component({
   selector: 'app-profile',
@@ -26,7 +24,6 @@ export class ProfileComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private modalService: BsModalService,
-    private messageService: MessageService
   ) { }
 
   ngOnInit() {
