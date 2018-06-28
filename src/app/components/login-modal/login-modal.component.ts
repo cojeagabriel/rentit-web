@@ -34,7 +34,7 @@ export class LoginModalComponent implements OnInit {
   createForm(): FormGroup{
     return this.formBuilder.group({
       email: this.formBuilder.control('', Validators.required),
-      password: this.formBuilder.control('parola', Validators.required)
+      password: this.formBuilder.control('', Validators.required)
     });
   }
 

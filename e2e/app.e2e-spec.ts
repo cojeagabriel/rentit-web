@@ -30,7 +30,7 @@ describe('rentit web', () => {
     expect(page.loginModalTitle.getText()).toBe('Login');
 
     await page.loginEmailField.clear();
-    await page.loginEmailField.sendKeys('test@yahoo.com');
+    await page.loginEmailField.sendKeys('cojeagabriel@yahoo.com');
 
     await page.loginPasswordField.clear();
     await page.loginPasswordField.sendKeys('parola');
@@ -43,7 +43,7 @@ describe('rentit web', () => {
     expect(page.loginButton.isPresent()).toBe(false);
     expect(page.addItemButton.isPresent()).toBe(true);
     expect(page.userMenuToggle.isPresent()).toBe(true);
-    expect(page.userMenuToggle.getText()).toContain('Hi, test');
+    expect(page.userMenuToggle.getText()).toContain('Hi, Gabriel');
   });
 
   it('should logout', async () => {
